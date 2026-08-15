@@ -1,5 +1,3 @@
-import { Mail, Phone, PenLine, ArrowUpRight } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/BrandIcons";
 import { site } from "@/content/site";
 import { ContactForm } from "@/components/ContactForm";
 import { Reveal } from "@/components/motion/Reveal";
@@ -7,85 +5,70 @@ import { SectionHeading } from "./SectionHeading";
 
 export function Contact() {
   return (
-    <section id="contact" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-24 sm:px-8">
+    <section
+      id="contact"
+      className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-28 sm:px-10 sm:py-36"
+    >
       <SectionHeading
-        index="05 / Contact"
+        index="05"
+        eyebrow="Contact"
         title="Let's build something"
-        lead={site.availability + ". Tell me what you're working on and I'll get back to you."}
+        lead={`${site.availability}. Tell me what you are working on and I will get back to you.`}
       />
 
-      <div className="mt-12 grid gap-5 lg:grid-cols-[1.2fr_1fr]">
+      <div className="mt-16 grid gap-16 lg:grid-cols-[1.3fr_1fr] lg:gap-24">
         <Reveal>
           <ContactForm />
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <div className="space-y-4">
-            <a
-              href={`mailto:${site.email}`}
-              className="card group flex items-center gap-4 rounded-2xl p-5 transition-colors hover:border-primary"
-            >
-              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-primary-soft text-primary">
-                <Mail className="size-4" />
-              </span>
-              <span className="min-w-0">
-                <span className="block text-xs text-muted">Email</span>
-                <span className="block truncate text-sm">{site.email}</span>
-              </span>
-            </a>
+        <Reveal delay={0.08}>
+          <div>
+            <div className="rule-t pt-4">
+              <p className="label">Direct</p>
+              <a
+                href={`mailto:${site.email}`}
+                className="link-underline mono mt-3 block text-sm text-ink"
+              >
+                {site.email}
+              </a>
+              <a
+                href={`tel:${site.phoneHref}`}
+                className="link-underline mono mt-2 block text-sm text-ink"
+              >
+                {site.phone}
+              </a>
+            </div>
 
-            <a
-              href={`tel:${site.phoneHref}`}
-              className="card group flex items-center gap-4 rounded-2xl p-5 transition-colors hover:border-primary"
-            >
-              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-primary-soft text-primary">
-                <Phone className="size-4" />
-              </span>
-              <span>
-                <span className="block text-xs text-muted">Phone</span>
-                <span className="block text-sm">{site.phone}</span>
-              </span>
-            </a>
-
-            <div className="card rounded-2xl p-5">
-              <p className="text-xs text-muted">Elsewhere</p>
-              <div className="mt-3 space-y-1">
+            <div className="rule-t mt-10 pt-4">
+              <p className="label">Elsewhere</p>
+              <ul className="mt-3 space-y-2">
                 {[
-                  {
-                    href: site.links.github,
-                    label: "GitHub",
-                    handle: "@wasifullah7",
-                    Icon: GithubIcon,
-                  },
-                  {
-                    href: site.links.linkedin,
-                    label: "LinkedIn",
-                    handle: "@wasifullahdev",
-                    Icon: LinkedinIcon,
-                  },
-                  {
-                    href: site.links.medium,
-                    label: "Medium",
-                    handle: "@wasifullahdev",
-                    Icon: PenLine,
-                  },
-                ].map(({ href, label, handle, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group flex items-center justify-between gap-3 rounded-lg px-2 py-2 transition-colors hover:bg-surface-2"
-                  >
-                    <span className="flex items-center gap-3 text-sm">
-                      <Icon className="size-4 text-muted" />
-                      {label}
-                      <span className="font-mono text-xs text-muted">{handle}</span>
-                    </span>
-                    <ArrowUpRight className="size-3.5 text-muted transition-colors group-hover:text-primary" />
-                  </a>
+                  { href: site.links.github, label: "GitHub", handle: "wasifullah7" },
+                  { href: site.links.linkedin, label: "LinkedIn", handle: "wasifullahdev" },
+                  { href: site.links.medium, label: "Medium", handle: "wasifullahdev" },
+                ].map((item) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex items-baseline justify-between gap-4"
+                    >
+                      <span className="text-sm text-ink">{item.label}</span>
+                      <span className="mono text-xs text-faint transition-colors group-hover:text-accent">
+                        {item.handle}
+                      </span>
+                    </a>
+                  </li>
                 ))}
-              </div>
+              </ul>
+            </div>
+
+            <div className="rule-t mt-10 pt-4">
+              <p className="label">Location</p>
+              <p className="mono mt-3 text-sm text-ink">
+                {site.location} · {site.locationNote}
+              </p>
             </div>
           </div>
         </Reveal>

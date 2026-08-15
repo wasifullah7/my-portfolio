@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/content/site";
 
-export const alt = `${site.name} — ${site.role}`;
+export const alt = `${site.name}, ${site.role}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -15,32 +15,26 @@ export default async function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#07080c",
-          backgroundImage:
-            "radial-gradient(circle at 15% 0%, rgba(77,163,255,0.28), transparent 45%), radial-gradient(circle at 85% 20%, rgba(167,139,250,0.22), transparent 45%)",
-          padding: "72px 80px",
+          background: "#efebe3",
+          color: "#17150f",
+          padding: "64px 72px",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 52,
-              height: 52,
-              borderRadius: 12,
-              background: "#4da3ff",
-              color: "#04060b",
-              fontSize: 30,
-              fontWeight: 700,
-            }}
-          >
-            W
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            borderBottom: "1px solid #d5cdbe",
+            paddingBottom: 20,
+          }}
+        >
+          <div style={{ display: "flex", fontSize: 22, letterSpacing: 2, color: "#6b6455" }}>
+            {site.name.toUpperCase()}
           </div>
-          <div style={{ display: "flex", fontSize: 26, color: "#eef1f7", fontWeight: 600 }}>
-            {site.name}
+          <div style={{ display: "flex", fontSize: 20, letterSpacing: 3, color: "#a8431e" }}>
+            {site.location.toUpperCase()}
           </div>
         </div>
 
@@ -48,35 +42,60 @@ export default async function Image() {
           <div
             style={{
               display: "flex",
-              fontSize: 82,
-              lineHeight: 1.05,
-              fontWeight: 700,
-              color: "#eef1f7",
-              letterSpacing: "-0.03em",
+              fontSize: 104,
+              lineHeight: 1,
+              fontWeight: 800,
+              letterSpacing: "-0.04em",
+              textTransform: "uppercase",
             }}
           >
-            {site.role}
+            Full-Stack
           </div>
           <div
             style={{
               display: "flex",
-              marginTop: 20,
-              fontSize: 30,
-              color: "#93a4c0",
+              fontSize: 104,
+              lineHeight: 1,
+              fontWeight: 800,
+              letterSpacing: "-0.04em",
+              textTransform: "uppercase",
             }}
           >
-            {site.disciplines.join("  ·  ")}
+            AI Engineer
+          </div>
+          <div
+            style={{
+              display: "flex",
+              marginTop: 26,
+              fontSize: 22,
+              letterSpacing: 3,
+              color: "#6b6455",
+            }}
+          >
+            {site.disciplines.join("   /   ").toUpperCase()}
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
-          {site.stats.map((stat) => (
-            <div key={stat.label} style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex", fontSize: 34, fontWeight: 700, color: "#4da3ff" }}>
-                {stat.value}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            gap: 64,
+            borderTop: "1px solid #d5cdbe",
+            paddingTop: 22,
+          }}
+        >
+          {[
+            { v: "0.83", l: "MAP, DIAGRAM DETECTION" },
+            { v: "97%", l: "ARROW ASSOCIATION" },
+            { v: "3", l: "PRODUCTION TEAMS" },
+          ].map((stat) => (
+            <div key={stat.l} style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex", fontSize: 44, fontWeight: 700, color: "#a8431e" }}>
+                {stat.v}
               </div>
-              <div style={{ display: "flex", fontSize: 19, color: "#828fa8", marginTop: 4 }}>
-                {stat.label}
+              <div style={{ display: "flex", fontSize: 16, letterSpacing: 2, color: "#6b6455", marginTop: 6 }}>
+                {stat.l}
               </div>
             </div>
           ))}

@@ -2,52 +2,54 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ---------------------------------------------------------------------------
+   Technical Instrument palette.
+   Warm ink on warm paper with a single oxide signal colour. Deliberately no
+   blue, no violet, no gradient: those read as machine defaults.
+   --------------------------------------------------------------------------- */
+
 :root {
-  --background: #fbfbfd;
-  --surface: #ffffff;
-  --surface-2: #f3f4f8;
-  --foreground: #0b0d12;
-  --muted: #5a6272;
-  --border: #e3e5ec;
-  --primary: #0b73e8;
-  --primary-soft: #e8f1fe;
-  --accent: #7c4dff;
-  --grid: rgba(11, 13, 18, 0.05);
-  --glow-a: rgba(11, 115, 232, 0.16);
-  --glow-b: rgba(124, 77, 255, 0.12);
+  --paper: #efebe3;
+  --paper-2: #e7e2d8;
+  --ink: #17150f;
+  --muted: #6b6455;
+  --faint: #928b7a;
+  --rule: #d5cdbe;
+  --accent: #a8431e;
+  --accent-ink: #ffffff;
+  --accent-wash: rgba(168, 67, 30, 0.09);
+  --grain: 0.035;
 }
 
 .dark {
-  --background: #07080c;
-  --surface: #0c0e14;
-  --surface-2: #12151d;
-  --foreground: #eef1f7;
-  --muted: #929bb0;
-  --border: #1c202b;
-  --primary: #4da3ff;
-  --primary-soft: rgba(77, 163, 255, 0.12);
-  --accent: #a78bfa;
-  --grid: rgba(255, 255, 255, 0.045);
-  --glow-a: rgba(77, 163, 255, 0.18);
-  --glow-b: rgba(167, 139, 250, 0.14);
+  --paper: #14130f;
+  --paper-2: #1a1814;
+  --ink: #eae5da;
+  --muted: #928b7a;
+  --faint: #6b6455;
+  --rule: #2b2823;
+  --accent: #e0703c;
+  --accent-ink: #14130f;
+  --accent-wash: rgba(224, 112, 60, 0.12);
+  --grain: 0.055;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-foreground: var(--foreground);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
   --color-muted: var(--muted);
-  --color-border: var(--border);
-  --color-primary: var(--primary);
-  --color-primary-soft: var(--primary-soft);
+  --color-faint: var(--faint);
+  --color-rule: var(--rule);
   --color-accent: var(--accent);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent-wash: var(--accent-wash);
+  --font-display: var(--font-bricolage);
+  --font-mono: var(--font-jetbrains);
 }
 
 * {
-  border-color: var(--border);
+  border-color: var(--rule);
+  min-width: 0;
 }
 
 html {
@@ -55,18 +57,29 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  font-optical-sizing: auto;
   overflow-x: hidden;
 }
 
-::selection {
-  background: var(--primary);
-  color: #fff;
+/* Paper grain. Costs nothing, and machines never think to add it. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: var(--grain);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Lenis drives scrolling; native smooth scroll would fight it. */
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
 html.lenis,
 html.lenis body {
   height: auto;
@@ -75,79 +88,91 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 
-/* --- Ambient background --------------------------------------------- */
+/* --- Typography ------------------------------------------------------------ */
 
-.bg-grid {
-  background-image:
-    linear-gradient(to right, var(--grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+.display {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  text-transform: uppercase;
 }
 
-.glow-field::before {
-  content: "";
-  position: absolute;
-  inset: -20% -10% auto -10%;
-  height: 60vh;
-  background:
-    radial-gradient(50% 60% at 20% 0%, var(--glow-a), transparent 70%),
-    radial-gradient(50% 60% at 80% 10%, var(--glow-b), transparent 70%);
-  pointer-events: none;
-  z-index: 0;
+/* Mono metadata labels: the technical-documentation voice of the page. */
+.label {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
 }
 
-/* --- Type --- */
+.mono {
+  font-family: var(--font-jetbrains), monospace;
+}
 
-.text-gradient {
-  background: linear-gradient(100deg, var(--foreground) 10%, var(--primary) 55%, var(--accent) 95%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.tabular {
+  font-family: var(--font-jetbrains), monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 
 .balance {
   text-wrap: balance;
 }
 
-/* --- Surfaces --- */
-
-.card {
-  background: color-mix(in oklab, var(--surface) 88%, transparent);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(12px);
+.measure {
+  max-width: 62ch;
 }
 
-.hairline {
-  border-top: 1px solid var(--border);
+/* --- Structure: hairlines instead of cards --------------------------------- */
+
+.rule-t {
+  border-top: 1px solid var(--rule);
+}
+.rule-b {
+  border-bottom: 1px solid var(--rule);
 }
 
-/* Animated conic border used on featured cards. */
-.card-lit {
-  position: relative;
-  isolation: isolate;
+/* Section headers read like a document index: "01 //// ABOUT" */
+.index-rule {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
-.card-lit::after {
+.index-rule::after {
   content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(140deg, transparent 30%, var(--primary), transparent 70%);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-.card-lit:hover::after {
-  opacity: 1;
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
 }
 
-/* --- Marquee --- */
+/* Rows that light up on hover without becoming buttons. */
+.row {
+  transition:
+    background-color 0.35s ease,
+    padding-left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.row:hover {
+  background: var(--accent-wash);
+  padding-left: 0.75rem;
+}
+
+/* --- Links ----------------------------------------------------------------- */
+
+.link-underline {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* --- Marquee --------------------------------------------------------------- */
 
 @keyframes marquee {
   from {
@@ -158,21 +183,18 @@ html.lenis body {
   }
 }
 .animate-marquee {
-  animation: marquee 40s linear infinite;
+  animation: marquee 52s linear infinite;
 }
 .marquee-mask {
-  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
 
-/* --- Focus --- */
+/* --- Focus ----------------------------------------------------------------- */
 
 :focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
 }
-
-/* --- Reduced motion: kill everything decorative --- */
 
 @media (prefers-reduced-motion: reduce) {
   *,

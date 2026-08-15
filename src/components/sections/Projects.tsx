@@ -1,57 +1,59 @@
-import { ArrowUpRight } from "lucide-react";
 import { projects, earlierWork } from "@/content/projects";
 import { site } from "@/content/site";
-import { ProjectCard } from "@/components/ProjectCard";
+import { ProjectEntry } from "@/components/ProjectEntry";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 
 export function Projects() {
   return (
-    <section id="work" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-24 sm:px-8">
+    <section
+      id="work"
+      className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-28 sm:px-10 sm:py-36"
+    >
       <SectionHeading
-        index="04 / Work"
+        index="04"
+        eyebrow="Work"
         title="Selected work"
         lead="Production systems first, research second. Every number below is measured, not estimated."
       />
 
-      <div className="mt-14 grid gap-5 lg:grid-cols-2">
+      <div className="mt-14">
         {projects.map((project, i) => (
-          <ProjectCard key={project.slug} project={project} index={i} />
+          <ProjectEntry key={project.slug} project={project} index={i} />
         ))}
+        <div className="rule-t" />
       </div>
 
       <Reveal>
-        <div className="card mt-6 rounded-3xl p-6 sm:p-8">
-          <h3 className="text-sm font-medium">Earlier work</h3>
-          <p className="mt-1 text-sm text-muted">
-            Foundational projects, still public.
-          </p>
-          <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        <div className="mt-20">
+          <div className="index-rule">
+            <span className="label order-3">Earlier work</span>
+          </div>
+
+          <ul className="mt-6">
             {earlierWork.map((item) => (
               <li key={item.title}>
                 <a
                   href={item.repoUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-baseline justify-between gap-4 border-b border-border py-2.5 transition-colors hover:border-primary"
+                  className="row rule-t group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-5"
                 >
-                  <span className="text-sm">
-                    {item.title}
-                    <span className="ml-2 text-xs text-muted">{item.note}</span>
-                  </span>
-                  <ArrowUpRight className="size-3.5 shrink-0 text-muted transition-colors group-hover:text-primary" />
+                  <span className="text-[0.9375rem] text-ink">{item.title}</span>
+                  <span className="mono text-xs text-faint">{item.note}</span>
                 </a>
               </li>
             ))}
           </ul>
+          <div className="rule-t" />
 
           <a
             href={site.links.github}
             target="_blank"
             rel="noreferrer"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
+            className="link-underline mono mt-8 inline-block text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
           >
-            All repositories on GitHub <ArrowUpRight className="size-3.5" />
+            All repositories on GitHub
           </a>
         </div>
       </Reveal>

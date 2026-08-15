@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
 import { navItems, site } from "@/content/site";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
@@ -10,7 +9,7 @@ import { cn } from "@/lib/utils";
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string>("");
+  const [active, setActive] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -41,45 +40,37 @@ export function Nav() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled
-          ? "border-b border-border bg-background/80 backdrop-blur-xl"
-          : "border-b border-transparent",
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+        scrolled ? "border-b border-rule bg-paper/85 backdrop-blur-md" : "border-b border-transparent",
       )}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-        <Link href="/" className="group flex items-center gap-2 font-semibold tracking-tight">
-          <span className="grid size-7 place-items-center rounded-md bg-primary text-[13px] font-bold text-white">
-            W
-          </span>
-          <span className="hidden sm:inline">
-            Wasif<span className="text-primary">Ullah</span>
-          </span>
+      <nav className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 sm:px-10">
+        <Link href="/" className="mono text-sm tracking-tight">
+          {site.name.toLowerCase().replace(" ", ".")}
         </Link>
 
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               className={cn(
-                "rounded-full px-3.5 py-1.5 text-sm transition-colors",
-                active === item.href
-                  ? "bg-primary-soft text-primary"
-                  : "text-muted hover:text-foreground",
+                "mono group flex items-baseline gap-1.5 text-xs uppercase tracking-[0.14em] transition-colors",
+                active === item.href ? "text-accent" : "text-muted hover:text-ink",
               )}
             >
+              <span className="tabular text-[0.625rem] text-faint">{item.index}</span>
               {item.label}
             </a>
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-6">
           <ThemeToggle />
           <a
             href={site.resumePath}
             download
-            className="hidden rounded-full border border-border px-4 py-1.5 text-sm text-foreground transition-colors hover:border-primary hover:text-primary sm:inline-block"
+            className="link-underline mono hidden text-xs uppercase tracking-[0.14em] text-muted transition-colors hover:text-ink sm:inline-block"
           >
             Résumé
           </a>
@@ -88,22 +79,23 @@ export function Nav() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
-            className="grid size-9 place-items-center rounded-full border border-border md:hidden"
+            className="mono text-xs uppercase tracking-[0.14em] text-muted md:hidden"
           >
-            {open ? <X className="size-4" /> : <Menu className="size-4" />}
+            {open ? "Close" : "Menu"}
           </button>
         </div>
       </nav>
 
       {open ? (
-        <div className="border-t border-border bg-background/95 px-5 py-3 backdrop-blur-xl md:hidden">
+        <div className="border-t border-rule bg-paper px-6 py-2 md:hidden">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="block rounded-lg px-3 py-2.5 text-sm text-muted hover:bg-surface-2 hover:text-foreground"
+              className="mono flex items-baseline gap-3 border-b border-rule py-3.5 text-xs uppercase tracking-[0.14em] text-muted last:border-b-0"
             >
+              <span className="tabular text-[0.625rem] text-faint">{item.index}</span>
               {item.label}
             </a>
           ))}

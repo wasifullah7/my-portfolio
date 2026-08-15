@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Download, Mail, Phone } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/BrandIcons";
 import { site } from "@/content/site";
 import { experience } from "@/content/experience";
 import { skillGroups } from "@/content/skills";
@@ -9,7 +7,7 @@ import { projects } from "@/content/projects";
 
 export const metadata: Metadata = {
   title: "Résumé",
-  description: `Résumé of ${site.name} — ${site.role}. Experience, skills, projects, and education.`,
+  description: `Résumé of ${site.name}, ${site.role}. Experience, skills, projects, and education.`,
 };
 
 /**
@@ -18,83 +16,74 @@ export const metadata: Metadata = {
  */
 export default function ResumePage() {
   return (
-    <div className="mx-auto max-w-3xl px-5 pb-24 pt-28 sm:px-8">
+    <div className="mx-auto max-w-3xl px-6 pb-28 pt-28 sm:px-10">
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-primary"
+        className="link-underline mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
       >
-        <ArrowLeft className="size-3.5" /> Back to portfolio
+        &larr; Back to portfolio
       </Link>
 
-      <header className="mt-8 flex flex-wrap items-start justify-between gap-6">
+      <header className="mt-10 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{site.name}</h1>
-          <p className="mt-1.5 text-primary">{site.role}</p>
-          <p className="mt-1 text-sm text-muted">{site.disciplines.join(" · ")}</p>
+          <h1 className="display text-[clamp(2rem,6vw,3.25rem)]">{site.name}</h1>
+          <p className="label mt-3">{site.role}</p>
+          <p className="mono mt-1 text-sm text-muted">{site.disciplines.join(" / ")}</p>
         </div>
 
         <a
           href={site.resumePath}
           download
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-white transition-shadow hover:shadow-[0_0_28px_-6px_var(--primary)]"
+          className="group mono inline-flex items-center gap-3 border border-ink px-5 py-2.5 text-xs uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-ink hover:text-paper"
         >
-          <Download className="size-4" /> Download PDF
+          Download PDF
+          <span className="inline-block transition-transform duration-300 group-hover:translate-y-0.5">
+            &darr;
+          </span>
         </a>
       </header>
 
-      <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
-        <li>
-          <a href={`mailto:${site.email}`} className="flex items-center gap-2 hover:text-primary">
-            <Mail className="size-3.5" /> {site.email}
-          </a>
-        </li>
-        <li>
-          <a href={`tel:${site.phoneHref}`} className="flex items-center gap-2 hover:text-primary">
-            <Phone className="size-3.5" /> {site.phone}
-          </a>
-        </li>
-        <li>
-          <a
-            href={site.links.github}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 hover:text-primary"
-          >
-            <GithubIcon className="size-3.5" /> wasifullah7
-          </a>
-        </li>
-        <li>
-          <a
-            href={site.links.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 hover:text-primary"
-          >
-            <LinkedinIcon className="size-3.5" /> wasifullahdev
-          </a>
-        </li>
+      <ul className="rule-t mt-8 flex flex-wrap gap-x-8 gap-y-2 pt-4">
+        {[
+          { href: `mailto:${site.email}`, text: site.email },
+          { href: `tel:${site.phoneHref}`, text: site.phone },
+          { href: site.links.github, text: "github.com/wasifullah7" },
+          { href: site.links.linkedin, text: "linkedin.com/in/wasifullahdev" },
+        ].map((item) => (
+          <li key={item.text}>
+            <a href={item.href} className="link-underline mono text-xs text-muted">
+              {item.text}
+            </a>
+          </li>
+        ))}
       </ul>
 
       <Section title="Profile">
-        <p className="text-sm leading-relaxed text-muted">{site.bio[0]}</p>
+        <p className="text-[0.9375rem] leading-relaxed text-muted">{site.bio[0]}</p>
       </Section>
 
       <Section title="Experience">
-        <div className="space-y-8">
+        <div className="space-y-9">
           {experience.map((role) => (
             <article key={role.company}>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="font-medium">
-                  {role.title} · <span className="text-primary">{role.company}</span>
+                <h3 className="text-[1.0625rem] text-ink">
+                  {role.title}
+                  <span className="text-muted">, {role.company}</span>
                 </h3>
-                <span className="font-mono text-xs text-muted">{role.period}</span>
+                <span className="tabular text-xs text-accent">{role.period}</span>
               </div>
-              <p className="mt-0.5 text-xs text-muted">{role.location}</p>
-              <ul className="mt-3 space-y-2">
+              <p className="label mt-1">{role.location}</p>
+              <ul className="mt-4 space-y-2.5">
                 {role.points.map((point) => (
-                  <li key={point} className="flex gap-2.5 text-sm leading-relaxed text-muted">
-                    <span aria-hidden className="mt-2 size-1 shrink-0 rounded-full bg-primary" />
-                    {point}
+                  <li
+                    key={point}
+                    className="grid grid-cols-[16px_1fr] text-[0.875rem] leading-relaxed text-muted"
+                  >
+                    <span aria-hidden className="mono text-faint">
+                      /
+                    </span>
+                    <span>{point}</span>
                   </li>
                 ))}
               </ul>
@@ -104,26 +93,28 @@ export default function ResumePage() {
       </Section>
 
       <Section title="Selected Projects">
-        <div className="space-y-5">
+        <div className="space-y-6">
           {projects.slice(0, 4).map((project) => (
             <article key={project.slug}>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="font-medium">{project.title}</h3>
-                <span className="font-mono text-xs text-muted">{project.context}</span>
+                <h3 className="text-[1.0625rem] text-ink">{project.title}</h3>
+                <span className="label">{project.context}</span>
               </div>
-              <p className="mt-1 text-sm leading-relaxed text-muted">{project.blurb}</p>
-              <p className="mt-1.5 font-mono text-xs text-muted">{project.stack.join(" · ")}</p>
+              <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
+                {project.blurb}
+              </p>
+              <p className="mono mt-2 text-xs text-faint">{project.stack.join(" / ")}</p>
             </article>
           ))}
         </div>
       </Section>
 
       <Section title="Skills">
-        <div className="space-y-3">
+        <div className="space-y-4">
           {skillGroups.map((group) => (
-            <div key={group.title} className="grid gap-1 sm:grid-cols-[180px_1fr]">
-              <p className="text-sm font-medium">{group.title}</p>
-              <p className="text-sm text-muted">{group.items.join(", ")}</p>
+            <div key={group.code} className="grid gap-1 sm:grid-cols-[160px_1fr]">
+              <p className="mono text-[0.8125rem] text-ink">{group.title}</p>
+              <p className="text-[0.875rem] text-muted">{group.items.join(", ")}</p>
             </div>
           ))}
         </div>
@@ -131,14 +122,24 @@ export default function ResumePage() {
 
       <Section title="Education & Certifications">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <p className="font-medium">{site.education.degree}</p>
-          <span className="font-mono text-xs text-muted">{site.education.period}</span>
+          <p className="text-[1.0625rem] text-ink">{site.education.degree}</p>
+          <span className="tabular text-xs text-accent">{site.education.period}</span>
         </div>
-        <p className="text-sm text-muted">{site.education.school}</p>
-        <ul className="mt-4 space-y-1.5">
+        <p className="text-sm text-muted">
+          {site.education.school}
+          <span className="mono ml-2 text-xs text-faint">{site.education.detail}</span>
+        </p>
+        <ul className="mt-5 space-y-2">
           {site.certifications.map((cert) => (
-            <li key={cert.name} className="text-sm text-muted">
-              {cert.name} — <span className="text-xs">{cert.issuer}</span>
+            <li
+              key={cert.name}
+              className="flex flex-wrap items-baseline justify-between gap-2 text-[0.875rem] text-muted"
+            >
+              <span>
+                {cert.name}
+                <span className="mono text-xs text-faint">, {cert.issuer}</span>
+              </span>
+              <span className="tabular text-xs text-faint">{cert.date}</span>
             </li>
           ))}
         </ul>
@@ -149,11 +150,9 @@ export default function ResumePage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="mt-12">
-      <h2 className="hairline pt-5 text-xs font-medium uppercase tracking-widest text-primary">
-        {title}
-      </h2>
-      <div className="mt-5">{children}</div>
+    <section className="rule-t mt-14 pt-5">
+      <h2 className="label text-accent">{title}</h2>
+      <div className="mt-6">{children}</div>
     </section>
   );
 }

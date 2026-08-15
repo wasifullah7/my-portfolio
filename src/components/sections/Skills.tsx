@@ -1,45 +1,49 @@
 import { skillGroups, marqueeSkills } from "@/content/skills";
-import { Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 
 export function Skills() {
   return (
-    <section id="skills" className="scroll-mt-24 py-24">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+    <section id="skills" className="scroll-mt-24 py-28 sm:py-36">
+      <div className="mx-auto max-w-[1400px] px-6 sm:px-10">
         <SectionHeading
-          index="02 / Stack"
+          index="02"
+          eyebrow="Stack"
           title="What I build with"
           lead="Grouped by the problem it solves rather than by language."
         />
 
-        <Stagger className="mt-12 grid gap-4 sm:grid-cols-2">
-          {skillGroups.map((group) => (
-            <StaggerItem key={group.title}>
-              <div className="card card-lit h-full rounded-2xl p-6">
-                <h3 className="font-medium">{group.title}</h3>
-                <p className="mt-1.5 text-sm text-muted">{group.caption}</p>
-                <ul className="mt-5 flex flex-wrap gap-2">
+        <div className="mt-16">
+          {skillGroups.map((group, i) => (
+            <Reveal key={group.code} delay={i * 0.06}>
+              <div className="row rule-t grid grid-cols-1 gap-4 py-7 md:grid-cols-[80px_240px_1fr] md:gap-8">
+                <span className="tabular text-sm text-accent">{group.code}</span>
+
+                <div>
+                  <h3 className="text-[1.05rem] text-ink">{group.title}</h3>
+                  <p className="mt-1 text-sm text-muted">{group.caption}</p>
+                </div>
+
+                <ul className="flex flex-wrap items-start gap-x-5 gap-y-2 md:justify-end">
                   {group.items.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-muted"
-                    >
+                    <li key={item} className="mono text-[0.8125rem] text-muted">
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-            </StaggerItem>
+            </Reveal>
           ))}
-        </Stagger>
+          <div className="rule-t" />
+        </div>
       </div>
 
-      <div className="marquee-mask mt-14 overflow-hidden py-2">
-        <div className="animate-marquee flex w-max gap-3">
+      <div className="marquee-mask mt-20 overflow-hidden">
+        <div className="animate-marquee flex w-max gap-12">
           {[...marqueeSkills, ...marqueeSkills].map((skill, i) => (
             <span
               key={`${skill}-${i}`}
-              className="whitespace-nowrap rounded-full border border-border px-4 py-1.5 font-mono text-xs text-muted"
+              className="mono whitespace-nowrap text-sm text-faint"
             >
               {skill}
             </span>

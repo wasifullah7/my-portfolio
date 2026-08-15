@@ -2,17 +2,26 @@ import { Reveal } from "@/components/motion/Reveal";
 
 type Props = {
   index: string;
+  eyebrow: string;
   title: string;
   lead?: string;
 };
 
-export function SectionHeading({ index, title, lead }: Props) {
+/** Reads like a document index: 01 ///// ABOUT */
+export function SectionHeading({ index, eyebrow, title, lead }: Props) {
   return (
     <Reveal>
-      <div className="max-w-2xl">
-        <span className="font-mono text-xs tracking-widest text-primary">{index}</span>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
-        {lead ? <p className="balance mt-4 text-muted">{lead}</p> : null}
+      <div>
+        <div className="index-rule">
+          <span className="tabular text-xs text-accent">{index}</span>
+          <span className="label order-3">{eyebrow}</span>
+        </div>
+
+        <h2 className="display mt-8 text-[clamp(2rem,5.5vw,4rem)]">{title}</h2>
+
+        {lead ? (
+          <p className="measure mt-6 text-base leading-relaxed text-muted">{lead}</p>
+        ) : null}
       </div>
     </Reveal>
   );

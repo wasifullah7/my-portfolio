@@ -1,37 +1,35 @@
-import { Mail, PenLine } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "./BrandIcons";
 import { site } from "@/content/site";
 
 export function Footer() {
   return (
-    <footer className="hairline mt-24">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:px-8 md:flex-row md:items-center md:justify-between">
+    <footer className="mx-auto max-w-[1400px] px-6 sm:px-10">
+      <div className="rule-t flex flex-col gap-8 py-10 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="font-semibold">{site.name}</p>
-          <p className="text-sm text-muted">{site.role}</p>
+          <p className="display text-2xl">{site.name}</p>
+          <p className="label mt-2">{site.role}</p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <ul className="flex flex-wrap gap-x-8 gap-y-2">
           {[
-            { href: site.links.github, label: "GitHub", Icon: GithubIcon },
-            { href: site.links.linkedin, label: "LinkedIn", Icon: LinkedinIcon },
-            { href: site.links.medium, label: "Medium", Icon: PenLine },
-            { href: `mailto:${site.email}`, label: "Email", Icon: Mail },
-          ].map(({ href, label, Icon }) => (
-            <a
-              key={label}
-              href={href}
-              aria-label={label}
-              target={href.startsWith("mailto:") ? undefined : "_blank"}
-              rel="noreferrer"
-              className="grid size-9 place-items-center rounded-full border border-border text-muted transition-colors hover:border-primary hover:text-primary"
-            >
-              <Icon className="size-4" />
-            </a>
+            { href: site.links.github, label: "GitHub" },
+            { href: site.links.linkedin, label: "LinkedIn" },
+            { href: site.links.medium, label: "Medium" },
+            { href: `mailto:${site.email}`, label: "Email" },
+          ].map((item) => (
+            <li key={item.label}>
+              <a
+                href={item.href}
+                target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+                rel="noreferrer"
+                className="link-underline mono text-xs uppercase tracking-[0.14em] text-muted transition-colors hover:text-ink"
+              >
+                {item.label}
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <p className="text-sm text-muted">
+        <p className="tabular text-xs text-faint">
           © {new Date().getFullYear()} {site.name}
         </p>
       </div>

@@ -10,50 +10,55 @@ export type Role = {
 };
 
 /**
- * Dates are the canonical set from the GitHub profile README — the live v0 site
- * carried an older, conflicting set that omitted Strateger AI entirely.
+ * Source of truth is WASIF_ULLAH.pdf (the CV). It supersedes both the old v0
+ * site and the GitHub README, which disagreed with each other on dates and had
+ * UNAZ in the wrong location.
  */
 export const experience: Role[] = [
   {
     company: "Strateger AI",
     title: "Full-Stack AI Engineer",
-    location: "Lahore",
-    period: "Jul 2025 — Present",
+    location: "Lahore, onsite",
+    period: "Jul 2025 / Present",
     current: true,
     summary:
-      "Enterprise AI: computer-vision pipelines and LLM agents, deployed on automated multi-region cloud infrastructure.",
+      "Computer-vision pipelines and AI microservices for UK, EU, and international enterprise clients.",
     points: [
-      "Built the AI Board Scanner — a diagram recognition pipeline using RF-DETR detection, PaddleOCR, and SAM2 segmentation, reaching 0.83 mAP and 97% arrow-association accuracy.",
-      "Engineered binary-mask pipelines with KD-trees, skeletonisation, and spatial algorithms to reconstruct graph topology from raw engineering drawings.",
-      "Deployed LLM-powered conversational agents through Amazon Lex and Bedrock, with Dockerised FastAPI services on AWS.",
-      "Automated cloud infrastructure with Terraform and Terragrunt for repeatable multi-region enterprise deployments.",
+      "Architected and deployed the AI Board Scanner, an end-to-end diagram recognition system combining RF-DETR object detection, PaddleOCR text extraction, and SAM2 segmentation, achieving 0.83 mAP and 97% arrow-association accuracy against industry benchmarks.",
+      "Built dynamic binary mask pipelines and spatial algorithms using KD-trees, BFS skeletonisation, and colour and angle detection logic to extract complex graphs from diagrams with overlapping objects and OCR gaps.",
+      "Developed and dockerised FastAPI REST services for scalable deployment across AWS EC2 and S3, emitting structured JSON consumed by downstream frontend and enterprise integrations.",
+      "Automated cloud infrastructure with Terraform and Terragrunt, supporting consistent rollout of AI microservices across multiple enterprise regions.",
+      "Implemented CI/CD with GitHub Actions and Docker to streamline build, test, and deployment cycles across the AI backend.",
     ],
-    stack: ["RF-DETR", "SAM2", "PaddleOCR", "FastAPI", "AWS Bedrock", "Terraform", "Docker"],
+    stack: ["RF-DETR", "SAM2", "PaddleOCR", "PyTorch", "FastAPI", "Docker", "Terraform", "AWS"],
   },
   {
     company: "Gojins",
-    title: "MERN Stack Developer",
-    location: "Lahore",
-    period: "Aug 2024 — Jun 2025",
+    title: "Full-Stack Developer",
+    location: "Lahore, onsite",
+    period: "Aug 2024 / Jun 2025",
     summary:
-      "Production business platforms for real operators, with ML woven into the workflows rather than bolted on.",
+      "Production platforms for a UK enterprise client, with ML woven into workflows rather than bolted on.",
     points: [
-      "Built business management platforms and a real-time portfolio builder with custom domain support.",
-      "Shipped a full HRMS covering payroll, attendance, leave tracking, and performance analytics.",
-      "Integrated ML models for predictive diagnostics and workflow automation across the product suite.",
+      "Designed and built a comprehensive HRMS covering leave tracking, payroll, attendance, performance reviews, and analytics dashboards, backed by secure REST APIs, PostgreSQL, MongoDB, and JWT authentication.",
+      "Developed a real-time Portfolio Builder letting users create, update, and publish personal sites with live editing and custom domain support.",
+      "Engineered business management and equipment troubleshooting platforms on dual-database architectures combining PostgreSQL and MongoDB.",
+      "Integrated ML-driven logic for predictive diagnostics, smart recommendations, and adaptive workflow automation.",
+      "Maintained reliability through Jest unit and integration testing while shipping on tight Agile delivery cycles.",
     ],
-    stack: ["React", "Node.js", "Express", "MongoDB", "JWT", "REST APIs"],
+    stack: ["React", "Next.js", "Redux Toolkit", "Node.js", "Express", "PostgreSQL", "MongoDB", "Jest"],
   },
   {
     company: "UNAZ Legal Services",
     title: "Junior Software Developer",
-    location: "Nowshera",
-    period: "Jan 2024 — May 2024",
-    summary: "First production role — legal-sector internal tooling.",
+    location: "Hull, UK, remote",
+    period: "Oct 2023 / May 2024",
+    summary: "First production role, building internal tooling for legal professionals.",
     points: [
-      "Developed a lawyer case management application and a Zakat automation system.",
-      "Focused on async programming patterns, responsive UI, and scalable API design.",
+      "Built a Lawyer Case Management backend in Node.js handling document workflows, scheduling, case tracking, and client management.",
+      "Designed a Zakat Automation System with real-time analytics, a PostgreSQL data layer, and cross-module state via React Context API.",
+      "Applied async programming patterns to optimise notification delivery and case-tracking responsiveness across high-volume workflows.",
     ],
-    stack: ["React", "Node.js", "Context API"],
+    stack: ["Node.js", "React", "PostgreSQL", "REST APIs", "Context API"],
   },
 ];

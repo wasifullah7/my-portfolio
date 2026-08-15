@@ -31,7 +31,7 @@ function makeDotTexture() {
 type Props = { nodeColor: string; edgeColor: string };
 
 /**
- * A drifting constellation of nodes wired by proximity — a nod to the graph
+ * A drifting constellation of nodes wired by proximity, a nod to the graph
  * extraction work in the AI Board Scanner rather than a generic 3D object.
  * Topology is recomputed every frame into preallocated buffers, so nothing
  * allocates inside the render loop.
@@ -89,7 +89,7 @@ export function NodeGraph({ nodeColor, edgeColor }: Props) {
     };
   }, []);
 
-  // Theme changes recolor in place — no scene rebuild.
+  // Theme changes recolor in place, no scene rebuild.
   useEffect(() => {
     scene.pointMaterial.color.set(nodeColor);
     scene.lineMaterial.color.set(edgeColor);

@@ -1,116 +1,108 @@
-import { ArrowDown, ArrowUpRight } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/BrandIcons";
 import { site } from "@/content/site";
 import { HeroCanvas } from "@/components/three/HeroCanvas";
-import { TextReveal } from "@/components/motion/TextReveal";
+import { CharReveal } from "@/components/motion/CharReveal";
 import { Reveal } from "@/components/motion/Reveal";
-import { Magnetic } from "@/components/motion/MagneticButton";
+import { Counter } from "@/components/motion/Counter";
+import { cn } from "@/lib/utils";
 
 export function Hero() {
   return (
-    <section
-      id="home"
-      className="glow-field relative flex min-h-[100svh] items-center overflow-hidden pt-16"
-    >
-      <div className="absolute inset-0 bg-grid" aria-hidden />
+    <section id="home" className="relative min-h-[100svh] overflow-hidden pt-24">
       <HeroCanvas />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-5 sm:px-8">
-        <Reveal y={0}>
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/70 px-3 py-1 text-xs text-muted backdrop-blur">
-            <span className="relative flex size-1.5">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-70" />
-              <span className="relative inline-flex size-1.5 rounded-full bg-primary" />
-            </span>
-            {site.availability}
-          </span>
-        </Reveal>
+      <div className="relative z-10 mx-auto max-w-[1400px] px-6 sm:px-10">
+        <div className="grid gap-10 lg:grid-cols-[minmax(180px,220px)_1fr] lg:gap-16">
+          {/* Instrument readout column */}
+          <Reveal y={0} delay={0.9} className="order-2 lg:order-1 lg:pt-4">
+            <dl className="space-y-6">
+              {[
+                { term: "Currently", value: site.currentRole },
+                { term: "Based", value: site.location },
+                { term: "Status", value: site.locationNote },
+              ].map((item) => (
+                <div key={item.term} className="rule-t pt-3">
+                  <dt className="label">{item.term}</dt>
+                  <dd className="mono mt-1.5 text-sm text-ink">{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
 
-        <h1 className="mt-6 max-w-4xl text-[clamp(2.4rem,7vw,5rem)] font-semibold leading-[1.02] tracking-tight">
-          <TextReveal text={site.role} className="text-gradient" delay={0.1} />
-        </h1>
+          <div className="order-1 lg:order-2">
+            <h1 className="display text-[clamp(2.9rem,10.5vw,9.5rem)]">
+              <CharReveal lines={site.roleLines} delay={0.15} />
+            </h1>
 
-        <Reveal delay={0.45}>
-          <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-sm text-muted">
-            {site.disciplines.map((item, i) => (
-              <span key={item} className="flex items-center gap-3">
-                {i > 0 ? <span className="text-border">/</span> : null}
-                {item}
-              </span>
-            ))}
-          </p>
-        </Reveal>
+            <Reveal delay={0.75}>
+              <div className="rule-t mt-8 flex flex-wrap gap-x-8 gap-y-2 pt-4">
+                {site.disciplines.map((item) => (
+                  <span key={item} className="label text-ink/70">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </Reveal>
 
-        <Reveal delay={0.55}>
-          <p className="balance mt-7 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-            {site.tagline}
-          </p>
-        </Reveal>
+            <Reveal delay={0.85}>
+              <p className="measure mt-8 text-[1.0625rem] leading-[1.65] text-muted sm:text-lg">
+                {site.tagline}
+              </p>
+            </Reveal>
 
-        <Reveal delay={0.65}>
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <Magnetic>
-              <a
-                href="#work"
-                className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-white transition-shadow hover:shadow-[0_0_32px_-4px_var(--primary)]"
-              >
-                View selected work
-                <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            </Magnetic>
-            <Magnetic>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-6 py-3 text-sm font-medium backdrop-blur transition-colors hover:border-primary hover:text-primary"
-              >
-                Get in touch
-              </a>
-            </Magnetic>
-
-            <div className="ml-1 flex items-center gap-2">
-              <a
-                href={site.links.github}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub"
-                className="grid size-11 place-items-center rounded-full border border-border text-muted transition-colors hover:border-primary hover:text-primary"
-              >
-                <GithubIcon className="size-4" />
-              </a>
-              <a
-                href={site.links.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-                className="grid size-11 place-items-center rounded-full border border-border text-muted transition-colors hover:border-primary hover:text-primary"
-              >
-                <LinkedinIcon className="size-4" />
-              </a>
-            </div>
+            <Reveal delay={0.95}>
+              <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-4">
+                <a
+                  href="#work"
+                  className="group mono inline-flex items-center gap-3 border border-ink px-6 py-3 text-xs uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-ink hover:text-paper"
+                >
+                  Selected work
+                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                    &rarr;
+                  </span>
+                </a>
+                <a
+                  href="#contact"
+                  className="link-underline mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
+                >
+                  Get in touch
+                </a>
+                <a
+                  href={site.resumePath}
+                  download
+                  className="link-underline mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
+                >
+                  Résumé, PDF
+                </a>
+              </div>
+            </Reveal>
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal delay={0.8}>
-          <dl className="mt-16 grid max-w-2xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-3">
-            {site.stats.map((stat) => (
-              <div key={stat.label} className="bg-surface/70 px-5 py-4 backdrop-blur">
-                <dt className="text-2xl font-semibold tracking-tight text-foreground">
-                  {stat.value}
-                </dt>
-                <dd className="mt-0.5 text-xs text-muted">{stat.label}</dd>
+        {/* Measurement band */}
+        <Reveal delay={1.05}>
+          <div className="rule-t mt-16 grid grid-cols-2 lg:grid-cols-4">
+            {site.stats.map((stat, i) => (
+              <div
+                key={stat.label}
+                className={cn(
+                  "py-6 pr-6 sm:pr-10",
+                  i > 0 && "sm:pl-10 sm:border-l sm:border-rule",
+                  i >= 2 && "rule-t lg:border-t-0",
+                )}
+              >
+                <div className="tabular text-3xl font-medium tracking-tight text-accent sm:text-4xl">
+                  <Counter
+                    value={stat.value}
+                    decimals={stat.decimals}
+                    suffix={stat.suffix}
+                  />
+                </div>
+                <div className="label mt-2 leading-relaxed">{stat.label}</div>
               </div>
             ))}
-          </dl>
+          </div>
         </Reveal>
       </div>
-
-      <a
-        href="#about"
-        aria-label="Scroll to about"
-        className="absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 text-muted transition-colors hover:text-primary md:block"
-      >
-        <ArrowDown className="size-5 animate-bounce" />
-      </a>
     </section>
   );
 }

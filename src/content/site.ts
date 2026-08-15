@@ -1,19 +1,23 @@
 export const site = {
   name: "Wasif Ullah",
   role: "Full-Stack AI Engineer",
+  roleLines: ["Full-Stack", "AI Engineer"],
   disciplines: ["Computer Vision", "LLM Engineering", "Cloud Infrastructure"],
   tagline:
-    "I build AI systems that hold up in production — vision pipelines, retrieval-augmented agents, and the cloud infrastructure that keeps them running.",
+    "I build AI systems that survive production: vision pipelines that read engineering drawings, retrieval agents that answer from real documents, and the backend infrastructure that keeps both running. Two years shipping for clients across the UK, EU, and US.",
   bio: [
-    "I'm a software engineer working at the seam between machine learning and production web systems. Today I build enterprise AI at Strateger AI, where I lead the AI Board Scanner — a diagram-recognition pipeline that turns engineering drawings into structured graphs using RF-DETR detection, PaddleOCR, and SAM2 segmentation.",
-    "Before that I shipped production MERN platforms at Gojins and UNAZ Legal Services: business management systems, a real-time portfolio builder with custom domains, and a full HRMS handling payroll, attendance, and performance analytics.",
-    "What ties it together is a preference for systems that actually survive contact with real data — measured with real metrics, containerised, and deployed on infrastructure I can reason about.",
+    "I work at the seam between machine learning and production web systems. At Strateger AI I architected the AI Board Scanner, an end-to-end pipeline that reads engineering diagrams and rebuilds them as structured JSON using RF-DETR detection, PaddleOCR, and SAM2 segmentation.",
+    "The hard part was never the model. It was the spatial reasoning around it: binary mask pipelines, KD-trees, and BFS skeletonisation that resolve which arrow connects which pair of nodes when objects overlap and OCR drops characters.",
+    "Before that I built production platforms at Gojins and UNAZ Legal Services for UK enterprise clients: a full HRMS covering payroll, attendance and performance analytics, a real-time portfolio builder with custom domains, and legal case management systems.",
+    "What ties it together is a bias toward systems that survive contact with real data. Measured against real benchmarks, containerised, tested, and deployed on infrastructure I can reason about at 3am.",
   ],
-  location: "Pakistan",
+  location: "Lahore, Pakistan",
+  locationNote: "Open to remote",
   email: "wasif.wwez@gmail.com",
   phone: "+92 318 9340438",
   phoneHref: "+923189340438",
   availability: "Open to AI engineering and full-stack roles",
+  currentRole: "Strateger AI",
   url: "https://v0-professional-portfolio-website-one-kappa.vercel.app",
   resumePath: "/resume.pdf",
   links: {
@@ -24,24 +28,39 @@ export const site = {
   education: {
     degree: "BSc (Hons) Computer Science",
     school: "University of Engineering & Technology, Mardan",
-    period: "2021 — 2025",
+    period: "Sep 2021 / May 2025",
+    detail: "GPA 3.0 / 4.0",
   },
   certifications: [
-    { name: "Web Development Specialization", issuer: "Vanderbilt University" },
-    { name: "Computer Vision Expert", issuer: "DeepLearning.AI" },
-    { name: "Applied Machine Learning", issuer: "LinkedIn Learning" },
+    {
+      name: "Computer Vision Specialization",
+      issuer: "DeepLearning.AI",
+      date: "Oct 2025",
+    },
+    {
+      name: "Applied Machine Learning: Algorithms",
+      issuer: "LinkedIn Learning",
+      date: "Apr 2024",
+    },
+    {
+      name: "Web Development Specialization",
+      issuer: "Vanderbilt University",
+      date: "Jan 2023",
+    },
   ],
+  /** Rendered as an instrument readout. `value` animates, `suffix` does not. */
   stats: [
-    { value: "0.83", label: "mAP on diagram detection" },
-    { value: "97%", label: "arrow-association accuracy" },
-    { value: "3", label: "production teams shipped for" },
+    { value: 0.83, decimals: 2, suffix: "", label: "mAP, diagram detection" },
+    { value: 97, decimals: 0, suffix: "%", label: "arrow association accuracy" },
+    { value: 89, decimals: 0, suffix: "%", label: "RAG recommendation accuracy" },
+    { value: 3, decimals: 0, suffix: "", label: "regions shipped to: UK, EU, US" },
   ],
 } as const;
 
 export const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Experience", href: "#experience" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "#about", index: "01" },
+  { label: "Stack", href: "#skills", index: "02" },
+  { label: "Experience", href: "#experience", index: "03" },
+  { label: "Work", href: "#work", index: "04" },
+  { label: "Contact", href: "#contact", index: "05" },
 ] as const;

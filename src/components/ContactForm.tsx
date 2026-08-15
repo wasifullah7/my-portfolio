@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import { site } from "@/content/site";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState("");
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -27,7 +26,7 @@ export function ContactForm() {
       const body = (await response.json()) as { error?: string };
 
       if (!response.ok) {
-        setError(body.error ?? "Something went wrong. Please email me directly.");
+        setError(body.error ?? "Something went wrong. Please email me directly at");
         setStatus("error");
         return;
       }
@@ -35,23 +34,21 @@ export function ContactForm() {
       form.reset();
       setStatus("sent");
     } catch {
-      setError("Network error. Please email me directly.");
+      setError("Network error. Please email me directly at");
       setStatus("error");
     }
   }
 
   if (status === "sent") {
     return (
-      <div className="card flex flex-col items-start gap-3 rounded-2xl p-8">
-        <CheckCircle2 className="size-6 text-primary" />
-        <h3 className="text-lg font-medium">Message sent</h3>
-        <p className="text-sm text-muted">
-          Thanks for reaching out — I&apos;ll reply to you shortly.
-        </p>
+      <div className="rule-t pt-6">
+        <p className="label text-accent">Sent</p>
+        <p className="mt-4 text-lg text-ink">Thanks for reaching out.</p>
+        <p className="mt-2 text-sm text-muted">I will reply shortly.</p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-2 text-sm text-primary hover:underline"
+          className="link-underline mono mt-6 text-xs uppercase tracking-[0.16em] text-muted hover:text-ink"
         >
           Send another
         </button>
@@ -60,20 +57,20 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="card rounded-2xl p-6 sm:p-8">
-      {/* Honeypot — hidden from people, tempting to bots. */}
+    <form onSubmit={onSubmit}>
+      {/* Honeypot: hidden from people, tempting to bots. */}
       <div aria-hidden className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
         <label htmlFor="company">Company</label>
         <input id="company" name="company" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-x-10 sm:grid-cols-2">
         <Field label="Name" name="name" placeholder="Your name" />
         <Field label="Email" name="email" type="email" placeholder="you@company.com" />
       </div>
 
-      <div className="mt-4">
-        <label htmlFor="message" className="text-sm font-medium">
+      <div className="rule-t mt-8 pt-4">
+        <label htmlFor="message" className="label">
           Message
         </label>
         <textarea
@@ -83,36 +80,28 @@ export function ContactForm() {
           minLength={10}
           rows={5}
           placeholder="What are you building?"
-          className="mt-2 w-full resize-y rounded-xl border border-border bg-surface-2 px-3.5 py-2.5 text-sm outline-none transition-colors placeholder:text-muted/70 focus:border-primary"
+          className="mt-3 w-full resize-y bg-transparent text-[0.9375rem] text-ink outline-none placeholder:text-faint"
         />
       </div>
 
       {status === "error" ? (
-        <p className="mt-4 flex items-start gap-2 rounded-xl border border-border bg-surface-2 p-3 text-sm text-muted">
-          <AlertCircle className="mt-0.5 size-4 shrink-0 text-primary" />
-          <span>
-            {error}{" "}
-            <a href={`mailto:${site.email}`} className="text-primary hover:underline">
-              {site.email}
-            </a>
-          </span>
+        <p className="rule-t mt-6 pt-4 text-sm text-muted">
+          {error}{" "}
+          <a href={`mailto:${site.email}`} className="link-underline text-accent">
+            {site.email}
+          </a>
         </p>
       ) : null}
 
       <button
         type="submit"
         disabled={status === "sending"}
-        className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-white transition-shadow hover:shadow-[0_0_28px_-6px_var(--primary)] disabled:opacity-60"
+        className="group mono mt-10 inline-flex items-center gap-3 border border-ink px-7 py-3.5 text-xs uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-ink hover:text-paper disabled:opacity-50"
       >
-        {status === "sending" ? (
-          <>
-            <Loader2 className="size-4 animate-spin" /> Sending…
-          </>
-        ) : (
-          <>
-            Send message <Send className="size-4" />
-          </>
-        )}
+        {status === "sending" ? "Sending" : "Send message"}
+        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+          &rarr;
+        </span>
       </button>
     </form>
   );
@@ -130,8 +119,8 @@ function Field({
   placeholder?: string;
 }) {
   return (
-    <div>
-      <label htmlFor={name} className="text-sm font-medium">
+    <div className="rule-t pt-4">
+      <label htmlFor={name} className="label">
         {label}
       </label>
       <input
@@ -140,7 +129,7 @@ function Field({
         type={type}
         required
         placeholder={placeholder}
-        className="mt-2 w-full rounded-xl border border-border bg-surface-2 px-3.5 py-2.5 text-sm outline-none transition-colors placeholder:text-muted/70 focus:border-primary"
+        className="mt-3 w-full bg-transparent text-[0.9375rem] text-ink outline-none placeholder:text-faint"
       />
     </div>
   );

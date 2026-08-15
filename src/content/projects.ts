@@ -8,7 +8,7 @@ export type Project = {
   stack: string[];
   metrics?: { value: string; label: string }[];
   image?: string;
-  /** Rendered only when present — this is what prevents dead "Code" buttons. */
+  /** Rendered only when present. This is what prevents dead "Source" buttons. */
   repoUrl?: string;
   demoUrl?: string;
 };
@@ -17,16 +17,16 @@ export const projects: Project[] = [
   {
     slug: "ai-board-scanner",
     title: "AI Board Scanner",
-    context: "Strateger AI · Production",
-    year: "2025 — present",
+    context: "Strateger AI / Production",
+    year: "2025",
     blurb:
-      "A diagram-recognition pipeline that reads engineering drawings and rebuilds them as structured, queryable graphs.",
+      "A diagram-recognition pipeline that reads engineering drawings and emits them as structured JSON.",
     highlights: [
-      "RF-DETR detection combined with PaddleOCR text extraction and SAM2 segmentation to isolate every node and connector.",
-      "Binary-mask pipeline using KD-trees, skeletonisation, and spatial heuristics to resolve which arrow connects which pair of nodes.",
-      "Dockerised FastAPI service deployed to AWS, with Terraform-managed infrastructure across regions.",
+      "RF-DETR object detection combined with PaddleOCR text extraction and SAM2 segmentation to isolate every node and connector.",
+      "Binary mask pipelines using KD-trees, BFS skeletonisation, and colour and angle heuristics to resolve which arrow connects which pair of nodes, even with overlapping objects and OCR gaps.",
+      "Dockerised FastAPI services on AWS EC2 and S3, with GitHub Actions CI/CD and Terraform-managed infrastructure across enterprise regions.",
     ],
-    stack: ["RF-DETR", "SAM2", "PaddleOCR", "Python", "FastAPI", "Docker", "AWS"],
+    stack: ["RF-DETR", "SAM2", "PaddleOCR", "PyTorch", "FastAPI", "Docker", "AWS", "Terraform"],
     metrics: [
       { value: "0.83", label: "mAP" },
       { value: "97%", label: "arrow association" },
@@ -39,40 +39,20 @@ export const projects: Project[] = [
     context: "Q-volution Hackathon",
     year: "2026",
     blurb:
-      "Quantum optimisation for power-grid resilience — QAOA run on real quantum hardware to cut blackout exposure.",
+      "Quantum optimisation for power-grid resilience, running QAOA on real quantum hardware to cut blackout exposure.",
     highlights: [
       "Applied the Quantum Approximate Optimization Algorithm to Max-Cut over electricity distribution networks.",
-      "Introduced light-cone decomposition as quantum preconditioning, partitioning large grids into subgraphs that fit hardware limits — a ~10× speedup over standard QAOA.",
+      "Introduced light-cone decomposition as quantum preconditioning, partitioning large grids into subgraphs that fit hardware limits for roughly a 10x speedup over standard QAOA.",
       "Executed against Rigetti's 84-qubit Ankaa-3 QPU via PyQuil and Quantum Cloud Services, with an interactive dashboard for circuits, measurements, and sustainability metrics.",
     ],
     stack: ["React", "TypeScript", "PyQuil", "Rigetti Ankaa-3", "QAOA", "Vite"],
     metrics: [
       { value: "84", label: "qubit QPU" },
-      { value: "10×", label: "speedup vs. standard QAOA" },
+      { value: "10x", label: "speedup vs standard QAOA" },
     ],
     image: "/projects/eleqtric.webp",
     repoUrl: "https://github.com/wasifullah7/Q-volution-Hackathon",
     demoUrl: "https://q-volution-hackathon-theta.vercel.app/",
-  },
-  {
-    slug: "document-intelligence-pipeline",
-    title: "Document Intelligence Pipeline",
-    context: "Open source",
-    year: "2026",
-    blurb:
-      "Fully offline document understanding — ingest, classify, extract, and semantically search PDFs with no cloud dependency.",
-    highlights: [
-      "Text extraction with PyMuPDF, zero-shot classification via DeBERTa-v3, and field extraction combining regex with spaCy NER.",
-      "Semantic search over documents using bge-small-en-v1.5 embeddings stored in ChromaDB.",
-      "Runs CPU-only in ~287 MB of models, exposed through a FastAPI service with Swagger docs — deployable where data can't leave the building.",
-    ],
-    stack: ["Python", "FastAPI", "ChromaDB", "spaCy", "Transformers", "PyMuPDF"],
-    metrics: [
-      { value: "3", label: "document types" },
-      { value: "0", label: "cloud calls" },
-    ],
-    image: "/projects/document-intelligence.webp",
-    repoUrl: "https://github.com/wasifullah7/document-intelligence-pipeline",
   },
   {
     slug: "ai-career-coach",
@@ -80,28 +60,50 @@ export const projects: Project[] = [
     context: "Independent",
     year: "2025",
     blurb:
-      "A job recommendation engine built on retrieval-augmented generation over real labour-market data.",
+      "A job recommendation engine built on retrieval-augmented generation over live labour-market data.",
     highlights: [
-      "RAG pipeline backed by a Pinecone vector database for semantic matching between candidate profiles and postings.",
-      "Trained and evaluated against Dice.com job-market data, reaching 89% predictive accuracy.",
+      "RAG pipeline backed by a Pinecone vector database, matching candidate profiles to postings by embedding similarity rather than keyword overlap.",
+      "Evaluated against live job-market data, reaching 89% predictive accuracy.",
+      "Served through a FastAPI REST layer with LangChain orchestrating retrieval and generation.",
     ],
-    stack: ["RAG", "Pinecone", "Python", "LLM"],
+    stack: ["FastAPI", "LangChain", "Pinecone", "Python", "REST API"],
     metrics: [{ value: "89%", label: "predictive accuracy" }],
     image: "/projects/ai-career-coach.webp",
   },
   {
-    slug: "llm-finetuning",
-    title: "LLM Fine-tuning & Deployment",
-    context: "Strateger AI",
-    year: "2025",
+    slug: "document-intelligence-pipeline",
+    title: "Document Intelligence Pipeline",
+    context: "Open source",
+    year: "2026",
     blurb:
-      "Fine-tuned conversational models and the automated pipeline that trains and ships them.",
+      "Fully offline document understanding: ingest, classify, extract, and semantically search PDFs with no cloud dependency.",
     highlights: [
-      "Fine-tuned models on the EmpatheticDialogues dataset for higher-quality conversational tone.",
-      "Automated the training pipeline and deployed via Amazon Bedrock, Lex, and Lambda.",
+      "Text extraction with PyMuPDF, zero-shot classification via DeBERTa-v3, and field extraction combining regex with spaCy NER.",
+      "Semantic search using bge-small-en-v1.5 embeddings stored in ChromaDB.",
+      "Runs CPU-only in roughly 287 MB of models behind a FastAPI service, deployable where data cannot leave the building.",
     ],
-    stack: ["Amazon Bedrock", "AWS Lambda", "Amazon Lex", "Python"],
-    image: "/projects/llm-finetuning.webp",
+    stack: ["Python", "FastAPI", "ChromaDB", "spaCy", "Transformers", "PyMuPDF"],
+    metrics: [
+      { value: "287MB", label: "total model size" },
+      { value: "0", label: "cloud calls" },
+    ],
+    image: "/projects/document-intelligence.webp",
+    repoUrl: "https://github.com/wasifullah7/document-intelligence-pipeline",
+  },
+  {
+    slug: "hrms-platform",
+    title: "HRMS Platform",
+    context: "Gojins / UK enterprise client",
+    year: "2024",
+    blurb:
+      "End-to-end human resource management covering payroll, leave, attendance, performance reviews, and analytics.",
+    highlights: [
+      "Secure REST APIs with JWT authentication over a dual-database architecture combining PostgreSQL and MongoDB.",
+      "Analytics dashboards surfacing attendance and performance trends for HR teams rather than raw tables.",
+      "Shipped alongside a real-time Portfolio Builder with live editing and custom domain support.",
+    ],
+    stack: ["React", "Next.js", "Redux Toolkit", "Node.js", "Express", "PostgreSQL", "MongoDB", "JWT"],
+    image: "/projects/hrms.webp",
   },
   {
     slug: "psl-recognition",
@@ -109,12 +111,12 @@ export const projects: Project[] = [
     context: "Final Year Project",
     year: "2025",
     blurb:
-      "A GAN-based system for assistive communication, generating and recognising Pakistani Sign Language.",
+      "A GAN-based system for real-time image recognition of Pakistani Sign Language, built for assistive communication.",
     highlights: [
-      "GAN architecture reaching 85% accuracy on sign-language image generation.",
-      "Built a custom dataset and image-processing pipeline that lifted model performance by 20%.",
+      "Generative Adversarial Network trained for real-time image-based sign recognition.",
+      "Custom dataset and image-processing pipeline that lifted model performance by 20%.",
     ],
-    stack: ["TensorFlow", "GAN", "OpenCV", "Python"],
+    stack: ["PyTorch", "OpenCV", "GAN", "Python"],
     metrics: [{ value: "85%", label: "accuracy" }],
     image: "/projects/psl.webp",
   },
@@ -128,7 +130,7 @@ export type EarlierWork = {
 
 export const earlierWork: EarlierWork[] = [
   {
-    title: "Rock–Paper–Scissors Classifier",
+    title: "Rock-Paper-Scissors Classifier",
     note: "CNN gesture recognition, 92% accuracy",
     repoUrl: "https://github.com/wasifullah7/Rock_Paper_scissor",
   },
