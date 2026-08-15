@@ -266,6 +266,40 @@ html.lenis body {
   height: auto;
   border: 1px solid var(--rule);
 }
+.prose svg {
+  display: block;
+  color: var(--ink);
+  margin: 2.5em 0;
+}
+/* Wide tables scroll inside themselves rather than pushing the page sideways. */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.prose th,
+.prose td {
+  text-align: left;
+  padding: 0.6em 1em 0.6em 0;
+  border-bottom: 1px solid var(--rule);
+}
+.prose th {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  font-weight: 500;
+}
+.prose td {
+  color: var(--muted);
+}
+.prose td strong {
+  color: var(--ink);
+}
 .prose figure {
   margin-top: 2em;
   margin-bottom: 2em;

@@ -6,6 +6,8 @@ import { marked } from "marked";
 export type Post = {
   slug: string;
   title: string;
+  /** Short title for the <title> tag, so long headlines never truncate in results. */
+  metaTitle?: string;
   date: string;
   excerpt: string;
   tags: string[];
@@ -49,6 +51,7 @@ function readLocal(): Post[] {
       return {
         slug: (data.slug as string) ?? file.replace(/\.md$/, ""),
         title: (data.title as string) ?? file.replace(/\.md$/, ""),
+        metaTitle: (data.metaTitle as string) || undefined,
         date: new Date(data.date ?? Date.now()).toISOString(),
         excerpt: (data.excerpt as string) ?? "",
         tags: (data.tags as string[]) ?? [],

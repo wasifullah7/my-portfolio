@@ -17,6 +17,7 @@ export async function generateMetadata(
 
   // Google truncates around 60 chars, and the template appends " · Wasif Ullah".
   const shortTitle = (() => {
+    if (post.metaTitle) return post.metaTitle;
     const head = post.title.split(":")[0].trim();
     if (head.length <= 44) return head;
     const cut = head.slice(0, 44);
