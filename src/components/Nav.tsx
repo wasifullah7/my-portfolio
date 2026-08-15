@@ -65,6 +65,21 @@ export function Nav() {
           ))}
         </div>
 
+        <div className="hidden items-center gap-6 md:flex">
+          <Link
+            href="/blog"
+            className="mono text-xs uppercase tracking-[0.14em] text-muted transition-colors hover:text-ink"
+          >
+            Writing
+          </Link>
+          <Link
+            href="/hire"
+            className="mono border border-ink px-3.5 py-1.5 text-xs uppercase tracking-[0.14em] transition-colors duration-300 hover:bg-ink hover:text-paper"
+          >
+            Hire me
+          </Link>
+        </div>
+
         <div className="flex items-center gap-6">
           <ThemeToggle />
           <a
@@ -99,6 +114,22 @@ export function Nav() {
               {item.label}
             </a>
           ))}
+          <Link
+            href="/blog"
+            onClick={() => setOpen(false)}
+            className="mono flex items-baseline gap-3 border-b border-rule py-3.5 text-xs uppercase tracking-[0.14em] text-muted"
+          >
+            <span className="tabular text-[0.625rem] text-faint">06</span>
+            Writing
+          </Link>
+          <Link
+            href="/hire"
+            onClick={() => setOpen(false)}
+            className="mono flex items-baseline gap-3 py-3.5 text-xs uppercase tracking-[0.14em] text-accent"
+          >
+            <span className="tabular text-[0.625rem] text-faint">07</span>
+            Hire me
+          </Link>
         </div>
       ) : null}
     </header>

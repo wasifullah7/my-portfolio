@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Project } from "@/content/projects";
 import { ProjectMedia } from "./ProjectMedia";
 import { ClipReveal } from "./motion/ClipReveal";
@@ -65,17 +66,26 @@ export function ProjectEntry({ project, index }: { project: Project; index: numb
         </ul>
 
         <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+          {project.problem ? (
+            <Link
+              href={`/work/${project.slug}`}
+              className="group mono inline-flex items-center gap-2 border border-ink px-5 py-2.5 text-[0.6875rem] uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-ink hover:text-paper"
+            >
+              Case study
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </Link>
+          ) : null}
+
           {project.demoUrl ? (
             <a
               href={project.demoUrl}
               target="_blank"
               rel="noreferrer"
-              className="group mono inline-flex items-center gap-2 border border-ink px-5 py-2.5 text-[0.6875rem] uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-ink hover:text-paper"
+              className="link-underline mono text-[0.6875rem] uppercase tracking-[0.16em] text-accent"
             >
               Live demo
-              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-                &rarr;
-              </span>
             </a>
           ) : null}
 

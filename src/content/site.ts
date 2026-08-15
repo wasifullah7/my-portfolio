@@ -68,6 +68,63 @@ export const site = {
   ],
 } as const;
 
+/**
+ * Recruiter-facing content for /hire.
+ * Review and edit these before sharing widely: the FAQ answers are written to
+ * be safe and general, not to speak for you on notice period or salary.
+ * Set bookingUrl to a Cal.com or Calendly link to turn on the booking button.
+ */
+export const hire = {
+  headline: "Hiring for an AI engineering role?",
+  lead: "Here is everything a recruiter usually asks, answered up front, plus the fastest way to reach me.",
+  bookingUrl: "",
+  lookingFor: [
+    "Full-stack AI engineering, where the model and the product are the same job",
+    "Computer vision and retrieval systems that run in production, not notebooks",
+    "Remote-first teams, or onsite in Lahore",
+  ],
+  strengths: [
+    {
+      title: "Measured, not claimed",
+      body: "0.83 mAP on diagram detection, 97% arrow association, voice latency cut from 1.8s to under 300ms. Every number on this site comes from a shipped system.",
+    },
+    {
+      title: "The whole path to production",
+      body: "Model work through to dockerised FastAPI services, Terraform infrastructure and GitHub Actions pipelines. I do not hand off at the notebook.",
+    },
+    {
+      title: "Written down",
+      body: "Ten published engineering write-ups on latency, concurrency and retrieval. If you want to know how I think before you interview me, it is already public.",
+    },
+  ],
+  faqs: [
+    {
+      q: "What kind of roles are you looking for?",
+      a: "Full-stack AI engineering: computer vision, retrieval-augmented systems, and the backend infrastructure around them. Remote-first, or onsite in Lahore. Open to both permanent roles and contract work.",
+    },
+    {
+      q: "What do you actually build?",
+      a: "Production AI systems. Recent work includes a diagram recognition pipeline using RF-DETR, PaddleOCR and SAM2 reaching 0.83 mAP, and real-time voice agents cut from 1.8 seconds of latency to under 300ms using Twilio, LiveKit and vLLM.",
+    },
+    {
+      q: "Have you worked with international teams?",
+      a: "Yes. I have shipped for clients across the UK, EU and US, working in Agile cross-functional teams on tight delivery cycles, including a fully remote role for a UK company.",
+    },
+    {
+      q: "What is your core stack?",
+      a: "Python and FastAPI on the backend, PyTorch for vision, React and Next.js on the frontend, PostgreSQL and MongoDB for data, and AWS with Docker and Terraform for infrastructure.",
+    },
+    {
+      q: "How soon could you start?",
+      a: "It depends on notice, so email me with the role and timeline and I will give you exact dates rather than a guess.",
+    },
+    {
+      q: "Can I see code?",
+      a: "Yes. Several projects link straight to their repositories, and my GitHub activity is shown live on this site. Employer work is proprietary, but I am happy to walk through the architecture in a call.",
+    },
+  ],
+} as const;
+
 export const navItems = [
   { label: "About", href: "#about", index: "01" },
   { label: "Stack", href: "#skills", index: "02" },

@@ -11,6 +11,12 @@ export type Project = {
   /** Rendered only when present. This is what prevents dead "Source" buttons. */
   repoUrl?: string;
   demoUrl?: string;
+  /** Case-study detail for /work/[slug]. Pages render only when present. */
+  problem?: string;
+  approach?: string[];
+  outcome?: string;
+  /** Slugs from src/content/posts, for internal linking between work and writing. */
+  relatedPosts?: string[];
 };
 
 export const projects: Project[] = [
@@ -32,6 +38,52 @@ export const projects: Project[] = [
       { value: "97%", label: "arrow association" },
     ],
     image: "/projects/ai-board-scanner.webp",
+    problem:
+      "Enterprise engineering diagrams carry their meaning in structure: which box connects to which, in what direction. Off-the-shelf OCR returns floating text with no topology, and object detection returns boxes with no relationships. Neither answers the question the business actually asks, which is what does this diagram say.",
+    approach: [
+      "Detect every node and connector with RF-DETR, then read embedded text with PaddleOCR and isolate shapes with SAM2 segmentation.",
+      "Reconstruct topology from the detections: binary mask pipelines, KD-tree nearest-neighbour search, and BFS skeletonisation to trace each arrow from tail to head.",
+      "Resolve ambiguity with colour and angle heuristics where objects overlap or OCR drops characters, which is the normal case rather than the exception.",
+      "Serve the result as structured JSON from a dockerised FastAPI service on AWS EC2 and S3, with GitHub Actions CI/CD and Terraform-managed infrastructure across regions.",
+    ],
+    outcome:
+      "0.83 mAP on detection and 97% arrow-association accuracy against industry benchmarks, with output consumed directly by downstream frontend and enterprise integrations.",
+  },
+  {
+    slug: "voice-ai-platform",
+    title: "Production Voice AI Platform",
+    context: "Production deployment",
+    year: "2026",
+    blurb:
+      "Real-time telephony voice agents cut from 1.8 seconds of latency to under 300ms, with hybrid retrieval answering from a live industrial catalogue.",
+    highlights: [
+      "Replaced rigid IVR call flows with autonomous agents built on Twilio and LiveKit, streaming audio over WebSockets rather than request-response turns.",
+      "Built hybrid retrieval combining pgvector similarity with BM25 keyword search behind async FastAPI, returning grounded answers in under 150ms.",
+      "Tuned vLLM across a 3-node, 6-GPU cluster (A4500 and A100) serving a Qwen conversational model under high concurrency.",
+    ],
+    stack: ["LiveKit", "Twilio", "WebRTC", "vLLM", "FastAPI", "pgvector", "Python"],
+    metrics: [
+      { value: "300ms", label: "end-to-end latency, from 1.8s" },
+      { value: "150ms", label: "hybrid RAG retrieval" },
+    ],
+    image: "/projects/voice-ai.webp",
+    problem:
+      "A voice agent that takes 1.8 seconds to answer is unusable. Humans read that pause as the line going dead and start talking over it. Every component in the chain, speech recognition, retrieval, inference and speech synthesis, has to be measured and cut, because latency is the product.",
+    approach: [
+      "Profile the full turn rather than guessing, then attack the largest segment first instead of micro-optimising the model.",
+      "Stream over Twilio WebSockets so audio moves continuously rather than in discrete request-response turns.",
+      "Combine pgvector semantic search with BM25 keyword matching, because catalogue queries contain part numbers that embeddings alone handle badly.",
+      "Tune vLLM batching and concurrency across the GPU cluster so throughput holds up when many calls arrive at once.",
+    ],
+    outcome:
+      "End-to-end response under 300ms, down from 1.8 seconds, with retrieval consistently under 150ms. The work is documented in detail across five engineering write-ups.",
+    relatedPosts: [
+      "how-i-reduced-voice-ai-latency-from-18-seconds-to-under",
+      "architecting-sub-150ms-hybrid-rag-for-voice-agents",
+      "beyond-the-sandbox",
+      "how-i-optimized-vllm-for-high-concurrency-in-a-production",
+      "from-call-flows-to-autonomous-agents",
+    ],
   },
   {
     slug: "eleqtric",
@@ -53,6 +105,16 @@ export const projects: Project[] = [
     image: "/projects/eleqtric.webp",
     repoUrl: "https://github.com/wasifullah7/Q-volution-Hackathon",
     demoUrl: "https://q-volution-hackathon-theta.vercel.app/",
+    problem:
+      "Partitioning a power grid to minimise blackout cascade is a Max-Cut problem, which is NP-hard and grows intractable fast. Quantum hardware is theoretically suited to it, but real QPUs have too few qubits and too much noise to take a full grid graph directly.",
+    approach: [
+      "Formulate grid partitioning as Max-Cut and solve with the Quantum Approximate Optimization Algorithm.",
+      "Apply light-cone decomposition as a preconditioning step, splitting the graph into subgraphs small enough to fit hardware limits while preserving the structure that matters.",
+      "Execute against Rigetti's 84-qubit Ankaa-3 QPU through PyQuil and Quantum Cloud Services rather than a simulator.",
+      "Surface circuits, measurement distributions and sustainability metrics in an interactive React dashboard so the result is inspectable, not a black box.",
+    ],
+    outcome:
+      "Roughly a 10x speedup over standard QAOA on the same problems, running on real quantum hardware with a live public demo.",
   },
   {
     slug: "ai-career-coach",
@@ -89,6 +151,16 @@ export const projects: Project[] = [
     ],
     image: "/projects/document-intelligence.webp",
     repoUrl: "https://github.com/wasifullah7/document-intelligence-pipeline",
+    problem:
+      "Plenty of organisations cannot send documents to a cloud API: legal, medical and financial records carry data that is not allowed to leave the building. That rules out most document-understanding tooling, which assumes an internet round trip.",
+    approach: [
+      "Extract text with PyMuPDF, then classify document type with zero-shot DeBERTa-v3 so new categories need no retraining.",
+      "Pull structured fields with regex where the format is rigid and spaCy NER where it is not.",
+      "Index bge-small-en-v1.5 embeddings in ChromaDB for semantic search across the whole corpus.",
+      "Keep the entire model set under 300 MB and CPU-only, so it runs on ordinary hardware behind a firewall.",
+    ],
+    outcome:
+      "Invoices, resumes and utility bills parsed to structured JSON with zero cloud calls, exposed through a FastAPI service with Swagger docs.",
   },
   {
     slug: "hrms-platform",
@@ -119,6 +191,7 @@ export const projects: Project[] = [
     stack: ["PyTorch", "OpenCV", "GAN", "Python"],
     metrics: [{ value: "85%", label: "accuracy" }],
     image: "/projects/psl.webp",
+    relatedPosts: ["building-a-text-to-sign-language-for-pakistani-urdu"],
   },
 ];
 
