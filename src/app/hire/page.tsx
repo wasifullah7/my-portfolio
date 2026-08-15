@@ -8,7 +8,7 @@ import { Reveal } from "@/components/motion/Reveal";
 export const metadata: Metadata = {
   title: "Hire Wasif Ullah",
   description:
-    "Full-Stack AI Engineer available for AI engineering and full-stack roles. Computer vision, RAG and production backends, with measured results and published write-ups.",
+    "Full-Stack AI Engineer in Lahore, open to AI engineering roles. Computer vision, RAG and production backends, with measured results.",
   alternates: { canonical: "/hire" },
 };
 

@@ -7,7 +7,8 @@ import { projects } from "@/content/projects";
 
 export const metadata: Metadata = {
   title: "Résumé",
-  description: `Résumé of ${site.name}, ${site.role}. Experience, skills, projects, and education.`,
+  description: `Résumé of ${site.name}, ${site.role} in ${site.location}. Computer vision, RAG and production backend experience, skills, projects and education.`,
+  alternates: { canonical: "/resume" },
 };
 
 /**

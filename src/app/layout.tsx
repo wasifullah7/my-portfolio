@@ -18,12 +18,12 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const description = `${site.role} building computer-vision pipelines, RAG systems, and the cloud infrastructure behind them. Currently at Strateger AI.`;
+const description = `${site.name} is a ${site.role} in ${site.location}, building computer-vision pipelines, RAG systems and production backends. Currently at Strateger AI.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name}, ${site.role}`,
+    default: `${site.name}, ${site.role}, Computer Vision & RAG`,
     template: `%s · ${site.name}`,
   },
   description,
@@ -39,7 +39,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    types: { "application/rss+xml": `${site.url}/blog/rss.xml` },
+  },
   openGraph: {
     type: "website",
     url: site.url,

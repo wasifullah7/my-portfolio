@@ -15,16 +15,29 @@ export async function generateMetadata(
   const post = getPost(slug);
   if (!post) return {};
 
+  // Google truncates around 60 chars, and the template appends " · Wasif Ullah".
+  const shortTitle = (() => {
+    const head = post.title.split(":")[0].trim();
+    if (head.length <= 44) return head;
+    const cut = head.slice(0, 44);
+    return cut.slice(0, cut.lastIndexOf(" "));
+  })();
+
+  const shortDesc =
+    post.excerpt.length <= 155
+      ? post.excerpt
+      : post.excerpt.slice(0, post.excerpt.slice(0, 155).lastIndexOf(" ")) + "…";
+
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: shortTitle,
+    description: shortDesc,
     keywords: post.tags,
     // Deliberate: Medium published these first and keeps the ranking credit.
     alternates: { canonical: post.canonicalUrl },
     openGraph: {
       type: "article",
       title: post.title,
-      description: post.excerpt,
+      description: shortDesc,
       publishedTime: post.date,
       authors: [site.name],
       tags: post.tags,
@@ -33,7 +46,7 @@ export async function generateMetadata(
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.excerpt,
+      description: shortDesc,
     },
   };
 }

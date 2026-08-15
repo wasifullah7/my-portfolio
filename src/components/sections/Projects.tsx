@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { projects, earlierWork } from "@/content/projects";
 import { site } from "@/content/site";
 import { ProjectEntry } from "@/components/ProjectEntry";
@@ -47,14 +48,22 @@ export function Projects() {
           </ul>
           <div className="rule-t" />
 
-          <a
-            href={site.links.github}
-            target="_blank"
-            rel="noreferrer"
-            className="link-underline mono mt-8 inline-block text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
-          >
-            All repositories on GitHub
-          </a>
+          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+            <Link
+              href="/work"
+              className="link-underline mono text-xs uppercase tracking-[0.16em] text-accent"
+            >
+              All case studies
+            </Link>
+            <a
+              href={site.links.github}
+              target="_blank"
+              rel="noreferrer"
+              className="link-underline mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
+            >
+              All repositories on GitHub
+            </a>
+          </div>
         </div>
       </Reveal>
     </section>

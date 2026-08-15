@@ -114,20 +114,6 @@ export default function BlogIndex() {
         <div className="rule-t" />
       </div>
 
-      <Reveal>
-        <p className="mt-10 text-sm text-muted">
-          These were first published on{" "}
-          <a
-            href={site.links.medium}
-            target="_blank"
-            rel="noreferrer"
-            className="link-underline text-accent"
-          >
-            Medium
-          </a>
-          , which remains the canonical source.
-        </p>
-      </Reveal>
     </div>
   );
 }
