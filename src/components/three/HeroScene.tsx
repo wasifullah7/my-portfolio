@@ -18,12 +18,12 @@ export default function HeroScene() {
         inset: 0,
         pointerEvents: "none",
         // Sits behind the type as texture, never competing with it.
-        opacity: dark ? 0.55 : 0.4,
+        opacity: dark ? 0.5 : 0.35,
       }}
     >
       <NodeGraph
-        nodeColor={dark ? "#e0703c" : "#a8431e"}
-        edgeColor={dark ? "#6b5142" : "#b9ac97"}
+        nodeColor={dark ? "#ff3b2f" : "#e5241b"}
+        edgeColor={dark ? "#4a4a4f" : "#c9c9cf"}
       />
     </Canvas>
   );

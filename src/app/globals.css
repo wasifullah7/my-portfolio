@@ -3,35 +3,35 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ---------------------------------------------------------------------------
-   Technical Instrument palette.
-   Warm ink on warm paper with a single oxide signal colour. Deliberately no
-   blue, no violet, no gradient: those read as machine defaults.
+   International Typographic Style (Swiss).
+   Pure white, pure black, two neutral greys, one signal red. No warmth, no
+   gradient, no tint: warm cream with terracotta is Anthropic's palette, and
+   blue-to-violet is the generic machine default. This is neither.
+   Red appears only on numerals, active state, and callouts. Never decoration.
    --------------------------------------------------------------------------- */
 
 :root {
-  --paper: #efebe3;
-  --paper-2: #e7e2d8;
-  --ink: #17150f;
-  --muted: #6b6455;
-  --faint: #928b7a;
-  --rule: #d5cdbe;
-  --accent: #a8431e;
+  --paper: #ffffff;
+  --paper-2: #fafafa;
+  --ink: #0a0a0a;
+  --muted: #6b7280;
+  --faint: #9ca3af;
+  --rule: #e4e4e7;
+  --accent: #e5241b;
   --accent-ink: #ffffff;
-  --accent-wash: rgba(168, 67, 30, 0.09);
-  --grain: 0.035;
+  --row-hover: rgba(10, 10, 10, 0.035);
 }
 
 .dark {
-  --paper: #14130f;
-  --paper-2: #1a1814;
-  --ink: #eae5da;
-  --muted: #928b7a;
-  --faint: #6b6455;
-  --rule: #2b2823;
-  --accent: #e0703c;
-  --accent-ink: #14130f;
-  --accent-wash: rgba(224, 112, 60, 0.12);
-  --grain: 0.055;
+  --paper: #0a0a0a;
+  --paper-2: #141416;
+  --ink: #f4f4f5;
+  --muted: #9ca3af;
+  --faint: #6b7280;
+  --rule: #232326;
+  --accent: #ff3b2f;
+  --accent-ink: #0a0a0a;
+  --row-hover: rgba(255, 255, 255, 0.045);
 }
 
 @theme inline {
@@ -42,8 +42,7 @@
   --color-faint: var(--faint);
   --color-rule: var(--rule);
   --color-accent: var(--accent);
-  --color-accent-wash: var(--accent-wash);
-  --font-display: var(--font-bricolage);
+  --font-display: var(--font-archivo);
   --font-mono: var(--font-jetbrains);
 }
 
@@ -59,20 +58,8 @@ html {
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
-  font-optical-sizing: auto;
+  font-family: var(--font-archivo), Helvetica, Arial, sans-serif;
   overflow-x: hidden;
-}
-
-/* Paper grain. Costs nothing, and machines never think to add it. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: var(--grain);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 ::selection {
@@ -90,15 +77,15 @@ html.lenis body {
 
 /* --- Typography ------------------------------------------------------------ */
 
+/* Grotesk set tight and large, the way Swiss posters set Akzidenz. */
 .display {
-  font-family: var(--font-bricolage), sans-serif;
+  font-family: var(--font-archivo), Helvetica, Arial, sans-serif;
   font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 0.92;
+  letter-spacing: -0.045em;
+  line-height: 0.88;
   text-transform: uppercase;
 }
 
-/* Mono metadata labels: the technical-documentation voice of the page. */
 .label {
   font-family: var(--font-jetbrains), monospace;
   font-size: 0.6875rem;
@@ -126,13 +113,18 @@ html.lenis body {
   max-width: 62ch;
 }
 
-/* --- Structure: hairlines instead of cards --------------------------------- */
+/* --- Structure: hairlines, never cards ------------------------------------- */
 
 .rule-t {
   border-top: 1px solid var(--rule);
 }
 .rule-b {
   border-bottom: 1px solid var(--rule);
+}
+
+/* A heavier rule under section indexes, the Swiss "bar". */
+.rule-heavy {
+  border-top: 2px solid var(--ink);
 }
 
 /* Section headers read like a document index: "01 //// ABOUT" */
@@ -148,14 +140,14 @@ html.lenis body {
   background: var(--rule);
 }
 
-/* Rows that light up on hover without becoming buttons. */
+/* Rows shift and tint on hover without pretending to be buttons. */
 .row {
   transition:
-    background-color 0.35s ease,
+    background-color 0.3s ease,
     padding-left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .row:hover {
-  background: var(--accent-wash);
+  background: var(--row-hover);
   padding-left: 0.75rem;
 }
 

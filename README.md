@@ -11,17 +11,22 @@ Live: https://v0-professional-portfolio-website-one-kappa.vercel.app
 | Framework | Next.js 16 (App Router) + React 19 |
 | Language | TypeScript |
 | Styling | Tailwind CSS v4, CSS custom-property theming |
-| Type | Bricolage Grotesque (display) + JetBrains Mono (data) |
+| Type | Archivo (display) + JetBrains Mono (data) |
 | 3D | three.js via `@react-three/fiber` |
 | Motion | `motion` (Framer Motion) + Lenis smooth scroll |
 | Email | Resend, behind a validated API route |
 
 ## Design notes
 
-The visual system is deliberately **not** the default: no blue-to-violet gradient,
-no Inter, no rounded feature cards with line icons, no icon library at all. It uses
-warm ink on warm paper with a single oxide signal colour, hairline rules instead of
-card borders, tabular figures for every measurement, and an SVG paper grain.
+The visual system follows the **International Typographic Style**: pure white, pure
+black, two neutral greys, and one signal red used only on numerals, active state and
+callouts. Hairline rules replace card borders, headings sit under a heavy black bar,
+and every measurement is set in tabular figures.
+
+It deliberately avoids two separate defaults. Blue-to-violet gradients with Inter and
+rounded icon cards are the generic machine output. Warm cream with a terracotta accent
+is Anthropic's brand palette. This is neither, and the project ships **no icon library
+at all**: the theme control is a text toggle.
 
 Motion is built from four primitives rather than one fade-up helper:
 
