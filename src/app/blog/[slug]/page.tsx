@@ -32,8 +32,9 @@ export async function generateMetadata(
     title: shortTitle,
     description: shortDesc,
     keywords: post.tags,
-    // Deliberate: Medium published these first and keeps the ranking credit.
-    alternates: { canonical: post.canonicalUrl },
+    // Posts imported from Medium canonicalise there, since Medium published
+    // them first. Posts written here canonicalise to this site.
+    alternates: { canonical: post.canonicalUrl ?? `/blog/${post.slug}` },
     openGraph: {
       type: "article",
       title: post.title,
@@ -73,7 +74,10 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
       jobTitle: site.role,
     },
     publisher: { "@type": "Person", name: site.name, url: site.url },
-    mainEntityOfPage: { "@type": "WebPage", "@id": post.canonicalUrl },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": post.canonicalUrl ?? `${site.url}/blog/${post.slug}`,
+    },
     url: `${site.url}/blog/${post.slug}`,
   };
 
@@ -141,18 +145,20 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
       />
 
       <footer className="rule-t mt-16 pt-6">
-        <p className="text-sm text-muted">
-          Originally published on{" "}
-          <a
-            href={post.canonicalUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="link-underline text-accent"
-          >
-            Medium
-          </a>
-          .
-        </p>
+        {post.canonicalUrl ? (
+          <p className="text-sm text-muted">
+            Originally published on{" "}
+            <a
+              href={post.canonicalUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="link-underline text-accent"
+            >
+              Medium
+            </a>
+            .
+          </p>
+        ) : null}
 
         <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
           <Link

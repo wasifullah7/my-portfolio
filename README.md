@@ -90,3 +90,5 @@ Source for the portfolio site above. Next.js 16, React 19, TypeScript, Tailwind 
 npm install
 npm run dev
 ```
+
+Publishing workflow for articles: [docs/WRITING.md](docs/WRITING.md)
