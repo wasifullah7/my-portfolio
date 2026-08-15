@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #fbfbfd;
+  --surface: #ffffff;
+  --surface-2: #f3f4f8;
+  --foreground: #0b0d12;
+  --muted: #5a6272;
+  --border: #e3e5ec;
+  --primary: #0b73e8;
+  --primary-soft: #e8f1fe;
+  --accent: #7c4dff;
+  --grid: rgba(11, 13, 18, 0.05);
+  --glow-a: rgba(11, 115, 232, 0.16);
+  --glow-b: rgba(124, 77, 255, 0.12);
+}
+
+.dark {
+  --background: #07080c;
+  --surface: #0c0e14;
+  --surface-2: #12151d;
+  --foreground: #eef1f7;
+  --muted: #929bb0;
+  --border: #1c202b;
+  --primary: #4da3ff;
+  --primary-soft: rgba(77, 163, 255, 0.12);
+  --accent: #a78bfa;
+  --grid: rgba(255, 255, 255, 0.045);
+  --glow-a: rgba(77, 163, 255, 0.18);
+  --glow-b: rgba(167, 139, 250, 0.14);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Lenis drives scrolling; native smooth scroll would fight it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* --- Ambient background --------------------------------------------- */
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+.glow-field::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 60vh;
+  background:
+    radial-gradient(50% 60% at 20% 0%, var(--glow-a), transparent 70%),
+    radial-gradient(50% 60% at 80% 10%, var(--glow-b), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- Type --- */
+
+.text-gradient {
+  background: linear-gradient(100deg, var(--foreground) 10%, var(--primary) 55%, var(--accent) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.balance {
+  text-wrap: balance;
+}
+
+/* --- Surfaces --- */
+
+.card {
+  background: color-mix(in oklab, var(--surface) 88%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.hairline {
+  border-top: 1px solid var(--border);
+}
+
+/* Animated conic border used on featured cards. */
+.card-lit {
+  position: relative;
+  isolation: isolate;
+}
+.card-lit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(140deg, transparent 30%, var(--primary), transparent 70%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.card-lit:hover::after {
+  opacity: 1;
+}
+
+/* --- Marquee --- */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* --- Focus --- */
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --- Reduced motion: kill everything decorative --- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,80 @@
+%PDF-1.4
+1 0 obj
+<</Type/Catalog/Pages 2 0 R>>
+endobj
+2 0 obj
+<</Type/Pages/Kids[3 0 R]/Count 1>>
+endobj
+3 0 obj
+<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</Font<</F1 4 0 R/F2 5 0 R>>>>/Contents 6 0 R>>
+endobj
+4 0 obj
+<</Type/Font/Subtype/Type1/BaseFont/Helvetica/Encoding/WinAnsiEncoding>>
+endobj
+5 0 obj
+<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Bold/Encoding/WinAnsiEncoding>>
+endobj
+6 0 obj
+<</Length 4541>>
+stream
+BT /F2 22 Tf 0 0 0 rg 50 800 Td (WASIF ULLAH) Tj ET
+BT /F1 10 Tf 0.04 0.45 0.91 rg 50 780 Td (Full-Stack AI Engineer  |  Computer Vision  |  LLM Engineering  |  Cloud Infrastructure) Tj ET
+BT /F1 9 Tf 0.35 0.38 0.45 rg 50 765 Td (wasif.wwez@gmail.com  |  +92 318 9340438  |  github.com/wasifullah7  |  linkedin.com/in/wasifullahdev) Tj ET
+BT /F2 11 Tf 0 0 0 rg 50 743 Td (PROFILE) Tj ET
+0.75 0.78 0.85 RG 0.7 w 50 745 m 545 745 l S
+BT /F1 10 Tf 0 0 0 rg 50 729 Td (Software engineer building AI-driven cloud solutions, computer vision systems, and scalable web) Tj ET
+BT /F1 10 Tf 0 0 0 rg 50 716 Td (applications. Currently building enterprise AI at Strateger AI; previously shipped production) Tj ET
+BT /F1 10 Tf 0 0 0 rg 50 703 Td (systems at Gojins and UNAZ Legal Services.) Tj ET
+BT /F2 11 Tf 0 0 0 rg 50 681 Td (EXPERIENCE) Tj ET
+0.75 0.78 0.85 RG 0.7 w 50 683 m 545 683 l S
+BT /F2 10 Tf 0 0 0 rg 50 667 Td (Full-Stack AI Engineer  -  Strateger AI, Lahore) Tj ET
+BT /F1 9 Tf 0.35 0.38 0.45 rg 50 655 Td (Jul 2025 - Present) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 642 Td (-  Built the AI Board Scanner: diagram recognition using RF-DETR, PaddleOCR and SAM2 segmentation,) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 630 Td (-  reaching 0.83 mAP and 97% arrow-association accuracy.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 618 Td (-  Engineered binary-mask pipelines with KD-trees and skeletonisation to reconstruct graph topology.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 606 Td (-  Deployed LLM conversational agents via Amazon Lex and Bedrock; Dockerised FastAPI on AWS.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 594 Td (-  Automated multi-region infrastructure with Terraform and Terragrunt.) Tj ET
+BT /F2 10 Tf 0 0 0 rg 50 574 Td (MERN Stack Developer  -  Gojins, Lahore) Tj ET
+BT /F1 9 Tf 0.35 0.38 0.45 rg 50 562 Td (Aug 2024 - Jun 2025) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 549 Td (-  Built business management platforms and a real-time portfolio builder with custom domains.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 537 Td (-  Shipped a full HRMS covering payroll, attendance, leave tracking and performance analytics.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 525 Td (-  Integrated ML models for predictive diagnostics and workflow automation.) Tj ET
+BT /F2 10 Tf 0 0 0 rg 50 505 Td (Junior Software Developer  -  UNAZ Legal Services, Nowshera) Tj ET
+BT /F1 9 Tf 0.35 0.38 0.45 rg 50 493 Td (Jan 2024 - May 2024) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 480 Td (-  Developed a lawyer case management application and a Zakat automation system.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 468 Td (-  Focused on async programming patterns, responsive UI and scalable API design.) Tj ET
+BT /F2 11 Tf 0 0 0 rg 50 448 Td (SELECTED PROJECTS) Tj ET
+0.75 0.78 0.85 RG 0.7 w 50 450 m 545 450 l S
+BT /F1 9.5 Tf 0 0 0 rg 50 434 Td (-  AI Board Scanner \(Strateger AI\) - RF-DETR, SAM2, PaddleOCR, FastAPI, Docker, AWS. 0.83 mAP.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 421.5 Td (-  Ele\(Q\)tric - QAOA grid optimisation on Rigetti's 84-qubit Ankaa-3 QPU. ~10x speedup. Live demo.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 409 Td (-  Document Intelligence Pipeline - offline RAG: FastAPI, ChromaDB, spaCy, DeBERTa-v3, PyMuPDF.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 396.5 Td (-  AI Career Coach - RAG job recommender on Pinecone, 89% predictive accuracy.) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 384 Td (-  Pakistani Sign Language Recognition \(FYP\) - GAN-based assistive system, 85% accuracy.) Tj ET
+BT /F2 11 Tf 0 0 0 rg 50 361.5 Td (SKILLS) Tj ET
+0.75 0.78 0.85 RG 0.7 w 50 363.5 m 545 363.5 l S
+BT /F1 9.5 Tf 0 0 0 rg 50 347.5 Td (AI / Vision:   RF-DETR, YOLOv8, YOLO-NAS, SAM2, PaddleOCR, OpenCV, TensorFlow, scikit-learn) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 334.5 Td (LLM:           RAG pipelines, Pinecone, ChromaDB, Amazon Bedrock, Amazon Lex, fine-tuning, spaCy) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 321.5 Td (Full Stack:    React, Next.js, TypeScript, Node.js, Express, FastAPI, MongoDB, PostgreSQL) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 308.5 Td (Cloud:         AWS Lambda, SageMaker, API Gateway, Docker, Terraform, Terragrunt) Tj ET
+BT /F2 11 Tf 0 0 0 rg 50 286.5 Td (EDUCATION & CERTIFICATIONS) Tj ET
+0.75 0.78 0.85 RG 0.7 w 50 288.5 m 545 288.5 l S
+BT /F1 9.5 Tf 0 0 0 rg 50 272.5 Td (BSc \(Hons\) Computer Science - University of Engineering & Technology, Mardan   \(2021 - 2025\)) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 259.5 Td (Web Development Specialization, Vanderbilt University) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 247.5 Td (Computer Vision Expert, DeepLearning.AI) Tj ET
+BT /F1 9.5 Tf 0 0 0 rg 50 235.5 Td (Applied Machine Learning, LinkedIn Learning) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000054 00000 n 
+0000000105 00000 n 
+0000000226 00000 n 
+0000000314 00000 n 
+0000000407 00000 n 
+trailer
+<</Size 7/Root 1 0 R>>
+startxref
+4998
+%%EOF
