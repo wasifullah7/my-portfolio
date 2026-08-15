@@ -3,7 +3,7 @@
 **Full-Stack AI Engineer** · Python · FastAPI · React · Next.js · Computer Vision
 
 [wasif.wwez@gmail.com](mailto:wasif.wwez@gmail.com) · +92 318 9340438 · Lahore, Pakistan
-[LinkedIn](https://www.linkedin.com/in/wasifullahdev) · [GitHub](https://github.com/wasifullah7) · [Medium](https://medium.com/@wasifullahdev) · [Portfolio](https://v0-professional-portfolio-website-one-kappa.vercel.app)
+[LinkedIn](https://www.linkedin.com/in/wasifullahdev) · [GitHub](https://github.com/wasifullah7) · [Medium](https://medium.com/@wasifullahdev) · [Portfolio](https://wasif-ullah-portfolio.vercel.app)
 
 ---
 

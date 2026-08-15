@@ -1,3 +1,14 @@
+/**
+ * Canonical origin for metadata, OG tags, JSON-LD and the sitemap.
+ * Follows whatever domain the Vercel project is serving, so attaching a custom
+ * domain later needs no code change. Override locally with NEXT_PUBLIC_SITE_URL.
+ */
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "https://wasif-ullah-portfolio.vercel.app");
+
 export const site = {
   name: "Wasif Ullah",
   role: "Full-Stack AI Engineer",
@@ -18,7 +29,7 @@ export const site = {
   phoneHref: "+923189340438",
   availability: "Open to AI engineering and full-stack roles",
   currentRole: "Strateger AI",
-  url: "https://v0-professional-portfolio-website-one-kappa.vercel.app",
+  url: SITE_URL,
   resumePath: "/resume.pdf",
   links: {
     github: "https://github.com/wasifullah7",
