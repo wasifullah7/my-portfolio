@@ -1,5 +1,5 @@
+import Link from "next/link";
 import { site } from "@/content/site";
-import { ContactForm } from "@/components/ContactForm";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 
@@ -12,13 +12,29 @@ export function Contact() {
       <SectionHeading
         index="05"
         eyebrow="Contact"
-        title="Let's build something"
-        lead={`${site.availability}. Tell me what you are working on and I will get back to you.`}
+        title="Get in touch"
+        lead="If you are hiring, the form on the hire page asks the few things I need to give you a straight answer. Otherwise, email works fine."
       />
 
-      <div className="mt-16 grid gap-16 lg:grid-cols-[1.3fr_1fr] lg:gap-24">
+      <div className="mt-14 grid gap-14 lg:grid-cols-[1.2fr_1fr] lg:gap-24">
         <Reveal>
-          <ContactForm />
+          <div>
+            <Link
+              href="/hire"
+              className="group mono inline-flex items-center gap-3 border border-ink px-7 py-3.5 text-xs uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-ink hover:text-paper"
+            >
+              Hiring? Start here
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </Link>
+
+            <p className="measure mt-8 text-[0.9375rem] leading-relaxed text-muted">
+              I read everything that comes in and normally reply within a day. If it
+              is about a role, telling me the type of engagement and rough timeline
+              saves us both an email.
+            </p>
+          </div>
         </Reveal>
 
         <Reveal delay={0.08}>

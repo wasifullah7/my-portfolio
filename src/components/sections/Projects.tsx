@@ -15,7 +15,7 @@ export function Projects() {
         index="04"
         eyebrow="Work"
         title="Selected work"
-        lead="Production systems first, research second. Every number below is measured, not estimated."
+        lead="Every number below came off a system that shipped. None of it is estimated, and I can show you how each one was measured."
       />
 
       <div className="mt-14">

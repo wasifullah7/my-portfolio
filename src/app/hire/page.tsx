@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { site, hire } from "@/content/site";
+import { site, hire, hiringForm } from "@/content/site";
 import { experience } from "@/content/experience";
-import { ContactForm } from "@/components/ContactForm";
+import { HiringForm } from "@/components/HiringForm";
 import { Reveal } from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
@@ -51,13 +51,20 @@ export default function HirePage() {
 
         <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
           <a
-            href={`mailto:${site.email}?subject=Role%20enquiry`}
+            href="#enquiry"
             className="group mono inline-flex items-center gap-3 border border-ink px-7 py-3.5 text-xs uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-ink hover:text-paper"
           >
-            Email me
-            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-              &rarr;
+            Tell me about the role
+            <span className="inline-block transition-transform duration-300 group-hover:translate-y-0.5">
+              &darr;
             </span>
+          </a>
+
+          <a
+            href={`mailto:${site.email}?subject=Role%20enquiry`}
+            className="link-underline mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
+          >
+            Or just email me
           </a>
 
           {hire.bookingUrl ? (
@@ -203,10 +210,16 @@ export default function HirePage() {
       </div>
 
       <Reveal>
-        <section className="rule-heavy mt-24 pt-8">
-          <h2 className="label text-accent">Send a message</h2>
-          <div className="mt-8 max-w-2xl">
-            <ContactForm />
+        <section id="enquiry" className="rule-heavy mt-24 scroll-mt-24 pt-8">
+          <h2 className="display text-[clamp(1.6rem,4vw,2.6rem)]">
+            {hiringForm.title}
+          </h2>
+          <p className="measure mt-4 text-[0.9375rem] leading-relaxed text-muted">
+            {hiringForm.lead}
+          </p>
+
+          <div className="mt-12 max-w-2xl">
+            <HiringForm />
           </div>
         </section>
       </Reveal>

@@ -344,3 +344,79 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 }
+
+/* --- Skip link -------------------------------------------------------------- */
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* --- Print -----------------------------------------------------------------
+   Recruiters print and PDF résumés. Without this, /resume comes out carrying
+   the navigation, the dark ground and the WebGL canvas.
+   --------------------------------------------------------------------------- */
+
+@media print {
+  :root,
+  .dark {
+    --paper: #ffffff;
+    --paper-2: #ffffff;
+    --ink: #000000;
+    --muted: #333333;
+    --faint: #666666;
+    --rule: #cccccc;
+    --accent: #000000;
+  }
+
+  header,
+  footer,
+  canvas,
+  .skip-link,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+
+  main {
+    padding-top: 0 !important;
+  }
+
+  /* Print the destination of outbound links, since a printed page cannot click. */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+    word-break: break-all;
+  }
+
+  article,
+  li,
+  section {
+    break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+}

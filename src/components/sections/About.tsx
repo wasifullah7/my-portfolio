@@ -8,7 +8,11 @@ export function About() {
       id="about"
       className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-28 sm:px-10 sm:py-36"
     >
-      <SectionHeading index="01" eyebrow="About" title="Across the ML boundary" />
+      <SectionHeading
+        index="01"
+        eyebrow="About"
+        title="What I actually do"
+      />
 
       <div className="mt-16 grid gap-14 lg:grid-cols-[1.5fr_1fr] lg:gap-24">
         <div className="space-y-6">

@@ -12,7 +12,7 @@ export function Experience() {
         index="03"
         eyebrow="Experience"
         title="Where I've shipped"
-        lead="Three teams, each one a step further into production ML."
+        lead="Three teams. Each one moved me further from notebooks and closer to things people depend on."
       />
 
       <div className="mt-16">

@@ -10,7 +10,7 @@ export function Skills() {
           index="02"
           eyebrow="Stack"
           title="What I build with"
-          lead="Grouped by the problem it solves rather than by language."
+          lead="Grouped by what it solves, not by what language it happens to be written in."
         />
 
         <div className="mt-16">

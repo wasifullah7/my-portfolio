@@ -15,12 +15,13 @@ export const site = {
   roleLines: ["Full-Stack", "AI Engineer"],
   disciplines: ["Computer Vision", "LLM Engineering", "Cloud Infrastructure"],
   tagline:
-    "I build AI systems that survive production: vision pipelines that read engineering drawings, retrieval agents that answer from real documents, and the backend infrastructure that keeps both running. Two years shipping for clients across the UK, EU, and US.",
+    "Most AI demos work. Very few survive real data. I build the ones that do: diagram recognition at 0.83 mAP, voice agents answering in under 300ms, and the backend that keeps both up.",
   bio: [
-    "I work at the seam between machine learning and production web systems. At Strateger AI I architected the AI Board Scanner, an end-to-end pipeline that reads engineering diagrams and rebuilds them as structured JSON using RF-DETR detection, PaddleOCR, and SAM2 segmentation.",
-    "The hard part was never the model. It was the spatial reasoning around it: binary mask pipelines, KD-trees, and BFS skeletonisation that resolve which arrow connects which pair of nodes when objects overlap and OCR drops characters.",
-    "Before that I built production platforms at Gojins and UNAZ Legal Services for UK enterprise clients: a full HRMS covering payroll, attendance and performance analytics, a real-time portfolio builder with custom domains, and legal case management systems.",
-    "What ties it together is a bias toward systems that survive contact with real data. Measured against real benchmarks, containerised, tested, and deployed on infrastructure I can reason about at 3am.",
+    "I am a Full-Stack AI Engineer at Strateger AI, in Lahore. For two years I have been shipping AI systems for clients in the UK, EU and US.",
+    "My main project is the AI Board Scanner. It reads engineering diagrams and turns them into structured JSON, using RF-DETR for detection, PaddleOCR for the text, and SAM2 for segmentation. It hits 0.83 mAP and gets the arrow connections right 97% of the time.",
+    "The models were never the hard part. The hard part was working out which arrow connects which two boxes when the shapes overlap and OCR drops half the characters. That took KD-trees, binary masks and BFS skeletonisation, and a lot of looking at drawings that broke my assumptions.",
+    "Before this I built production platforms at Gojins and UNAZ Legal Services. A full HRMS handling payroll and attendance for a UK client. A portfolio builder with live editing and custom domains. Case management tooling for a legal firm in Hull.",
+    "The thread through all of it: I care about what happens after the demo. Real inputs, measured results, containers, and infrastructure I can reason about at 3am.",
   ],
   location: "Lahore, Pakistan",
   locationNote: "Open to remote",
@@ -43,21 +44,9 @@ export const site = {
     detail: "GPA 3.0 / 4.0",
   },
   certifications: [
-    {
-      name: "Computer Vision Specialization",
-      issuer: "DeepLearning.AI",
-      date: "Oct 2025",
-    },
-    {
-      name: "Applied Machine Learning: Algorithms",
-      issuer: "LinkedIn Learning",
-      date: "Apr 2024",
-    },
-    {
-      name: "Web Development Specialization",
-      issuer: "Vanderbilt University",
-      date: "Jan 2023",
-    },
+    { name: "Computer Vision Specialization", issuer: "DeepLearning.AI", date: "Oct 2025" },
+    { name: "Applied Machine Learning: Algorithms", issuer: "LinkedIn Learning", date: "Apr 2024" },
+    { name: "Web Development Specialization", issuer: "Vanderbilt University", date: "Jan 2023" },
   ],
   /** Rendered as an instrument readout. `value` animates, `suffix` does not. */
   stats: [
@@ -70,59 +59,85 @@ export const site = {
 
 /**
  * Recruiter-facing content for /hire.
- * Review and edit these before sharing widely: the FAQ answers are written to
- * be safe and general, not to speak for you on notice period or salary.
+ * Review before sharing widely: the FAQ answers are written to be safe and
+ * general, not to speak for you on notice period or salary.
  * Set bookingUrl to a Cal.com or Calendly link to turn on the booking button.
  */
 export const hire = {
   headline: "Hiring for an AI engineering role?",
-  lead: "Here is everything a recruiter usually asks, answered up front, plus the fastest way to reach me.",
+  lead: "Most of what a recruiter asks me in the first email is answered below. What is left is the form, which takes about a minute.",
   bookingUrl: "",
   lookingFor: [
     "Full-stack AI engineering, where the model and the product are the same job",
-    "Computer vision and retrieval systems that run in production, not notebooks",
+    "Computer vision and retrieval systems that run in production, not in notebooks",
     "Remote-first teams, or onsite in Lahore",
   ],
   strengths: [
     {
-      title: "Measured, not claimed",
-      body: "0.83 mAP on diagram detection, 97% arrow association, voice latency cut from 1.8s to under 300ms. Every number on this site comes from a shipped system.",
+      title: "The numbers are real",
+      body: "0.83 mAP. 97% arrow association. Voice latency from 1.8 seconds down to under 300ms. Every figure on this site came off a system that shipped, and I can walk you through how each one was measured.",
     },
     {
-      title: "The whole path to production",
-      body: "Model work through to dockerised FastAPI services, Terraform infrastructure and GitHub Actions pipelines. I do not hand off at the notebook.",
+      title: "I do not stop at the model",
+      body: "The model is usually a week. The other three months are OCR that fails on scanned pages, classifiers that are confidently wrong, and libraries that phone home when you promised they would not. That part is the job.",
     },
     {
-      title: "Written down",
-      body: "Ten published engineering write-ups on latency, concurrency and retrieval. If you want to know how I think before you interview me, it is already public.",
+      title: "It is already written down",
+      body: "Eleven published articles on latency, GPU concurrency and retrieval. If you want to know how I think before you spend an hour interviewing me, it is public.",
     },
   ],
   faqs: [
     {
       q: "What kind of roles are you looking for?",
-      a: "Full-stack AI engineering: computer vision, retrieval-augmented systems, and the backend infrastructure around them. Remote-first, or onsite in Lahore. Open to both permanent roles and contract work.",
+      a: "Full-stack AI engineering. Computer vision, retrieval systems, and the backend around them. Remote-first, or onsite in Lahore. Permanent or contract, both fine.",
     },
     {
       q: "What do you actually build?",
-      a: "Production AI systems. Recent work includes a diagram recognition pipeline using RF-DETR, PaddleOCR and SAM2 reaching 0.83 mAP, and real-time voice agents cut from 1.8 seconds of latency to under 300ms using Twilio, LiveKit and vLLM.",
+      a: "Right now, a diagram recognition pipeline using RF-DETR, PaddleOCR and SAM2 that reads engineering drawings and outputs structured JSON. Before that, real-time voice agents on Twilio and LiveKit, cut from 1.8 seconds of latency to under 300ms.",
     },
     {
       q: "Have you worked with international teams?",
-      a: "Yes. I have shipped for clients across the UK, EU and US, working in Agile cross-functional teams on tight delivery cycles, including a fully remote role for a UK company.",
+      a: "Yes. UK, EU and US clients, in Agile teams on short delivery cycles. My first production role was fully remote for a company in Hull.",
     },
     {
       q: "What is your core stack?",
-      a: "Python and FastAPI on the backend, PyTorch for vision, React and Next.js on the frontend, PostgreSQL and MongoDB for data, and AWS with Docker and Terraform for infrastructure.",
+      a: "Python and FastAPI on the backend. PyTorch for vision. React and Next.js on the front. PostgreSQL and MongoDB. AWS with Docker and Terraform.",
     },
     {
       q: "How soon could you start?",
-      a: "It depends on notice, so email me with the role and timeline and I will give you exact dates rather than a guess.",
+      a: "It depends on notice, so I would rather not guess. Send me the role and the timeline and I will give you exact dates.",
     },
     {
       q: "Can I see code?",
-      a: "Yes. Several projects link straight to their repositories, and my GitHub activity is shown live on this site. Employer work is proprietary, but I am happy to walk through the architecture in a call.",
+      a: "Some of it. Several projects link straight to their repositories, and my GitHub activity is on this site. Employer work is proprietary, but I am happy to walk through the architecture on a call.",
     },
   ],
+} as const;
+
+/**
+ * Hiring enquiry form. Wording lives here so it stays editable without
+ * touching the component.
+ */
+export const hiringForm = {
+  title: "Tell me about the role",
+  lead: "The more context you give me, the more useful my reply will be. I read every message myself and normally answer within a day.",
+  engagementOptions: [
+    "Full-time role",
+    "Contract",
+    "Technical advisory",
+    "Audit or code review",
+    "Something else",
+  ],
+  timelineOptions: [
+    "As soon as possible",
+    "Within a month",
+    "One to three months",
+    "Just exploring for now",
+  ],
+  budgetHelp:
+    "A range, a ceiling, or \"not sure yet\" are all fine. I would rather know roughly than not at all.",
+  successTitle: "Message sent",
+  successBody: "Thanks. I will read it properly and get back to you, normally within a day.",
 } as const;
 
 export const navItems = [

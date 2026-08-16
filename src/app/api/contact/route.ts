@@ -4,11 +4,16 @@ import { Resend } from "resend";
 import { site } from "@/content/site";
 
 const schema = z.object({
-  name: z.string().trim().min(2, "Name is too short").max(120),
-  email: z.email("That email doesn't look right"),
+  name: z.string().trim().min(2, "Please add your name").max(120),
+  email: z.email("That email address does not look right"),
   message: z.string().trim().min(10, "Tell me a little more").max(5000),
-  // Honeypot: real people never fill this in.
-  company: z.string().optional(),
+  company: z.string().trim().max(200).optional(),
+  roleTitle: z.string().trim().max(200).optional(),
+  budget: z.string().trim().max(200).optional(),
+  timeline: z.string().trim().max(120).optional(),
+  engagement: z.array(z.string().max(80)).max(10).optional(),
+  // Honeypot. Named "website" because "company" is a real field on this form.
+  website: z.string().optional(),
 });
 
 // Best-effort throttle. Resets on cold start, which is fine for a portfolio.
@@ -34,7 +39,7 @@ export async function POST(request: Request) {
 
   if (rateLimited(ip)) {
     return NextResponse.json(
-      { error: "Too many messages. Try again later or email me directly." },
+      { error: "Too many messages. Try again later, or email me directly at" },
       { status: 429 },
     );
   }
@@ -54,20 +59,42 @@ export async function POST(request: Request) {
     );
   }
 
-  // Silently accept bot submissions so they don't retry.
-  if (parsed.data.company) {
+  // Silently accept bot submissions so they do not retry.
+  if (parsed.data.website) {
     return NextResponse.json({ ok: true });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: "The contact form isn't connected yet. Please email me at" },
+      { error: "The form is not connected yet. Please email me at" },
       { status: 503 },
     );
   }
 
-  const { name, email, message } = parsed.data;
+  const { name, email, message, company, roleTitle, budget, timeline, engagement } =
+    parsed.data;
+
+  const engagementText = engagement?.length ? engagement.join(", ") : "not specified";
+  const subject = company
+    ? `Hiring enquiry from ${name} at ${company}`
+    : `Hiring enquiry from ${name}`;
+
+  // Formatted so the notification alone is enough to triage.
+  const body = [
+    `From:       ${name} <${email}>`,
+    company ? `Company:    ${company}` : null,
+    roleTitle ? `Their role: ${roleTitle}` : null,
+    `Engagement: ${engagementText}`,
+    timeline ? `Timeline:   ${timeline}` : null,
+    budget ? `Budget:     ${budget}` : null,
+    "",
+    "----------------------------------------",
+    "",
+    message,
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
 
   try {
     const resend = new Resend(apiKey);
@@ -75,8 +102,8 @@ export async function POST(request: Request) {
       from: process.env.CONTACT_FROM ?? "Portfolio <onboarding@resend.dev>",
       to: process.env.CONTACT_TO ?? site.email,
       replyTo: email,
-      subject: `Portfolio enquiry from ${name}`,
-      text: `From: ${name} <${email}>\n\n${message}`,
+      subject,
+      text: body,
     });
 
     if (error) {

@@ -131,6 +131,16 @@ export const projects: Project[] = [
     stack: ["FastAPI", "LangChain", "Pinecone", "Python", "REST API"],
     metrics: [{ value: "89%", label: "predictive accuracy" }],
     image: "/projects/ai-career-coach.webp",
+    problem:
+      "Job boards match on keywords. A CV that says PyTorch never surfaces a posting that says deep learning framework, even when it is the same job. That is not a ranking problem, it is a vocabulary problem, and no amount of filter tuning fixes it.",
+    approach: [
+      "Embed both sides, candidate profiles and job postings, so matching happens on meaning instead of exact words.",
+      "Store the vectors in Pinecone and retrieve by similarity, then let the language model explain why a given role fits.",
+      "Evaluate against live job-market data rather than a static sample, because postings drift and a model tuned on last year's wording quietly rots.",
+      "Serve it through FastAPI with LangChain handling retrieval and generation.",
+    ],
+    outcome:
+      "89% predictive accuracy on live job-market data, with matches that hold up when the posting and the CV use completely different words for the same skill.",
   },
   {
     slug: "document-intelligence-pipeline",
@@ -161,6 +171,7 @@ export const projects: Project[] = [
     ],
     outcome:
       "Invoices, resumes and utility bills parsed to structured JSON with zero cloud calls, exposed through a FastAPI service with Swagger docs.",
+    relatedPosts: ["how-i-built-a-document-ai-that-runs-fully-offline"],
   },
   {
     slug: "hrms-platform",
@@ -176,6 +187,16 @@ export const projects: Project[] = [
     ],
     stack: ["React", "Next.js", "Redux Toolkit", "Node.js", "Express", "PostgreSQL", "MongoDB", "JWT"],
     image: "/projects/hrms.webp",
+    problem:
+      "Payroll is the one system nobody forgives you for breaking. It depends on attendance, which depends on leave balances, which depend on approvals. At this client all of that lived in separate places, so every month someone reconciled it by hand.",
+    approach: [
+      "Put the whole chain behind one set of REST APIs with JWT auth, so attendance, leave and payroll read from the same source instead of three.",
+      "Split storage by shape rather than by habit: PostgreSQL for the relational parts where correctness matters, MongoDB for the documents that change structure per client.",
+      "Build dashboards that answer the questions HR actually asks, like who is off next week, rather than dumping tables.",
+      "Cover the payroll paths with Jest unit and integration tests, because those are the ones you cannot fix after the fact.",
+    ],
+    outcome:
+      "One system carrying a UK enterprise client from clock-in to payslip, with leave, attendance, performance reviews and analytics in the same place.",
   },
   {
     slug: "psl-recognition",
@@ -191,6 +212,16 @@ export const projects: Project[] = [
     stack: ["PyTorch", "OpenCV", "GAN", "Python"],
     metrics: [{ value: "85%", label: "accuracy" }],
     image: "/projects/psl.webp",
+    problem:
+      "Pakistani Sign Language has almost no public dataset. That is the real reason deaf users here get so little assistive tooling: you cannot train what you cannot collect, and every off-the-shelf sign model is trained on ASL, which is a different language.",
+    approach: [
+      "Build the dataset first, because nothing else was possible without it.",
+      "Use a generative adversarial network to produce sign imagery, so the system could cover signs the dataset was thin on.",
+      "Spend most of the effort on the image-processing pipeline rather than the architecture, since preprocessing was where the accuracy actually moved.",
+      "Keep it real-time, because a translation aid that lags is not an aid.",
+    ],
+    outcome:
+      "85% accuracy on sign recognition, with the preprocessing work alone accounting for a 20% improvement in model performance.",
     relatedPosts: ["building-a-text-to-sign-language-for-pakistani-urdu"],
   },
 ];
