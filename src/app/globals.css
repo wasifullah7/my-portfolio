@@ -14,8 +14,10 @@
   --paper: #ffffff;
   --paper-2: #fafafa;
   --ink: #0a0a0a;
-  --muted: #6b7280;
-  --faint: #9ca3af;
+  /* Both greys clear WCAG AA on white (5.8:1 and 4.8:1). The old --faint was
+     #9ca3af at 2.54:1, which failed on every label, date and metadata line. */
+  --muted: #5f6672;
+  --faint: #6b7280;
   --rule: #e4e4e7;
   --accent: #e5241b;
   --accent-ink: #ffffff;
@@ -26,8 +28,10 @@
   --paper: #0a0a0a;
   --paper-2: #141416;
   --ink: #f4f4f5;
+  /* 7.8:1 and 6.0:1 on near-black. The old --faint was 4.10:1, which only
+     qualified for large text. */
   --muted: #9ca3af;
-  --faint: #6b7280;
+  --faint: #868e9a;
   --rule: #232326;
   --accent: #ff3b2f;
   --accent-ink: #0a0a0a;
