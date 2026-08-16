@@ -6,6 +6,7 @@ import { site } from "@/content/site";
 import { getPost, formatDate } from "@/lib/posts";
 import { ProjectMedia } from "@/components/ProjectMedia";
 import { ClipReveal } from "@/components/motion/ClipReveal";
+import { ViewTransition } from "@/components/motion/ViewTransition";
 
 /** Only projects with written case-study detail get a page. */
 const caseStudies = projects.filter((project) => project.problem);
@@ -96,7 +97,9 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
           <span className="tabular text-xs text-faint">{project.year}</span>
         </div>
 
-        <h1 className="display mt-5 text-[clamp(2rem,6vw,4.25rem)]">{project.title}</h1>
+        <ViewTransition name={`work-title-${project.slug}`} share="morph" default="none">
+          <h1 className="display mt-5 text-[clamp(2rem,6vw,4.25rem)]">{project.title}</h1>
+        </ViewTransition>
 
         {/* Leading definition: the first 80 words carry the extractable answer. */}
         <p className="measure mt-7 text-lg leading-relaxed text-muted">{project.blurb}</p>

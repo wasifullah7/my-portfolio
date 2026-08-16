@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Project } from "@/content/projects";
 import { ProjectMedia } from "./ProjectMedia";
 import { ClipReveal } from "./motion/ClipReveal";
+import { ViewTransition } from "./motion/ViewTransition";
 import { Reveal } from "./motion/Reveal";
 import { cn } from "@/lib/utils";
 
@@ -24,9 +25,13 @@ export function ProjectEntry({ project, index }: { project: Project; index: numb
           <span className="tabular text-xs text-faint">{project.year}</span>
         </div>
 
-        <h3 className="mt-4 text-[clamp(1.5rem,3vw,2.25rem)] leading-tight tracking-tight text-ink">
-          {project.title}
-        </h3>
+        {/* Morphs into the case-study headline on navigation, so the title is
+            visibly the same object rather than two that swapped. */}
+        <ViewTransition name={`work-title-${project.slug}`} share="morph" default="none">
+          <h3 className="mt-4 text-[clamp(1.5rem,3vw,2.25rem)] leading-tight tracking-tight text-ink">
+            {project.title}
+          </h3>
+        </ViewTransition>
 
         <p className="measure mt-4 text-[0.9375rem] leading-relaxed text-muted">
           {project.blurb}

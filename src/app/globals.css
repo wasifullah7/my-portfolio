@@ -345,6 +345,33 @@ html.lenis body {
   }
 }
 
+/* --- View transitions -------------------------------------------------------
+   Project titles carry a shared name across the work list and the case study,
+   so the browser morphs one into the other instead of swapping two elements.
+   The brief blur hides pixel interpolation mid-flight.
+   --------------------------------------------------------------------------- */
+
+::view-transition-group(.morph) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: morph-blur;
+}
+@keyframes morph-blur {
+  35% {
+    filter: blur(2.5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* --- Skip link -------------------------------------------------------------- */
 
 .skip-link {

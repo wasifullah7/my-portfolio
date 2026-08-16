@@ -3,6 +3,7 @@ import Link from "next/link";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { Reveal } from "@/components/motion/Reveal";
+import { ViewTransition } from "@/components/motion/ViewTransition";
 
 export const metadata: Metadata = {
   title: "Case studies",
@@ -63,9 +64,15 @@ export default function WorkIndex() {
               </span>
 
               <span className="lg:col-span-7">
-                <span className="block text-[1.2rem] leading-snug text-ink sm:text-[1.5rem]">
-                  {project.title}
-                </span>
+                <ViewTransition
+                  name={`work-title-${project.slug}`}
+                  share="morph"
+                  default="none"
+                >
+                  <span className="block text-[1.2rem] leading-snug text-ink sm:text-[1.5rem]">
+                    {project.title}
+                  </span>
+                </ViewTransition>
                 <span className="measure mt-2 block text-sm leading-relaxed text-muted">
                   {project.blurb}
                 </span>

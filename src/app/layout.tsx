@@ -4,6 +4,7 @@ import "./globals.css";
 import { site } from "@/content/site";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             Skip to content
           </a>
           <SmoothScroll />
+          <ScrollProgress />
           <Nav />
           <main id="main" className="flex-1">
             {children}
