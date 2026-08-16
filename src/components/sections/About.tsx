@@ -26,6 +26,27 @@ export function About() {
         </div>
 
         <div>
+          {site.portrait ? (
+            <Reveal delay={0.05}>
+              <figure className="rule-t mb-10 pt-4">
+                {/* Cut out of its studio backdrop so it sits on the page rather
+                    than in a box, which keeps the layout free of a coloured
+                    rectangle the palette has no room for. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={site.portrait.src}
+                  alt={site.portrait.alt}
+                  width={site.portrait.width}
+                  height={site.portrait.height}
+                  className="w-full max-w-[280px] select-none"
+                />
+                <figcaption className="label mt-2">
+                  {site.name}, {site.location}
+                </figcaption>
+              </figure>
+            </Reveal>
+          ) : null}
+
           <Reveal delay={0.1}>
             <div className="rule-t pt-4">
               <p className="label">Education</p>

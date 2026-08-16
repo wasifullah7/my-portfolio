@@ -25,6 +25,17 @@ export const site = {
   ],
   location: "Lahore, Pakistan",
   locationNote: "Open to remote",
+  /**
+   * Portrait shown in the About section. Set to null to remove it everywhere;
+   * nothing else needs changing. Generated from the original studio shot with
+   * scripts/remove-background.mjs.
+   */
+  portrait: {
+    src: "/wasif-ullah.webp",
+    width: 400,
+    height: 400,
+    alt: "Wasif Ullah, smiling, arms folded",
+  } as { src: string; width: number; height: number; alt: string } | null,
   email: "wasif.wwez@gmail.com",
   phone: "+92 318 9340438",
   phoneHref: "+923189340438",
