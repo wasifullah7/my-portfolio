@@ -50,6 +50,66 @@ export const projects: Project[] = [
       "0.83 mAP on detection and 97% arrow-association accuracy against industry benchmarks, with output consumed directly by downstream frontend and enterprise integrations.",
   },
   {
+    slug: "pptx-adaptation-agent",
+    title: "PPTX Adaptation Agent",
+    context: "Strategy-consulting client",
+    year: "2026",
+    blurb:
+      "Give it a PowerPoint deck and a new topic. It rewrites every piece of text for a different domain while leaving geometry, typography and z-order untouched, then renders the slide and looks at its own work to check it.",
+    highlights: [
+      "Domain-driven architecture with a strictly one-way dependency rule, so the agent has no path to the filesystem except through use cases that enforce its own policies.",
+      "Nine tools wrapping single use cases, including a guarded resize with seven policy checks and a test asserting the repository is never called when a resize is rejected.",
+      "Self-correction loop: generate, validate fit, inject, render, then run vision QA on the pixels and feed the findings back as hard corrections.",
+      "Caps its repair passes, then enumerates residual issues honestly rather than declaring success.",
+    ],
+    stack: ["Python", "LangChain v1", "LangGraph", "Anthropic SDK", "python-pptx", "LibreOffice", "Next.js"],
+    metrics: [
+      { value: "1,197", label: "test functions" },
+      { value: "113k", label: "lines across 422 files" },
+    ],
+    image: "/projects/pptx-agent.webp",
+    problem:
+      "PPTX manipulation has no tolerance for nondeterminism: two runs on the same file must produce the same XML or the agent cannot reason about its own output. But the interesting work is the judgment between steps. Does the generated text actually fit? Is that large upper-left shape a title or a heading? When the render looks wrong but the character counts said it would fit, which do you trust? A fixed pipeline cannot make those calls.",
+    approach: [
+      "Split the system so the model decides content and repair strategy while deterministic, tested code does every file mutation, validation and render.",
+      "Put the resize policy inside the use case rather than in a prompt, so there is structurally no path from the agent to the geometry that skips the guardrails.",
+      "Verify with a different modality than the one that generated: the writer works from the file, the inspector works from the rendered pixels.",
+      "Feed vision findings back as a hint to the content generator, then re-render and re-inspect, with a hard cap on passes.",
+    ],
+    outcome:
+      "On the documented run the loop actually fired. Vision QA caught an overlap the character counts had missed, the agent regenerated, re-injected and re-inspected, and finished clean with geometry untouched. A system catching and fixing its own mistake, with the trace to prove it.",
+  },
+  {
+    slug: "voice-platform-architecture",
+    title: "On-Premise Voice AI Platform",
+    context: "Architecture engagement, healthcare client",
+    year: "2026",
+    blurb:
+      "Architecture and delivery leadership for a four-workstream, on-premise Kubernetes voice platform: a real-time telephony agent, call analytics, an internal knowledge assistant and live agent assist, all designed under HIPAA constraints.",
+    highlights: [
+      "Real-time path from the phone network through a SIP trunk and LiveKit into streaming speech recognition, a gRPC gateway, vLLM and speech synthesis, with warm transfer to a human.",
+      "Compliance treated as an architectural constraint: explicit trust boundaries for patient data, an immutable audit log, mutual TLS between services, and a legal gate on any third-party model.",
+      "Models chosen for licensing as much as quality, with the banned components drawn inside the diagrams so reviewers can see what was excluded and why.",
+      "A diagramming style guide fixing file naming, a shared class import and a palette where each colour carries a defined meaning, enforced at review time.",
+    ],
+    stack: ["Kubernetes", "LiveKit", "SIP", "vLLM", "Qdrant", "PostgreSQL", "gRPC", "LangGraph", "Prometheus"],
+    metrics: [
+      { value: "4", label: "parallel workstreams" },
+      { value: "500", label: "concurrent calls targeted" },
+    ],
+    image: "/projects/voice-architecture.webp",
+    problem:
+      "A healthcare communications company needed voice AI that could never send patient data to a third-party API, had to run on their own hardware, and had to survive an audit. That rules out most of the obvious stack, so the constraint had to drive the architecture rather than be bolted on afterwards.",
+    approach: [
+      "Design four workstreams as one coherent system rather than four projects that happen to share a cluster.",
+      "Select only permissively licensed speech and synthesis models, and record the rejected ones inside the architecture diagrams.",
+      "Separate GPU and CPU nodes explicitly, and put continuous batching in front of the language model so concurrency is a capacity question rather than a surprise.",
+      "Write the decisions down as architecture decision records, with research and benchmarks behind each one.",
+    ],
+    outcome:
+      "A full architecture specification, decision records, capacity and model-selection research, and a phased delivery plan. My role was architect and delivery lead: I designed and documented the system and ran the client cadence, rather than writing the production code.",
+  },
+  {
     slug: "voice-ai-platform",
     title: "Production Voice AI Platform",
     context: "Production deployment",
@@ -86,61 +146,65 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "eleqtric",
-    title: "Ele(Q)tric",
-    context: "Q-volution Hackathon",
+    slug: "template-matching-fit-studio",
+    title: "Template Matching & Fit Studio",
+    context: "Open source",
     year: "2026",
     blurb:
-      "Quantum optimisation for power-grid resilience, running QAOA on real quantum hardware to cut blackout exposure.",
+      "Given content as JSON, it picks the best-fit slide template by scoring both shape and meaning, fills it, renders it, reads it back with OCR, and repairs it when the pixels disagree with the file.",
     highlights: [
-      "Applied the Quantum Approximate Optimization Algorithm to Max-Cut over electricity distribution networks.",
-      "Introduced light-cone decomposition as quantum preconditioning, partitioning large grids into subgraphs that fit hardware limits for roughly a 10x speedup over standard QAOA.",
-      "Executed against Rigetti's 84-qubit Ankaa-3 QPU via PyQuil and Quantum Cloud Services, with an interactive dashboard for circuits, measurements, and sustainability metrics.",
+      "A vision model labels every region of each template once, permanently, so content is never written into a logo or a caption.",
+      "Every generated slide is rendered and read back with OCR, checking for text that is missing, cut off, too small or overlapping, plus a colour-drift check against the brand.",
+      "Semantic topic matching runs on a local embedding model rather than an API call, which is both a cost and a privacy decision.",
+      "When the file and the pixels disagree, the pixels win, so a slide that looks broken cannot quietly pass.",
     ],
-    stack: ["React", "TypeScript", "PyQuil", "Rigetti Ankaa-3", "QAOA", "Vite"],
+    stack: ["Python", "FastAPI", "PaddleOCR", "sentence-transformers", "python-pptx", "React", "Vite"],
     metrics: [
-      { value: "84", label: "qubit QPU" },
-      { value: "10x", label: "speedup vs standard QAOA" },
+      { value: "26k", label: "lines across 169 files" },
+      { value: "130", label: "of 130 commits mine" },
     ],
-    image: "/projects/eleqtric.webp",
-    repoUrl: "https://github.com/wasifullah7/Q-volution-Hackathon",
-    demoUrl: "https://q-volution-hackathon-theta.vercel.app/",
+    image: "/projects/fit-studio.webp",
+    repoUrl: "https://github.com/wasifullah-12/AI-PPT-Generation",
     problem:
-      "Partitioning a power grid to minimise blackout cascade is a Max-Cut problem, which is NP-hard and grows intractable fast. Quantum hardware is theoretically suited to it, but real QPUs have too few qubits and too much noise to take a full grid graph directly.",
+      "Earlier versions trusted the file. If every bullet found a box, the slide passed. But a file can pass while the slide looks broken: text spilling out of its shape, sitting under a logo, or shrunk too small to read. Geometry alone also cannot tell a logo caption from a real bullet, because they cluster into the same neat rows.",
     approach: [
-      "Formulate grid partitioning as Max-Cut and solve with the Quantum Approximate Optimization Algorithm.",
-      "Apply light-cone decomposition as a preconditioning step, splitting the graph into subgraphs small enough to fit hardware limits while preserving the structure that matters.",
-      "Execute against Rigetti's 84-qubit Ankaa-3 QPU through PyQuil and Quantum Cloud Services rather than a simulator.",
-      "Surface circuits, measurement distributions and sustainability metrics in an interactive React dashboard so the result is inspectable, not a black box.",
+      "Generate one way and verify another: the filler works from the file, the checker works from the pixels.",
+      "Score templates on two axes, how much content they can physically hold and what they are actually about, then add the scores and take the highest.",
+      "Label template regions once with a vision model and store that as permanent ground truth.",
+      "Run a bounded repair loop that shortens overflowing text and re-fits, keeping the best attempt rather than looping forever.",
     ],
     outcome:
-      "Roughly a 10x speedup over standard QAOA on the same problems, running on real quantum hardware with a live public demo.",
+      "A service that produces slides verified visually rather than assumed correct, with the whole matching and repair path covered by tests.",
   },
   {
-    slug: "ai-career-coach",
-    title: "AI Career Coach",
-    context: "Independent",
-    year: "2025",
+    slug: "crm-platform",
+    title: "CRM Platform",
+    context: "Team of five, lead author",
+    year: "2026",
     blurb:
-      "A job recommendation engine built on retrieval-augmented generation over live labour-market data.",
+      "A complete internal CRM: lead pipeline, projects and tasks, role-based access, real-time notifications, threaded comments with mentions, file attachments and a KPI dashboard.",
     highlights: [
-      "RAG pipeline backed by a Pinecone vector database, matching candidate profiles to postings by embedding similarity rather than keyword overlap.",
-      "Evaluated against live job-market data, reaching 89% predictive accuracy.",
-      "Served through a FastAPI REST layer with LangChain orchestrating retrieval and generation.",
+      "23 database models and an opinionated lead state machine, rather than a generic table with a status column.",
+      "The test suite refuses to start unless the target database name ends in _test. That guardrail is written by someone who has been burned, or thought hard enough not to be.",
+      "CPU-only PyTorch pinned in the Docker build to stop multi-gigabyte CUDA wheels breaking image builds, a diagnosed fix rather than a guess.",
+      "Production posture written down: run migrations explicitly, keep docs endpoints disabled, front the app with a reverse proxy.",
     ],
-    stack: ["FastAPI", "LangChain", "Pinecone", "Python", "REST API"],
-    metrics: [{ value: "89%", label: "predictive accuracy" }],
-    image: "/projects/ai-career-coach.webp",
+    stack: ["FastAPI", "PostgreSQL", "Redis", "React 19", "TanStack Query", "Docker", "Alembic"],
+    metrics: [
+      { value: "48k", label: "lines across 288 files" },
+      { value: "88", label: "of 129 commits mine" },
+    ],
+    image: "/projects/crm.webp",
     problem:
-      "Job boards match on keywords. A CV that says PyTorch never surfaces a posting that says deep learning framework, even when it is the same job. That is not a ranking problem, it is a vocabulary problem, and no amount of filter tuning fixes it.",
+      "Sales, delivery and support all needed the same records but wanted different views of them, and the process was running on spreadsheets and message threads. The hard part was not any single feature. It was making one permission model and one notification system serve several roles without turning into a maze.",
     approach: [
-      "Embed both sides, candidate profiles and job postings, so matching happens on meaning instead of exact words.",
-      "Store the vectors in Pinecone and retrieve by similarity, then let the language model explain why a given role fits.",
-      "Evaluate against live job-market data rather than a static sample, because postings drift and a model tuned on last year's wording quietly rots.",
-      "Serve it through FastAPI with LangChain handling retrieval and generation.",
+      "Model the domain properly first, including the states a lead can actually be in and which transitions are legal.",
+      "Put role-based access at the API layer, so the frontend is never the thing enforcing it.",
+      "Run the whole stack under Docker Compose, so a new developer gets a working database, cache and app in one command.",
+      "Treat operations as part of the product: migration chain, health checks, and guardrails against destructive test runs.",
     ],
     outcome:
-      "89% predictive accuracy on live job-market data, with matches that hold up when the posting and the CV use completely different words for the same skill.",
+      "A deployed internal platform used across sales and delivery. I was lead backend engineer on a team of five and wrote 88 of the 129 commits.",
   },
   {
     slug: "document-intelligence-pipeline",
@@ -172,6 +236,150 @@ export const projects: Project[] = [
     outcome:
       "Invoices, resumes and utility bills parsed to structured JSON with zero cloud calls, exposed through a FastAPI service with Swagger docs.",
     relatedPosts: ["how-i-built-a-document-ai-that-runs-fully-offline"],
+  },
+  {
+    slug: "eleqtric",
+    title: "Ele(Q)tric",
+    context: "Q-volution Hackathon",
+    year: "2026",
+    blurb:
+      "Quantum optimisation for power-grid resilience, running QAOA on real quantum hardware to cut blackout exposure.",
+    highlights: [
+      "Applied the Quantum Approximate Optimization Algorithm to Max-Cut over electricity distribution networks.",
+      "Introduced light-cone decomposition as quantum preconditioning, partitioning large grids into subgraphs that fit hardware limits for roughly a 10x speedup over standard QAOA.",
+      "Executed against Rigetti's 84-qubit Ankaa-3 QPU via PyQuil and Quantum Cloud Services, with an interactive dashboard for circuits, measurements, and sustainability metrics.",
+    ],
+    stack: ["React", "TypeScript", "PyQuil", "Rigetti Ankaa-3", "QAOA", "Vite"],
+    metrics: [
+      { value: "84", label: "qubit QPU" },
+      { value: "10x", label: "speedup vs standard QAOA" },
+    ],
+    image: "/projects/eleqtric.webp",
+    repoUrl: "https://github.com/wasifullah7/Q-volution-Hackathon",
+    demoUrl: "https://q-volution-hackathon-theta.vercel.app/",
+    problem:
+      "Partitioning a power grid to minimise blackout cascade is a Max-Cut problem, which is NP-hard and grows intractable fast. Quantum hardware is theoretically suited to it, but real QPUs have too few qubits and too much noise to take a full grid graph directly.",
+    approach: [
+      "Formulate grid partitioning as Max-Cut and solve with the Quantum Approximate Optimization Algorithm.",
+      "Apply light-cone decomposition as a preconditioning step, splitting the graph into subgraphs small enough to fit hardware limits while preserving the structure that matters.",
+      "Execute against Rigetti's 84-qubit Ankaa-3 QPU through PyQuil and Quantum Cloud Services rather than a simulator.",
+      "Surface circuits, measurement distributions and sustainability metrics in an interactive React dashboard so the result is inspectable, not a black box.",
+    ],
+    outcome:
+      "Roughly a 10x speedup over standard QAOA on the same problems, running on real quantum hardware with a live public demo.",
+  },
+  {
+    slug: "voice-ai-assessment",
+    title: "Voice AI Production Readiness Audit",
+    context: "Advisory, healthcare voice platform",
+    year: "2026",
+    blurb:
+      "A first-principles assessment of a multi-tenant healthcare voice platform, concluding it was not architecturally sound for its 500-concurrent-call target, with five ranked flaws and a costed remediation roadmap.",
+    highlights: [
+      "A global mutable config singleton shared across requests, which on a multi-tenant healthcare platform is a data-leakage path, not a code smell.",
+      "Blocking synchronous calls inside the async event loop, so token-refresh storms stall every call on the machine under load.",
+      "In-memory state and local audit logs, meaning a restart drops live calls and horizontal scaling produces inconsistency.",
+      "Findings ranked by severity with each dimension scored separately, rather than flattened into one comfortable number.",
+    ],
+    stack: ["FastAPI", "LiveKit", "asyncio", "Redis", "AWS", "Distributed systems"],
+    metrics: [
+      { value: "5", label: "critical findings" },
+      { value: "12-16", label: "week remediation plan" },
+    ],
+    image: "/projects/voice-audit.webp",
+    problem:
+      "The platform worked in demos and small pilots, and the team wanted to know whether it would hold at 500 concurrent calls. Answering that honestly meant reasoning from principles rather than counting bugs, because the failures at that scale are architectural and do not show up in a small test.",
+    approach: [
+      "Name the distributed-systems principles the system violates, then derive the consequences, instead of listing symptoms.",
+      "Separate what breaks correctness from what breaks scale, because they deserve different urgency.",
+      "Phase the remediation so the highest-risk fixes land first and every phase leaves the system shippable.",
+      "Put a number on both sides: the cost of doing nothing, and the cost of the fix.",
+    ],
+    outcome:
+      "A ranked assessment with a four-phase roadmap, delivered as an advisory engagement. I audited the system and designed the remediation. I did not write the production code.",
+  },
+  {
+    slug: "log-sentinel",
+    title: "Log Sentinel",
+    context: "Open source",
+    year: "2026",
+    blurb:
+      "A compact security monitoring and automated-response stack: normalise heterogeneous logs into one event schema, deduplicate incidents by fingerprint, provision detection rules from version control, and fire playbooks.",
+    highlights: [
+      "Detection rules live in git as files, so changing a detection is a reviewed commit rather than a click in a console.",
+      "Incidents deduplicate by fingerprint, which is what stops one noisy source burying everything else.",
+      "API sources poll with cursor checkpoints, so a restart neither replays nor skips events.",
+      "About a thousand lines in total. The restraint is the point.",
+    ],
+    stack: ["FastAPI", "OpenSearch", "Fluent Bit", "PostgreSQL", "Shuffle"],
+    metrics: [
+      { value: "1,050", label: "lines across 29 files" },
+      { value: "100%", label: "detection rules in git" },
+    ],
+    image: "/projects/log-sentinel.webp",
+    problem:
+      "Small teams get told they need a security operations centre, price one, and give up. Most of the value sits in a handful of behaviours: collect logs in one shape, notice when the same incident arrives twice, and act automatically on the obvious cases.",
+    approach: [
+      "Normalise every source into one compact event schema at ingestion, so downstream code never branches on source type.",
+      "Keep detection rules as version-controlled files and provision them into the search cluster from there.",
+      "Fingerprint incidents so repeats collapse instead of paging someone five times.",
+      "Gate the automated-response stack behind a profile, so it can be run or omitted per environment.",
+    ],
+    outcome:
+      "Minimum viable security operations: detection as code, deduplication and automated response, in about a thousand lines.",
+  },
+  {
+    slug: "lti-integration",
+    title: "LTI 1.3 Advantage Integration",
+    context: "Education-technology client",
+    year: "2026",
+    blurb:
+      "A standards-compliant wrapper letting a client web application plug into Canvas and Moodle with single sign-on, embedded display, content selection and grade passback, without changing a line of their existing code.",
+    highlights: [
+      "The requirement was absolute: do not touch the current sign-on code, just wrap it. So the integration only ever adds files.",
+      "The whole layer switches on with one environment variable. If it is absent, the application behaves exactly as it did before.",
+      "The handoff into the existing sign-on happens at exactly one documented seam, the same one their current provider uses.",
+      "A full test environment was built against real Canvas and Moodle instances, because standards compliance cannot be asserted, only demonstrated.",
+    ],
+    stack: ["Java 17", "Spring Boot", "Spring Security", "LTI 1.3", "Canvas", "Moodle"],
+    metrics: [{ value: "1", label: "environment variable kill switch" }],
+    image: "/projects/lti.webp",
+    problem:
+      "The client had a working application with its own single sign-on and would not accept changes to it. It still had to appear inside two different learning management systems as a first-class tool, which normally means threading a new identity flow straight through existing authentication code.",
+    approach: [
+      "Make every change additive, so the existing code paths are untouched and the diff stays reviewable.",
+      "Gate the entire layer behind one environment variable, giving the client a kill switch they control.",
+      "Implement the five LTI Advantage mechanisms against the specification rather than against one vendor's behaviour.",
+      "Stand up real Canvas and Moodle instances and prove the flows end to end.",
+    ],
+    outcome:
+      "A standards-compliant bridge delivered as a wrapper, with the client's original code and its behaviour intact, and a documented way to switch the whole thing off.",
+  },
+  {
+    slug: "ai-career-coach",
+    title: "AI Career Coach",
+    context: "Independent",
+    year: "2025",
+    blurb:
+      "A job recommendation engine built on retrieval-augmented generation over live labour-market data.",
+    highlights: [
+      "RAG pipeline backed by a Pinecone vector database, matching candidate profiles to postings by embedding similarity rather than keyword overlap.",
+      "Evaluated against live job-market data, reaching 89% predictive accuracy.",
+      "Served through a FastAPI REST layer with LangChain orchestrating retrieval and generation.",
+    ],
+    stack: ["FastAPI", "LangChain", "Pinecone", "Python", "REST API"],
+    metrics: [{ value: "89%", label: "predictive accuracy" }],
+    image: "/projects/ai-career-coach.webp",
+    problem:
+      "Job boards match on keywords. A CV that says PyTorch never surfaces a posting that says deep learning framework, even when it is the same job. That is not a ranking problem, it is a vocabulary problem, and no amount of filter tuning fixes it.",
+    approach: [
+      "Embed both sides, candidate profiles and job postings, so matching happens on meaning instead of exact words.",
+      "Store the vectors in Pinecone and retrieve by similarity, then let the language model explain why a given role fits.",
+      "Evaluate against live job-market data rather than a static sample, because postings drift and a model tuned on last year's wording quietly rots.",
+      "Serve it through FastAPI with LangChain handling retrieval and generation.",
+    ],
+    outcome:
+      "89% predictive accuracy on live job-market data, with matches that hold up when the posting and the CV use completely different words for the same skill.",
   },
   {
     slug: "hrms-platform",

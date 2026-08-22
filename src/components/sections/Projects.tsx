@@ -19,7 +19,7 @@ export function Projects() {
       />
 
       <div className="mt-14">
-        {projects.map((project, i) => (
+        {projects.slice(0, 6).map((project, i) => (
           <ProjectEntry key={project.slug} project={project} index={i} />
         ))}
         <div className="rule-t" />
