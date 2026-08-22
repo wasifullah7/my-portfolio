@@ -13,14 +13,15 @@ export const site = {
   name: "Wasif Ullah",
   role: "Full-Stack AI Engineer",
   roleLines: ["Full-Stack", "AI Engineer"],
-  disciplines: ["Computer Vision", "LLM Engineering", "Cloud Infrastructure"],
+  disciplines: ["Voice AI", "Computer Vision", "Real-Time Systems"],
   tagline:
-    "Most AI demos work. Very few survive real data. I build the ones that do: diagram recognition at 0.83 mAP, voice agents answering in under 300ms, and the backend that keeps both up.",
+    "Most AI demos work. Very few survive real data. I build the ones that do: voice agents that answer in under 300ms on a live phone line, diagram recognition at 0.83 mAP, and the infrastructure that keeps both up.",
   bio: [
-    "I am a Full-Stack AI Engineer at Strateger AI, in Lahore. For two years I have been shipping AI systems for clients in the UK, EU and US.",
-    "My main project is the AI Board Scanner. It reads engineering diagrams and turns them into structured JSON, using RF-DETR for detection, PaddleOCR for the text, and SAM2 for segmentation. It hits 0.83 mAP and gets the arrow connections right 97% of the time.",
-    "The models were never the hard part. The hard part was working out which arrow connects which two boxes when the shapes overlap and OCR drops half the characters. That took KD-trees, binary masks and BFS skeletonisation, and a lot of looking at drawings that broke my assumptions.",
-    "Before this I built production platforms at Gojins and UNAZ Legal Services. A full HRMS handling payroll and attendance for a UK client. A portfolio builder with live editing and custom domains. Case management tooling for a legal firm in Hull.",
+    "I am a Voice AI and Full-Stack AI Engineer at RTC League, in Lahore. For two years I have been shipping AI systems for clients in the UK, EU and US.",
+    "Most of my work is real-time voice. Agents that pick up a live phone call, understand it, answer from a knowledge base and hand off to a human when they should. I have taken that loop from 1.8 seconds down to under 300 milliseconds, tuned vLLM across a GPU cluster so it holds up under concurrent calls, and designed an on-premise platform for a healthcare client where patient data was never allowed to leave their hardware.",
+    "Latency is not a metric in voice AI. It is the product. Nobody forgives a system that pauses for a second and a half, because people read that pause as the line going dead.",
+    "The other half is vision. The AI Board Scanner reads engineering diagrams and turns them into structured JSON using RF-DETR, PaddleOCR and SAM2. It hits 0.83 mAP and gets the arrow connections right 97% of the time. The models were never the hard part. The hard part was working out which arrow connects which two boxes when the shapes overlap and OCR drops half the characters.",
+    "Before this I built production platforms at Gojins and UNAZ Legal Services: a full HRMS handling payroll and attendance for a UK client, a portfolio builder with live editing and custom domains, and case management tooling for a legal firm in Hull.",
     "The thread through all of it: I care about what happens after the demo. Real inputs, measured results, containers, and infrastructure I can reason about at 3am.",
   ],
   location: "Lahore, Pakistan",
@@ -40,7 +41,7 @@ export const site = {
   phone: "+92 318 9340438",
   phoneHref: "+923189340438",
   availability: "Open to AI engineering and full-stack roles",
-  currentRole: "Strateger AI",
+  currentRole: "RTC League",
   url: SITE_URL,
   resumePath: "/resume.pdf",
   links: {
@@ -100,11 +101,11 @@ export const hire = {
   faqs: [
     {
       q: "What kind of roles are you looking for?",
-      a: "Full-stack AI engineering. Computer vision, retrieval systems, and the backend around them. Remote-first, or onsite in Lahore. Permanent or contract, both fine.",
+      a: "Voice AI and full-stack AI engineering. Real-time agents, computer vision, retrieval systems, and the backend around them. Remote-first, or onsite in Lahore. Permanent or contract, both fine.",
     },
     {
       q: "What do you actually build?",
-      a: "Right now, a diagram recognition pipeline using RF-DETR, PaddleOCR and SAM2 that reads engineering drawings and outputs structured JSON. Before that, real-time voice agents on Twilio and LiveKit, cut from 1.8 seconds of latency to under 300ms.",
+      a: "Mostly real-time voice agents: LiveKit and SIP telephony in front of vLLM, with retrieval over a live knowledge base, cut from 1.8 seconds of latency to under 300ms. Alongside that, a diagram recognition pipeline using RF-DETR, PaddleOCR and SAM2 that reads engineering drawings and outputs structured JSON.",
     },
     {
       q: "Have you worked with international teams?",

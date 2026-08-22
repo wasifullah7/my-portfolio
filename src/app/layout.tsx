@@ -19,7 +19,7 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const description = `${site.name} is a ${site.role} in ${site.location}, building computer-vision pipelines, RAG systems and production backends. Currently at Strateger AI.`;
+const description = `${site.name} is a ${site.role} in ${site.location}, building computer-vision pipelines, RAG systems and production backends. Currently at RTC League.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -79,7 +79,7 @@ const jsonLd = {
   email: `mailto:${site.email}`,
   telephone: site.phone,
   url: site.url,
-  worksFor: { "@type": "Organization", name: "Strateger AI" },
+  worksFor: { "@type": "Organization", name: "RTC League" },
   alumniOf: { "@type": "CollegeOrUniversity", name: site.education.school },
   knowsAbout: [
     "Computer Vision",

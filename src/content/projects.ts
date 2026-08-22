@@ -23,7 +23,7 @@ export const projects: Project[] = [
   {
     slug: "ai-board-scanner",
     title: "AI Board Scanner",
-    context: "Strateger AI / Production",
+    context: "RTC League / Production",
     year: "2025",
     blurb:
       "A diagram-recognition pipeline that reads engineering drawings and emits them as structured JSON.",

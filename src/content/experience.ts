@@ -16,21 +16,24 @@ export type Role = {
  */
 export const experience: Role[] = [
   {
-    company: "Strateger AI",
-    title: "Full-Stack AI Engineer",
+    company: "RTC League",
+    title: "Voice AI & Full-Stack AI Engineer",
     location: "Lahore, onsite",
     period: "Jul 2025 / Present",
     current: true,
     summary:
-      "Computer vision and AI microservices for enterprise clients in the UK, EU and beyond. Most of my time goes on the diagram recognition pipeline.",
+      "Real-time voice agents and computer-vision pipelines for enterprise clients in the UK, EU and beyond. Most of my time goes on making live calls fast enough to feel like a conversation.",
     points: [
+      "Built real-time voice agents on LiveKit and SIP telephony, streaming audio rather than waiting on complete turns, and cut end-to-end response from 1.8 seconds to under 300 milliseconds.",
+      "Tuned vLLM across a multi-node GPU cluster with continuous batching so throughput holds when many calls arrive at once, and built hybrid retrieval combining vector and keyword search that returns grounded answers in under 150 milliseconds.",
+      "Designed an on-premise voice platform for a healthcare client where patient data could never leave their hardware, covering telephony, call analytics, a knowledge assistant and live agent assist.",
       "Architected and deployed the AI Board Scanner, an end-to-end diagram recognition system combining RF-DETR object detection, PaddleOCR text extraction, and SAM2 segmentation, achieving 0.83 mAP and 97% arrow-association accuracy against industry benchmarks.",
       "Built dynamic binary mask pipelines and spatial algorithms using KD-trees, BFS skeletonisation, and colour and angle detection logic to extract complex graphs from diagrams with overlapping objects and OCR gaps.",
       "Developed and dockerised FastAPI REST services for scalable deployment across AWS EC2 and S3, emitting structured JSON consumed by downstream frontend and enterprise integrations.",
       "Automated cloud infrastructure with Terraform and Terragrunt, supporting consistent rollout of AI microservices across multiple enterprise regions.",
       "Implemented CI/CD with GitHub Actions and Docker to streamline build, test, and deployment cycles across the AI backend.",
     ],
-    stack: ["RF-DETR", "SAM2", "PaddleOCR", "PyTorch", "FastAPI", "Docker", "Terraform", "AWS"],
+    stack: ["LiveKit", "SIP", "vLLM", "WebRTC", "RF-DETR", "SAM2", "PaddleOCR", "FastAPI", "Docker", "Terraform", "AWS"],
   },
   {
     company: "Gojins",
@@ -43,6 +46,9 @@ export const experience: Role[] = [
       "Designed and built a comprehensive HRMS covering leave tracking, payroll, attendance, performance reviews, and analytics dashboards, backed by secure REST APIs, PostgreSQL, MongoDB, and JWT authentication.",
       "Developed a real-time Portfolio Builder letting users create, update, and publish personal sites with live editing and custom domain support.",
       "Engineered business management and equipment troubleshooting platforms on dual-database architectures combining PostgreSQL and MongoDB.",
+      "Built a CRM covering the lead pipeline, projects and tasks, with role-based access, threaded comments and a KPI dashboard, as lead backend engineer on a team of five.",
+      "Shipped a two-service image moderation API and cut its median response from 1.67 seconds to 170 milliseconds without touching the model or losing accuracy.",
+      "Delivered a standards-compliant LMS integration for an education client as a pure wrapper, adding only new files and leaving their existing sign-on code untouched.",
       "Integrated ML-driven logic for predictive diagnostics, smart recommendations, and adaptive workflow automation.",
       "Maintained reliability through Jest unit and integration testing while shipping on tight Agile delivery cycles.",
     ],
