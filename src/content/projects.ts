@@ -107,7 +107,7 @@ export const projects: Project[] = [
       "Write the decisions down as architecture decision records, with research and benchmarks behind each one.",
     ],
     outcome:
-      "A full architecture specification, decision records, capacity and model-selection research, and a phased delivery plan. My role was architect and delivery lead: I designed and documented the system and ran the client cadence, rather than writing the production code.",
+      "A full architecture specification, decision records, capacity and model-selection research, and a phased delivery plan. I led the architecture and the delivery plan: the specification, the decision records, the model and capacity research, and the weekly client cadence.",
   },
   {
     slug: "voice-ai-platform",
@@ -296,7 +296,37 @@ export const projects: Project[] = [
       "Put a number on both sides: the cost of doing nothing, and the cost of the fix.",
     ],
     outcome:
-      "A ranked assessment with a four-phase roadmap, delivered as an advisory engagement. I audited the system and designed the remediation. I did not write the production code.",
+      "A ranked assessment with a costed four-phase roadmap, and the reasoning behind every finding written down so the team could act on it without me in the room.",
+  },
+  {
+    slug: "voice-assistant-audit",
+    title: "Municipal Voice Assistant Audit",
+    context: "Advisory, German municipal provider",
+    year: "2026",
+    blurb:
+      "A deep audit of a production German municipal voice assistant, scoring it 5.5 out of 10: strong architecture undermined by concurrency, security and resource-management issues, with 18 ranked findings.",
+    highlights: [
+      "Five race conditions firing on every call, because shared mutable state had no locks anywhere in the system.",
+      "Three exploitable injection paths, including speech-markup injection through unescaped text on its way to the synthesiser.",
+      "HTTP clients leaked per request and synchronous database calls sat inside the audio path, so latency grew with load rather than staying flat.",
+      "Each dimension scored separately, so an eight out of ten on architecture could not hide a four on concurrency safety.",
+    ],
+    stack: ["Python", "LiveKit Agents", "Azure Speech", "RAG", "PostgreSQL", "asyncio"],
+    metrics: [
+      { value: "18", label: "ranked findings" },
+      { value: "5.5", label: "overall score out of 10" },
+    ],
+    image: "/projects/voice-assistant-audit.webp",
+    problem:
+      "The system was live, serving a municipality, and the architecture was genuinely good: clean separation, a smart multi-stage retrieval pipeline, real multitenancy. That is exactly the situation where problems hide, because the shape is right and nobody looks closer at what happens under concurrent load.",
+    approach: [
+      "Score each dimension separately rather than producing one number, so strengths cannot mask the weaknesses.",
+      "Trace shared mutable state through a single call to find where two concurrent calls touch the same object.",
+      "Follow untrusted text all the way to where it is interpreted, which is where the injection paths were.",
+      "Estimate the fix for each finding, so the ranking is by value and not just by severity.",
+    ],
+    outcome:
+      "Eighteen findings ranked by severity, four of them critical, with roughly eight hours of estimated fixes for the ones that mattered most. Strong architecture, specific and addressable flaws.",
   },
   {
     slug: "log-sentinel",
