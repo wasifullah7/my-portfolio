@@ -146,37 +146,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "template-matching-fit-studio",
-    title: "Template Matching & Fit Studio",
-    context: "Open source",
-    year: "2026",
-    blurb:
-      "Given content as JSON, it picks the best-fit slide template by scoring both shape and meaning, fills it, renders it, reads it back with OCR, and repairs it when the pixels disagree with the file.",
-    highlights: [
-      "A vision model labels every region of each template once, permanently, so content is never written into a logo or a caption.",
-      "Every generated slide is rendered and read back with OCR, checking for text that is missing, cut off, too small or overlapping, plus a colour-drift check against the brand.",
-      "Semantic topic matching runs on a local embedding model rather than an API call, which is both a cost and a privacy decision.",
-      "When the file and the pixels disagree, the pixels win, so a slide that looks broken cannot quietly pass.",
-    ],
-    stack: ["Python", "FastAPI", "PaddleOCR", "sentence-transformers", "python-pptx", "React", "Vite"],
-    metrics: [
-      { value: "26k", label: "lines across 169 files" },
-      { value: "130", label: "of 130 commits mine" },
-    ],
-    image: "/projects/fit-studio.webp",
-    repoUrl: "https://github.com/wasifullah-12/AI-PPT-Generation",
-    problem:
-      "Earlier versions trusted the file. If every bullet found a box, the slide passed. But a file can pass while the slide looks broken: text spilling out of its shape, sitting under a logo, or shrunk too small to read. Geometry alone also cannot tell a logo caption from a real bullet, because they cluster into the same neat rows.",
-    approach: [
-      "Generate one way and verify another: the filler works from the file, the checker works from the pixels.",
-      "Score templates on two axes, how much content they can physically hold and what they are actually about, then add the scores and take the highest.",
-      "Label template regions once with a vision model and store that as permanent ground truth.",
-      "Run a bounded repair loop that shortens overflowing text and re-fits, keeping the best attempt rather than looping forever.",
-    ],
-    outcome:
-      "A service that produces slides verified visually rather than assumed correct, with the whole matching and repair path covered by tests.",
-  },
-  {
     slug: "crm-platform",
     title: "CRM Platform",
     context: "Team of five, lead author",
@@ -205,6 +174,37 @@ export const projects: Project[] = [
     ],
     outcome:
       "A deployed internal platform used across sales and delivery. I was lead backend engineer on a team of five and wrote 88 of the 129 commits.",
+  },
+  {
+    slug: "content-moderation-api",
+    title: "Content Moderation API",
+    context: "Production",
+    year: "2026",
+    blurb:
+      "A two-service image moderation pipeline that classifies uploads in real time, escalating anything ambiguous to a second model. Median response cut from 1.67 seconds to 170ms with no change to the model, the thresholds or the accuracy.",
+    highlights: [
+      "Two-tier classification: a fast model handles the clear cases, and only grey-area scores get escalated to a vision transformer for a second opinion.",
+      "An image quality pre-check runs in parallel with classification rather than before it, because neither reads the other's output. That alone was costing 400ms per request.",
+      "Preprocessing moved off pure-JavaScript canvas work, which had been looping over roughly 12 million pixels and handing the model a 36 MB tensor for a single 4K upload.",
+      "Instrumented every stage first. The model was never the bottleneck, which is exactly why profiling came before optimising.",
+    ],
+    stack: ["Node.js", "Express", "FastAPI", "TensorFlow.js", "sharp", "Docker", "Kubernetes", "Prometheus"],
+    metrics: [
+      { value: "170ms", label: "median, from 1.67s" },
+      { value: "96%", label: "accuracy, unchanged" },
+    ],
+    image: "/projects/content-moderation.webp",
+    problem:
+      "The numbers looked fine in staging and then real traffic arrived. A single classification call was taking 1.67 seconds on average, the service level objectives were slipping, and users were waiting on an upload to clear. The obvious suspect was the model, and the obvious suspect was wrong.",
+    approach: [
+      "Instrument every stage with timing before changing anything, so the fix targets the actual cost rather than the assumed one.",
+      "Run the quality check and the classification concurrently, since both only read the same image buffer and neither depends on the other.",
+      "Replace the canvas pixel loop with a native image pipeline, cutting both the work and the size of the tensor handed to the model.",
+      "Keep the second-opinion model for ambiguous scores only, so the expensive path stays rare.",
+    ],
+    outcome:
+      "Median response fell to 170 to 250 milliseconds, an 85% reduction, with accuracy holding at 96%. No infrastructure changes, no threshold changes, and the response shape stayed identical, so nothing downstream had to be touched.",
+    relatedPosts: ["from-167-seconds-to-170ms"],
   },
   {
     slug: "document-intelligence-pipeline",
