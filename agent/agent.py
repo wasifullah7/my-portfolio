@@ -11,9 +11,10 @@ import sys
 
 from dotenv import load_dotenv
 from livekit import agents
-from livekit.agents import Agent, AgentServer, AgentSession, JobContext, room_io
+from livekit.agents import AgentServer, AgentSession, JobContext, room_io
 from livekit.plugins import groq, silero
 
+from booking import PortfolioAgent
 from knowledge import build_instructions, load_digest_sync
 from metrics_bridge import TurnLatency
 from piper_tts import PiperTTS
@@ -73,9 +74,7 @@ async def entrypoint(ctx: JobContext) -> None:
     latency = TurnLatency(ctx.room)
     session.on("metrics_collected", latency.handle)
 
-    agent = Agent(
-        instructions=build_instructions(ctx.proc.userdata["digest"]),
-    )
+    agent = PortfolioAgent(build_instructions(ctx.proc.userdata["digest"]))
 
     await session.start(
         room=ctx.room,

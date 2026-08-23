@@ -31,6 +31,14 @@ system prompt every turn. Untrimmed, that caps a conversation at roughly four
 turns a minute, which is slower than people talk. Trimmed, the whole prompt is
 about 1,700 tokens.
 
+## Booking
+
+Two function tools backed by the Cal.com v2 API let the agent read real
+availability and book an intro call. It reads the email back before booking, will
+not offer a slot the calendar did not return, and books at most once per call.
+Without `CAL_API_KEY` both tools decline politely and it falls back to offering
+the booking link on the page.
+
 ## Guards
 
 The session cap lives here, in `agent.py`, not in the browser. A timer in the
