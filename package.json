@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "new:post": "node scripts/new-post.mjs",
-    "import:medium": "node scripts/import-medium.mjs"
+    "import:medium": "node scripts/import-medium.mjs",
+    "refresh:card": "node ../profile-readme/scripts/generate.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

@@ -434,6 +434,12 @@ html.lenis body {
   }
 }
 
+.github-card svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* --- Skip link -------------------------------------------------------------- */
 
 .skip-link {

@@ -4,7 +4,7 @@ import { Skills } from "@/components/sections/Skills";
 import { Experience } from "@/components/sections/Experience";
 import { Projects } from "@/components/sections/Projects";
 import { Contact } from "@/components/sections/Contact";
-import { GitHubActivity } from "@/components/GitHubActivity";
+import { GitHubCard } from "@/components/sections/GitHubCard";
 import { LatestWriting } from "@/components/sections/LatestWriting";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
       <Experience />
       <Projects />
       <LatestWriting />
-      <GitHubActivity />
+      <GitHubCard />
       <Contact />
     </>
   );
