@@ -12,9 +12,7 @@ import { Reveal } from "@/components/motion/Reveal";
  * its own, which is also why it is inlined: a file in <img> cannot read the
  * page's variables.
  *
- * The GitHub version pairs the readout with an ASCII portrait, which is the
- * convention there. Here it sits next to the actual photograph instead, since
- * an ASCII likeness at 52 columns cannot survive the comparison.
+ * Same layout as the GitHub profile card: ASCII portrait beside the readout.
  *
  * Refresh with `npm run refresh:card`.
  */
@@ -43,25 +41,10 @@ export function GitHubCard() {
       <Reveal delay={0.06}>
         {/* A panel rather than bare page, so the readout reads as one object.
             Both surfaces are theme tokens: near-white in light, near-black in dark. */}
-        <div className="profile-panel mt-12 grid gap-10 rounded-xl border border-rule bg-paper-2 p-8 sm:p-10 lg:grid-cols-[240px_1fr] lg:gap-14">
-          {site.portrait ? (
-            <figure className="max-w-[240px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={site.portrait.src}
-                alt={site.portrait.alt}
-                width={site.portrait.width}
-                height={site.portrait.height}
-                loading="lazy"
-                className="w-full select-none"
-              />
-              <figcaption className="label mt-2">{site.name}</figcaption>
-            </figure>
-          ) : null}
-
+        <div className="profile-panel mt-12 rounded-xl border border-rule bg-paper-2 p-6 sm:p-8">
           <div className="github-card overflow-x-auto">
             <div
-              className="min-w-[560px]"
+              className="min-w-[900px]"
               dangerouslySetInnerHTML={{ __html: svg }}
             />
           </div>

@@ -50,7 +50,7 @@ export const site = {
     medium: "https://medium.com/@wasifullahdev",
   },
   education: {
-    degree: "BSc (Hons) Computer Science",
+    degree: "BSc Computational Science",
     school: "University of Engineering & Technology, Mardan",
     period: "Sep 2021 / May 2025",
     detail: "GPA 3.0 / 4.0",
