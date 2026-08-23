@@ -45,8 +45,18 @@ export function Nav() {
       )}
     >
       <nav className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 sm:px-10">
-        <Link href="/" className="mono text-sm tracking-tight">
-          {site.name.toLowerCase().replace(" ", ".")}
+        <Link href="/" className="group flex items-center gap-2.5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/avatar.webp"
+            alt=""
+            width={28}
+            height={28}
+            className="h-7 w-7 rounded-full border border-rule bg-paper-2 object-cover"
+          />
+          <span className="mono text-sm tracking-tight">
+            {site.name.toLowerCase().replace(" ", ".")}
+          </span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
