@@ -376,6 +376,30 @@ html.lenis body {
   }
 }
 
+
+/* --- Hero backdrop ----------------------------------------------------------
+   The WebGL scene recedes as you leave the hero. This is a native scroll-driven
+   animation, so it runs on the compositor rather than through a scroll listener
+   on the main thread, and costs no JavaScript. Browsers without support keep
+   the backdrop visible, which is a perfectly good resting state.
+   --------------------------------------------------------------------------- */
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-backdrop {
+      animation: hero-recede linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 70vh;
+    }
+  }
+}
+
+@keyframes hero-recede {
+  to {
+    opacity: 0;
+  }
+}
+
 /* --- Skip link -------------------------------------------------------------- */
 
 .skip-link {

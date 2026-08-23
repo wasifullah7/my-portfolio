@@ -1,6 +1,6 @@
 import { site } from "@/content/site";
 import { HeroCanvas } from "@/components/three/HeroCanvas";
-import { CharReveal } from "@/components/motion/CharReveal";
+import { MagneticHeadline } from "@/components/motion/MagneticHeadline";
 import { Reveal } from "@/components/motion/Reveal";
 import { Counter } from "@/components/motion/Counter";
 import { cn } from "@/lib/utils";
@@ -30,7 +30,7 @@ export function Hero() {
 
           <div className="order-1 lg:order-2">
             <h1 className="display text-[clamp(2.9rem,10.5vw,9.5rem)]">
-              <CharReveal lines={site.roleLines} delay={0.15} />
+              <MagneticHeadline lines={site.roleLines} delay={0.15} />
             </h1>
 
             <Reveal delay={0.75}>

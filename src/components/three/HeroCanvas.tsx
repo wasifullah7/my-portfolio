@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { SceneFallback } from "./SceneFallback";
 
 // ssr:false keeps three.js out of the server render and off the critical path.
@@ -15,16 +14,14 @@ const HeroScene = dynamic(() => import("./HeroScene"), {
  * Decides whether this visitor gets WebGL at all. Phones and reduced-motion
  * users get the CSS fallback and never pay for the three.js chunk.
  *
- * The scene also recedes as you scroll out of the hero. It is background
- * texture for the headline, not something to keep looking at, and fading it
- * hands attention to the content below instead of competing with it.
+ * The scene recedes as you scroll out of the hero, but that fade is a native
+ * CSS scroll-driven animation rather than a scroll listener. It runs on the
+ * compositor, so it stays smooth even while the main thread is busy, and it
+ * costs no JavaScript at all. Browsers without support simply keep the
+ * backdrop, which is a fine resting state.
  */
 export function HeroCanvas() {
   const [enabled, setEnabled] = useState<boolean | null>(null);
-  const reduced = useReducedMotion();
-
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -42,12 +39,8 @@ export function HeroCanvas() {
   }, []);
 
   return (
-    <motion.div
-      aria-hidden
-      className="absolute inset-0"
-      style={reduced ? undefined : { opacity }}
-    >
+    <div aria-hidden className="hero-backdrop absolute inset-0">
       {enabled === true ? <HeroScene /> : <SceneFallback />}
-    </motion.div>
+    </div>
   );
 }
