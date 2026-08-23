@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
-import { HeroCanvas } from "@/components/three/HeroCanvas";
+import { HeroSpotlight } from "@/components/HeroSpotlight";
 import { MagneticHeadline } from "@/components/motion/MagneticHeadline";
 import { Reveal } from "@/components/motion/Reveal";
 import { Counter } from "@/components/motion/Counter";
@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export function Hero() {
   return (
     <section id="home" className="relative min-h-[100svh] overflow-hidden pt-24">
-      <HeroCanvas />
+      <HeroSpotlight />
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 sm:px-10">
         <div className="grid gap-10 lg:grid-cols-[minmax(180px,220px)_1fr] lg:gap-16">

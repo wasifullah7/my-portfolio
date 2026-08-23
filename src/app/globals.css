@@ -377,26 +377,60 @@ html.lenis body {
 }
 
 
-/* --- Hero backdrop ----------------------------------------------------------
-   The WebGL scene recedes as you leave the hero. This is a native scroll-driven
-   animation, so it runs on the compositor rather than through a scroll listener
-   on the main thread, and costs no JavaScript. Browsers without support keep
-   the backdrop visible, which is a perfectly good resting state.
+/* --- Hero spotlight ---------------------------------------------------------
+   Nothing at rest. A precise grid is revealed in a soft circle under the
+   cursor and fades out when the pointer leaves the page. Straight rules only:
+   the reveal moves, the grid never does.
    --------------------------------------------------------------------------- */
 
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-backdrop {
-      animation: hero-recede linear both;
-      animation-timeline: scroll(root block);
-      animation-range: 0 70vh;
-    }
-  }
+.hero-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 68px 68px;
+
+  --mx: 50%;
+  --my: 40%;
+
+  -webkit-mask-image: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    #000 0%,
+    rgba(0, 0, 0, 0.55) 45%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    #000 0%,
+    rgba(0, 0, 0, 0.55) 45%,
+    transparent 72%
+  );
 }
 
-@keyframes hero-recede {
-  to {
-    opacity: 0;
+.hero-spotlight[data-lit="true"] {
+  opacity: 1;
+}
+
+/* A small warm core, so the accent still marks where the reader is. */
+.hero-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    150px circle at var(--mx) var(--my),
+    var(--accent-wash, rgba(229, 36, 27, 0.09)) 0%,
+    transparent 70%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-spotlight {
+    display: none;
   }
 }
 

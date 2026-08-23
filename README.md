@@ -84,7 +84,7 @@ Measured results: **0.83 mAP** on a diagram digitisation pipeline, **97%** arrow
 
 ## Repository
 
-Source for the portfolio site above. Next.js 16, React 19, TypeScript, Tailwind CSS v4, three.js, Motion.
+Source for the portfolio site above. Next.js 16, React 19, TypeScript, Tailwind CSS v4, Motion.
 
 ```bash
 npm install
