@@ -444,6 +444,10 @@ html.lenis body {
      the monospace grid the ASCII portrait depends on. */
   font-variant-ligatures: none;
   font-feature-settings: "liga" 0, "calt" 0, "dlig" 0;
+  /* The card is inlined into HTML, where xml:space="preserve" is ignored.
+     Without this the leading spaces in the ASCII collapse, every line slides
+     left by a different amount, and the portrait shears apart. */
+  white-space: pre;
 }
 
 .github-card svg {
