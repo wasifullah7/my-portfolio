@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/content/site";
-import { VoiceAgent } from "@/components/VoiceAgent";
+import { AgentConsole } from "@/components/voice/AgentConsole";
 import { Reveal } from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
@@ -71,7 +71,7 @@ export default function TalkPage() {
 
       <Reveal delay={0.08}>
         <div className="mt-14">
-          <VoiceAgent />
+          <AgentConsole />
         </div>
       </Reveal>
     </main>
