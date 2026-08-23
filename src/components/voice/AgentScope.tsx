@@ -28,8 +28,12 @@ export function Scope({
   const level = useRef(0);
   const sweep = useRef(0);
 
-  bandsRef.current = bands;
-  liveRef.current = live;
+  // The draw loop reads these, so they are kept current after each render
+  // rather than written during it.
+  useEffect(() => {
+    bandsRef.current = bands;
+    liveRef.current = live;
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
