@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { AccessToken } from "livekit-server-sdk";
+import { RoomAgentDispatch, RoomConfiguration } from "@livekit/protocol";
 
 /**
  * Mints the short-lived token the browser needs to join a room with the voice
@@ -19,6 +20,9 @@ import { AccessToken } from "livekit-server-sdk";
  */
 
 export const runtime = "nodejs";
+
+/** Must match agent_name in agent/agent.py, or nothing is ever dispatched. */
+const AGENT_NAME = "portfolio-agent";
 
 const PER_IP_LIMIT = 3;
 const PER_IP_WINDOW_MS = 60 * 60 * 1000;
@@ -105,6 +109,18 @@ export async function POST(request: Request) {
     // able to change what the room says about itself.
     canPublishData: false,
     canUpdateOwnMetadata: false,
+  });
+
+  // The worker runs under a name, and naming a worker turns automatic dispatch
+  // off: it joins only the rooms it is sent to. Carrying the dispatch on the
+  // token means the agent is summoned as the visitor connects, with no second
+  // round trip from this route and no room sitting empty waiting for one.
+  token.roomConfig = new RoomConfiguration({
+    agents: [new RoomAgentDispatch({ agentName: AGENT_NAME })],
+    // Close the room promptly once the visitor leaves, so an abandoned tab does
+    // not keep billing agent minutes.
+    emptyTimeout: 20,
+    maxParticipants: 2,
   });
 
   return NextResponse.json({

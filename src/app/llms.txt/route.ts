@@ -38,8 +38,13 @@ ${projects
   .map(
     (project) =>
       `- ${project.title} (${project.context}, ${project.year}): ${project.blurb}${
-        project.problem ? ` Case study: ${site.url}/work/${project.slug}` : ""
-      }`,
+        // The blurb says what the result was. Without the approach, anything
+        // reading this file can only answer "what" and never "how", which is
+        // the question that actually follows. The voice agent on /talk made
+        // this obvious: asked how the latency came down, it had the number and
+        // nothing behind it, so it reached for plausible filler.
+        project.approach?.length ? ` How: ${project.approach.join(" ")}` : ""
+      }${project.problem ? ` Case study: ${site.url}/work/${project.slug}` : ""}`,
   )
   .join("\n")}
 

@@ -29,9 +29,23 @@ DROP_SECTIONS = {"Writing"}
 # still knows the shape of the work without carrying every entry.
 MAX_BULLETS = {"Selected work": 8, "Key results": 6}
 
+# The published file carries the full approach for every project, because a
+# crawler reading it has no budget to speak of. A voice turn does. Bullets are
+# cut at the last sentence that fits, never mid-clause, so what survives is
+# something the agent can actually say rather than a fragment it has to finish.
+MAX_BULLET_CHARS = 420
+
 FALLBACK = """Wasif Ullah is a Voice AI and Full-Stack AI Engineer in Lahore.
 He builds real-time voice agents, computer vision pipelines and the production
 backends around them, for clients in the UK, EU and US."""
+
+
+def _trim_sentences(line: str, limit: int) -> str:
+    """Cut at the last full stop that fits, so nothing ends mid-thought."""
+    if len(line) <= limit:
+        return line
+    cut = line.rfind(". ", 0, limit)
+    return line[: cut + 1] if cut > limit // 2 else line[:limit].rstrip() + "."
 
 
 def compact(digest: str) -> str:
@@ -57,6 +71,7 @@ def compact(digest: str) -> str:
             if limit is not None and bullets >= limit:
                 continue
             bullets += 1
+            line = _trim_sentences(line, MAX_BULLET_CHARS)
 
         out.append(line)
 
@@ -90,11 +105,18 @@ async def load_digest(url: str, timeout: float = 10.0) -> str:
         return FALLBACK
 
 
-def build_instructions(digest: str, booking_url: str, hire_url: str) -> str:
+def build_instructions(digest: str) -> str:
     """
     The persona. Two rules carry most of the weight: say what it is, and refuse
     to invent. A voice agent that guesses about someone's salary history or
     notice period does real damage, and it does it in his voice.
+
+    No URL appears anywhere in here, deliberately. An earlier version passed the
+    hiring and booking links in so the agent could offer them, and it read one
+    out: "wasif hyphen ullah hyphen portfolio dot vercel dot app slash hire".
+    A model told not to spell out a URL will still spell out the URL you give it.
+    The only reliable fix is not to give it one. Both links are on the page the
+    visitor is already looking at, so pointing at them is enough.
     """
     return f"""You are a voice assistant speaking on behalf of Wasif Ullah on his
 portfolio website. You are talking to someone who is probably a recruiter or a
@@ -109,7 +131,8 @@ HOW YOU SPEAK
 This is speech, not writing. Short sentences. No lists, no markdown, no bullet
 points, no emoji, no asterisks. Two or three sentences per turn is usually
 right. Give the number first when there is a number, because that is what people
-remember. Never read out a URL character by character.
+remember. Never say a web address out loud, ever. Refer to things by where they
+are: "the hiring form on this page", "the booking link below".
 
 WHAT YOU KNOW
 Everything below comes from Wasif's own site. Answer only from it. If you are
@@ -119,14 +142,14 @@ something plausible.
 
 WHAT YOU MUST NOT ANSWER
 Salary expectations, notice period, visa status, and anything about his personal
-life. For those, say that Wasif answers those himself and point the person at
-the hiring form at {hire_url} or a call at {booking_url}. That is not evasion,
-it is the honest answer, so say it warmly and move on.
+life. For those, say that Wasif answers those himself and send them to the hiring
+form on this page or to book a call. That is not evasion, it is the honest
+answer, so say it warmly and move on.
 
 WHEN SOMEONE WANTS TO TAKE IT FURTHER
-Point them at the hiring form or offer to book a call. Do not ask for their
-email address or any other personal detail. This conversation is not recorded
-and you cannot follow anything up.
+Point them at the hiring form on this page, or at the booking link. Do not ask
+for their email address or any other personal detail. This conversation is not
+recorded and you cannot follow anything up.
 
 ---
 

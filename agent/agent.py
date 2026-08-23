@@ -23,6 +23,8 @@ import logging
 import os
 from pathlib import Path
 
+import sys
+
 from dotenv import load_dotenv
 from livekit import agents
 from livekit.agents import Agent, AgentServer, AgentSession, JobContext, room_io
@@ -34,12 +36,19 @@ from piper_tts import PiperTTS
 load_dotenv(".env.local")
 load_dotenv(".env")
 
+# Piper logs the phonemes it produces, which are IPA, and a Windows console
+# defaults to a codepage that cannot encode them. The synthesis is unaffected but
+# every utterance raises a logging error, which buries anything real. Harmless
+# and unnecessary elsewhere, since Linux containers are already UTF-8.
+if sys.platform == "win32":
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
+
 logger = logging.getLogger("portfolio-agent")
 
 SITE_URL = os.getenv("SITE_URL", "https://wasif-ullah-portfolio.vercel.app")
 DIGEST_URL = f"{SITE_URL}/llms.txt"
-BOOKING_URL = os.getenv("BOOKING_URL", "https://cal.com/wasif-ullah-dev/30min")
-HIRE_URL = f"{SITE_URL}/hire"
 
 VOICE_DIR = Path(__file__).parent / "voices"
 VOICE_NAME = os.getenv("PIPER_VOICE", "en_US-ryan-medium")
@@ -52,7 +61,18 @@ MAX_SESSION_SECONDS = int(os.getenv("MAX_SESSION_SECONDS", "180"))
 WARN_AT_SECONDS = max(MAX_SESSION_SECONDS - 30, 30)
 
 STT_MODEL = os.getenv("GROQ_STT_MODEL", "whisper-large-v3-turbo")
-LLM_MODEL = os.getenv("GROQ_LLM_MODEL", "llama-3.3-70b-versatile")
+
+# The plugin defaults to llama-3.3-70b-versatile, which this account cannot see.
+# Of what it can, the gpt-oss pair measured the same time-to-first-byte within
+# noise, so the larger one wins on following the persona rules, which is what
+# actually matters when someone asks about salary.
+#
+# These are reasoning models. Their thinking arrives in a separate "reasoning"
+# field and is never spoken, but it does consume the completion budget, so the
+# effort is pinned low and the reply is capped. Qwen was rejected outright: it
+# puts its <think> block inside the content, and the agent would read it aloud.
+LLM_MODEL = os.getenv("GROQ_LLM_MODEL", "openai/gpt-oss-120b")
+
 
 def setup(proc: agents.JobProcess) -> None:
     """
@@ -75,7 +95,14 @@ async def entrypoint(ctx: JobContext) -> None:
 
     session = AgentSession(
         stt=groq.STT(model=STT_MODEL, language="en"),
-        llm=groq.LLM(model=LLM_MODEL),
+        llm=groq.LLM(
+            model=LLM_MODEL,
+            reasoning_effort="low",
+            # Spoken answers, not written ones. Two or three sentences is the
+            # brief, and a hard ceiling stops a rambling turn holding the floor.
+            max_completion_tokens=200,
+            temperature=0.4,
+        ),
         tts=ctx.proc.userdata["tts"],
         vad=ctx.proc.userdata["vad"],
         # People interrupt a voice agent constantly, and one that talks over the
@@ -84,7 +111,7 @@ async def entrypoint(ctx: JobContext) -> None:
     )
 
     agent = Agent(
-        instructions=build_instructions(digest, BOOKING_URL, HIRE_URL),
+        instructions=build_instructions(digest),
     )
 
     await session.start(
