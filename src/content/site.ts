@@ -157,8 +157,9 @@ export const hiringForm = {
 
 export const navItems = [
   { label: "About", href: "#about", index: "01" },
-  { label: "Stack", href: "#skills", index: "02" },
-  { label: "Experience", href: "#experience", index: "03" },
-  { label: "Work", href: "#work", index: "04" },
-  { label: "Contact", href: "#contact", index: "05" },
+  { label: "Agent", href: "#talk", index: "02" },
+  { label: "Stack", href: "#skills", index: "03" },
+  { label: "Experience", href: "#experience", index: "04" },
+  { label: "Work", href: "#work", index: "05" },
+  { label: "Contact", href: "#contact", index: "07" },
 ] as const;

@@ -12,7 +12,7 @@ export function Projects() {
       className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-28 sm:px-10 sm:py-36"
     >
       <SectionHeading
-        index="04"
+        index="05"
         eyebrow="Work"
         title="Selected work"
         lead="Every number below came off a system that shipped. None of it is estimated, and I can show you how each one was measured."

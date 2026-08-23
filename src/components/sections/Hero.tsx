@@ -61,6 +61,12 @@ export function Hero() {
                   </span>
                 </a>
                 <a
+                  href="#talk"
+                  className="link-underline mono text-xs uppercase tracking-[0.16em] text-accent"
+                >
+                  Talk to my agent
+                </a>
+                <a
                   href="#contact"
                   className="link-underline mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
                 >
