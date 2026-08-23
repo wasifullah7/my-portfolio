@@ -14,7 +14,7 @@ from livekit import agents
 from livekit.agents import Agent, AgentServer, AgentSession, JobContext, room_io
 from livekit.plugins import groq, silero
 
-from knowledge import build_instructions, load_digest
+from knowledge import build_instructions, load_digest_sync
 from metrics_bridge import TurnLatency
 from piper_tts import PiperTTS
 
@@ -48,6 +48,7 @@ def setup(proc: agents.JobProcess) -> None:
     tts = PiperTTS(model_path=VOICE_DIR / f"{VOICE_NAME}.onnx")
     tts.load_sync()
     proc.userdata["tts"] = tts
+    proc.userdata["digest"] = load_digest_sync(DIGEST_URL)
 
 
 server = AgentServer(setup_fnc=setup)
@@ -55,7 +56,6 @@ server = AgentServer(setup_fnc=setup)
 
 @server.rtc_session(agent_name="portfolio-agent")
 async def entrypoint(ctx: JobContext) -> None:
-    digest = await load_digest(DIGEST_URL)
 
     session = AgentSession(
         stt=groq.STT(model=STT_MODEL, language="en"),
@@ -74,7 +74,7 @@ async def entrypoint(ctx: JobContext) -> None:
     session.on("metrics_collected", latency.handle)
 
     agent = Agent(
-        instructions=build_instructions(digest),
+        instructions=build_instructions(ctx.proc.userdata["digest"]),
     )
 
     await session.start(
@@ -103,11 +103,9 @@ async def entrypoint(ctx: JobContext) -> None:
     timeout_task = asyncio.create_task(close_on_timeout())
     ctx.add_shutdown_callback(lambda: _cancel(timeout_task))
 
-    await session.generate_reply(
-        instructions=(
-            "Greet them in one short sentence. Say you are an AI assistant speaking for "
-            "Wasif, and ask what they would like to know about his work."
-        )
+    await session.say(
+        "Hi, I am an AI assistant speaking for Wasif. "
+        "What would you like to know about his work?"
     )
 
 

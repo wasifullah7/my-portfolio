@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
-  BarVisualizer,
   LiveKitRoom,
   RoomAudioRenderer,
   useDataChannel,
@@ -11,6 +10,7 @@ import {
   useVoiceAssistant,
 } from "@livekit/components-react";
 import { useAgentConnection } from "./useAgentConnection";
+import { LiveScope, Scope } from "./AgentScope";
 
 type Latency = {
   endOfTurn?: number;
@@ -73,7 +73,7 @@ function Console({
   onEnd?: () => void;
 }) {
   return (
-    <div className="grid gap-px border border-rule bg-rule lg:grid-cols-[1fr_minmax(260px,340px)_1fr]">
+    <div className="grid gap-px border border-rule bg-rule lg:grid-cols-[1fr_minmax(320px,420px)_1fr]">
       <Panel title="Transcript">
         {live ? <LiveTranscript /> : <IdleTranscript phase={phase} error={error} />}
       </Panel>
@@ -132,7 +132,12 @@ function IdleTranscript({ phase, error }: { phase?: string; error?: string | nul
 function IdleStage({ phase, onStart }: { phase?: string; onStart?: () => void }) {
   return (
     <>
-      <Plate idle />
+      <div className="w-full">
+        <Scope bands={[]} live={false} label="Waiting to start" />
+        <p className="mono mt-2 text-center text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
+          No signal
+        </p>
+      </div>
       <button
         type="button"
         onClick={onStart}
@@ -206,14 +211,9 @@ function LiveStage({ onEnd }: { onEnd?: () => void }) {
 
   return (
     <>
-      <Plate>
-        <BarVisualizer
-          state={state}
-          trackRef={audioTrack}
-          barCount={9}
-          className="flex h-16 items-center justify-center gap-1.5 [&>span]:w-[3px] [&>span]:rounded-none [&>span]:bg-accent"
-        />
-      </Plate>
+      <div className="w-full">
+        <LiveScope agentTrack={audioTrack} state={state} />
+      </div>
 
       <div className="flex flex-col items-center gap-3">
         <span className="label text-accent">{label}</span>
@@ -249,25 +249,6 @@ function LiveLatency() {
 }
 
 /* Shared ------------------------------------------------------------------ */
-
-// A square plate with corner ticks, so the centre reads as an instrument rather
-// than a chat bubble. Nothing rounded, nothing glowing.
-function Plate({ idle, children }: { idle?: boolean; children?: React.ReactNode }) {
-  return (
-    <div className="relative flex h-[132px] w-[132px] items-center justify-center border border-rule">
-      {["-top-px -left-px", "-top-px -right-px", "-bottom-px -left-px", "-bottom-px -right-px"].map(
-        (pos) => (
-          <span key={pos} className={`absolute ${pos} h-2 w-2 border border-accent`} aria-hidden />
-        ),
-      )}
-      {idle ? (
-        <span className="mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">Idle</span>
-      ) : (
-        children
-      )}
-    </div>
-  );
-}
 
 function Readout({ latency }: { latency: Latency | null }) {
   return (

@@ -57,6 +57,18 @@ def compact(digest: str) -> str:
     return text.strip()
 
 
+def load_digest_sync(url: str, timeout: float = 10.0) -> str:
+    try:
+        response = httpx.get(url, timeout=timeout)
+        response.raise_for_status()
+        digest = compact(response.text)
+        logger.info("loaded digest from %s (~%d tokens)", url, len(digest) // 4)
+        return digest
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("could not load %s (%s), using the fallback", url, exc)
+        return FALLBACK
+
+
 async def load_digest(url: str, timeout: float = 10.0) -> str:
 
     try:
