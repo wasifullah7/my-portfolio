@@ -5,6 +5,8 @@ import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { getPost, formatDate } from "@/lib/posts";
 import { ProjectMedia } from "@/components/ProjectMedia";
+import { ProjectDiagram } from "@/components/ProjectDiagram";
+import { diagrams } from "@/content/diagrams";
 import { ClipReveal } from "@/components/motion/ClipReveal";
 import { ViewTransition } from "@/components/motion/ViewTransition";
 
@@ -116,8 +118,22 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
         ) : null}
       </header>
 
+      {/* The architecture is the honest illustration for this work: most of it
+          is backend, and the client systems could not be screenshotted anyway.
+          A diagram wins here even where project.image is set, because that field
+          is an aspirational path to a screenshot that does not exist yet, and
+          because on a case study the architecture says more than a UI shot.
+          Projects with no diagram fall through to ProjectMedia. */}
       <ClipReveal className="mt-12">
-        <ProjectMedia project={project} />
+        {diagrams[project.slug] ? (
+          <ProjectDiagram
+            slug={project.slug}
+            title={project.title}
+            year={project.year}
+          />
+        ) : (
+          <ProjectMedia project={project} />
+        )}
       </ClipReveal>
 
       <div className="mt-16 grid gap-14 lg:grid-cols-[1fr_260px] lg:gap-20">
