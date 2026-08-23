@@ -1,49 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="980" height="518" viewBox="0 0 980 518" role="img" aria-label="Profile card for Wasif Ullah">
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="499" viewBox="0 0 980 499" role="img" aria-label="Profile card for Wasif Ullah">
   
   <g font-family="var(--font-jetbrains), ui-monospace, monospace" font-size="13.5" xml:space="preserve" style="font-variant-ligatures:none;font-feature-settings:&quot;liga&quot; 0,&quot;calt&quot; 0,&quot;dlig&quot; 0">
-    <text x="26" y="45" fill="var(--faint)">                      :::::...</text>
-    <text x="26" y="64" fill="var(--faint)">                     :....:-:..:</text>
-    <text x="26" y="83" fill="var(--faint)">                    : -++*##*+::</text>
-    <text x="26" y="102" fill="var(--faint)">                    .:=-=**=-=+:</text>
-    <text x="26" y="121" fill="var(--faint)">                     ++++++++**-</text>
-    <text x="26" y="140" fill="var(--faint)">                     =++-====+=</text>
-    <text x="26" y="159" fill="var(--faint)">                      -:-===-::</text>
-    <text x="26" y="178" fill="var(--faint)">                      :=:...:=:</text>
-    <text x="26" y="197" fill="var(--faint)">                    ...-++==++.:.</text>
-    <text x="26" y="216" fill="var(--faint)">                .:..... .-++-......:..</text>
-    <text x="26" y="235" fill="var(--faint)">             :..........  ..  .........:</text>
-    <text x="26" y="254" fill="var(--faint)">            :...........................:</text>
-    <text x="26" y="273" fill="var(--faint)">            ... .................... ....:</text>
-    <text x="26" y="292" fill="var(--faint)">           :...   ...........::::::.  ...:</text>
-    <text x="26" y="311" fill="var(--faint)">           :..... ......... .  ..   .....:</text>
-    <text x="26" y="330" fill="var(--faint)">           ....       . ... .     .-==::..</text>
-    <text x="26" y="349" fill="var(--faint)">          :=+++=-.               :+++***+=</text>
-    <text x="26" y="368" fill="var(--faint)">           *****+=+*+==--::.....:+*++****+</text>
-    <text x="26" y="387" fill="var(--faint)">           ++**+++****###*******#*****+++-</text>
-    <text x="26" y="406" fill="var(--faint)">           +++++*+++=--==+++****+++++++++</text>
-    <text x="26" y="425" fill="var(--faint)">           -**+++++++++========+++++++++:</text>
-    <text x="26" y="444" fill="var(--faint)">            -----------:::.  ..::::::::</text>
-    <text x="26" y="463" fill="var(--faint)">               .                     .</text>
-    <text x="26" y="482" fill="var(--faint)">               ..      ....         ..</text>
-    <text x="412.8" y="45"><tspan fill="var(--ink)" font-weight="700">wasifullah7@github</tspan><tspan fill="var(--rule)"> ────────────────────────────</tspan></text>
-    <text x="412.8" y="64"><tspan fill="var(--accent)">Role</tspan><tspan fill="var(--faint)">............</tspan></text><text x="555.6" y="64" fill="var(--ink)">Voice AI &amp; Full-Stack AI Engineer</text>
-    <text x="412.8" y="83"><tspan fill="var(--accent)">Company</tspan><tspan fill="var(--faint)">.........</tspan></text><text x="555.6" y="83" fill="var(--ink)">RTC League, Lahore</text>
-    <text x="412.8" y="102"><tspan fill="var(--accent)">Focus</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="555.6" y="102" fill="var(--ink)">Real-time voice agents, computer vision</text>
-    <text x="412.8" y="121"><tspan fill="var(--accent)">Shipping since</tspan><tspan fill="var(--faint)">..</tspan></text><text x="555.6" y="121" fill="var(--ink)">2023 · clients in the UK, EU and US</text>
-    <text x="412.8" y="159"><tspan fill="var(--accent)">Voice</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="555.6" y="159" fill="var(--ink)">LiveKit, SIP telephony, vLLM, WebRTC</text>
-    <text x="412.8" y="178"><tspan fill="var(--accent)">Vision</tspan><tspan fill="var(--faint)">..........</tspan></text><text x="555.6" y="178" fill="var(--ink)">RF-DETR, SAM2, PaddleOCR, PyTorch</text>
-    <text x="412.8" y="197"><tspan fill="var(--accent)">Retrieval</tspan><tspan fill="var(--faint)">.......</tspan></text><text x="555.6" y="197" fill="var(--ink)">RAG, pgvector, Qdrant, Pinecone</text>
-    <text x="412.8" y="216"><tspan fill="var(--accent)">Backend</tspan><tspan fill="var(--faint)">.........</tspan></text><text x="555.6" y="216" fill="var(--ink)">Python, FastAPI, Node.js, PostgreSQL</text>
-    <text x="412.8" y="235"><tspan fill="var(--accent)">Infra</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="555.6" y="235" fill="var(--ink)">AWS, Docker, Terraform, Kubernetes</text>
-    <text x="412.8" y="273"><tspan fill="var(--accent)">Portfolio</tspan><tspan fill="var(--faint)">.......</tspan></text><text x="555.6" y="273" fill="var(--ink)">wasif-ullah-portfolio.vercel.app</text>
-    <text x="412.8" y="292"><tspan fill="var(--accent)">Writing</tspan><tspan fill="var(--faint)">.........</tspan></text><text x="555.6" y="292" fill="var(--ink)">medium.com/@wasifullahdev</text>
-    <text x="412.8" y="311"><tspan fill="var(--accent)">LinkedIn</tspan><tspan fill="var(--faint)">........</tspan></text><text x="555.6" y="311" fill="var(--ink)">linkedin.com/in/wasifullahdev</text>
-    <text x="412.8" y="330"><tspan fill="var(--accent)">Email</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="555.6" y="330" fill="var(--ink)">wasif.wwez@gmail.com</text>
-    <text x="412.8" y="368"><tspan fill="var(--rule)">── </tspan><tspan fill="var(--ink)" font-weight="700">GitHub</tspan><tspan fill="var(--rule)"> ────────────────────────────────────────</tspan></text>
-    <text x="412.8" y="387"><tspan fill="var(--accent)">Repositories</tspan><tspan fill="var(--faint)">....</tspan></text><text x="555.6" y="387" fill="var(--ink)">38</text>
-    <text x="412.8" y="406"><tspan fill="var(--accent)">Stars</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="555.6" y="406" fill="var(--ink)">13</text>
-    <text x="412.8" y="425"><tspan fill="var(--accent)">Followers</tspan><tspan fill="var(--faint)">.......</tspan></text><text x="555.6" y="425" fill="var(--ink)">7</text>
-    <text x="412.8" y="444"><tspan fill="var(--accent)">Contributions</tspan><tspan fill="var(--faint)">...</tspan></text><text x="555.6" y="444" fill="var(--ink)">229 commits · 1 pull request · 0 issues</text>
-    <text x="412.8" y="463"><tspan fill="var(--accent)">Code written</tspan><tspan fill="var(--faint)">....</tspan></text><text x="555.6" y="463" fill="var(--ink)">21.6 MB across 38 repositories</text>
+    <text x="26" y="45" fill="var(--faint)" textLength="226.8" lengthAdjust="spacing">                        .::.</text>
+    <text x="26" y="64" fill="var(--faint)" textLength="251.1" lengthAdjust="spacing">                     :.........</text>
+    <text x="26" y="83" fill="var(--faint)" textLength="259.2" lengthAdjust="spacing">                    :.:-==+*+=.:</text>
+    <text x="26" y="102" fill="var(--faint)" textLength="259.2" lengthAdjust="spacing">                    :.===*#+===:</text>
+    <text x="26" y="121" fill="var(--faint)" textLength="259.2" lengthAdjust="spacing">                     +++=++=+**-</text>
+    <text x="26" y="140" fill="var(--faint)" textLength="251.1" lengthAdjust="spacing">                     -+======+=</text>
+    <text x="26" y="159" fill="var(--faint)" textLength="251.1" lengthAdjust="spacing">                      :---:::::</text>
+    <text x="26" y="178" fill="var(--faint)" textLength="259.2" lengthAdjust="spacing">                      .==-::=+:.</text>
+    <text x="26" y="197" fill="var(--faint)" textLength="299.7" lengthAdjust="spacing">                 .......-=++=:.......</text>
+    <text x="26" y="216" fill="var(--faint)" textLength="324.0" lengthAdjust="spacing">             ...........  ::  .........:</text>
+    <text x="26" y="235" fill="var(--faint)" textLength="332.1" lengthAdjust="spacing">            :.............. ............:</text>
+    <text x="26" y="254" fill="var(--faint)" textLength="340.2" lengthAdjust="spacing">            ...   ...........::.::.. ....:</text>
+    <text x="26" y="273" fill="var(--faint)" textLength="340.2" lengthAdjust="spacing">           :....  .................   ...:</text>
+    <text x="26" y="292" fill="var(--faint)" textLength="340.2" lengthAdjust="spacing">           ..      ..........      :--....</text>
+    <text x="26" y="311" fill="var(--faint)" textLength="340.2" lengthAdjust="spacing">          :-===-:.               .=+++++=-</text>
+    <text x="26" y="330" fill="var(--faint)" textLength="340.2" lengthAdjust="spacing">           **#**+-++++==-::.....-+*++****+</text>
+    <text x="26" y="349" fill="var(--faint)" textLength="340.2" lengthAdjust="spacing">           +++*+++***+**********#****++++-</text>
+    <text x="26" y="368" fill="var(--faint)" textLength="332.1" lengthAdjust="spacing">           +*++++++++=====++++++++++++++=</text>
+    <text x="26" y="387" fill="var(--faint)" textLength="324.0" lengthAdjust="spacing">            =+==========--::::-------==-</text>
+    <text x="26" y="406" fill="var(--faint)" textLength="307.8" lengthAdjust="spacing">               .........             :</text>
+    <text x="26" y="425" fill="var(--faint)" textLength="307.8" lengthAdjust="spacing">                .        ...        ..</text>
+    <text x="400.2" y="45"><tspan fill="var(--ink)" font-weight="700">wasifullah7@github</tspan><tspan fill="var(--rule)"> ────────────────────────────</tspan></text>
+    <text x="400.2" y="64"><tspan fill="var(--accent)">Role</tspan><tspan fill="var(--faint)">............</tspan></text><text x="537.9" y="64" fill="var(--ink)">Voice AI &amp; Full-Stack AI Engineer</text>
+    <text x="400.2" y="83"><tspan fill="var(--accent)">Company</tspan><tspan fill="var(--faint)">.........</tspan></text><text x="537.9" y="83" fill="var(--ink)">RTC League, Lahore</text>
+    <text x="400.2" y="102"><tspan fill="var(--accent)">Focus</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="537.9" y="102" fill="var(--ink)">Real-time voice agents, computer vision</text>
+    <text x="400.2" y="121"><tspan fill="var(--accent)">Shipping since</tspan><tspan fill="var(--faint)">..</tspan></text><text x="537.9" y="121" fill="var(--ink)">2023 · clients in the UK, EU and US</text>
+    <text x="400.2" y="159"><tspan fill="var(--accent)">Voice</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="537.9" y="159" fill="var(--ink)">LiveKit, SIP telephony, vLLM, WebRTC</text>
+    <text x="400.2" y="178"><tspan fill="var(--accent)">Vision</tspan><tspan fill="var(--faint)">..........</tspan></text><text x="537.9" y="178" fill="var(--ink)">RF-DETR, SAM2, PaddleOCR, PyTorch</text>
+    <text x="400.2" y="197"><tspan fill="var(--accent)">Retrieval</tspan><tspan fill="var(--faint)">.......</tspan></text><text x="537.9" y="197" fill="var(--ink)">RAG, pgvector, Qdrant, Pinecone</text>
+    <text x="400.2" y="216"><tspan fill="var(--accent)">Backend</tspan><tspan fill="var(--faint)">.........</tspan></text><text x="537.9" y="216" fill="var(--ink)">Python, FastAPI, Node.js, PostgreSQL</text>
+    <text x="400.2" y="235"><tspan fill="var(--accent)">Infra</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="537.9" y="235" fill="var(--ink)">AWS, Docker, Terraform, Kubernetes</text>
+    <text x="400.2" y="273"><tspan fill="var(--accent)">Portfolio</tspan><tspan fill="var(--faint)">.......</tspan></text><text x="537.9" y="273" fill="var(--ink)">wasif-ullah-portfolio.vercel.app</text>
+    <text x="400.2" y="292"><tspan fill="var(--accent)">Writing</tspan><tspan fill="var(--faint)">.........</tspan></text><text x="537.9" y="292" fill="var(--ink)">medium.com/@wasifullahdev</text>
+    <text x="400.2" y="311"><tspan fill="var(--accent)">LinkedIn</tspan><tspan fill="var(--faint)">........</tspan></text><text x="537.9" y="311" fill="var(--ink)">linkedin.com/in/wasifullahdev</text>
+    <text x="400.2" y="330"><tspan fill="var(--accent)">Email</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="537.9" y="330" fill="var(--ink)">wasif.wwez@gmail.com</text>
+    <text x="400.2" y="368"><tspan fill="var(--rule)">── </tspan><tspan fill="var(--ink)" font-weight="700">GitHub</tspan><tspan fill="var(--rule)"> ────────────────────────────────────────</tspan></text>
+    <text x="400.2" y="387"><tspan fill="var(--accent)">Repositories</tspan><tspan fill="var(--faint)">....</tspan></text><text x="537.9" y="387" fill="var(--ink)">38</text>
+    <text x="400.2" y="406"><tspan fill="var(--accent)">Stars</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="537.9" y="406" fill="var(--ink)">13</text>
+    <text x="400.2" y="425"><tspan fill="var(--accent)">Followers</tspan><tspan fill="var(--faint)">.......</tspan></text><text x="537.9" y="425" fill="var(--ink)">7</text>
+    <text x="400.2" y="444"><tspan fill="var(--accent)">Contributions</tspan><tspan fill="var(--faint)">...</tspan></text><text x="537.9" y="444" fill="var(--ink)">231 commits · 1 pull request · 0 issues</text>
+    <text x="400.2" y="463"><tspan fill="var(--accent)">Code written</tspan><tspan fill="var(--faint)">....</tspan></text><text x="537.9" y="463" fill="var(--ink)">21.6 MB across 38 repositories</text>
   </g>
 </svg>
