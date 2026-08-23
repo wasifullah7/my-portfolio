@@ -66,7 +66,7 @@ async def entrypoint(ctx: JobContext) -> None:
         # so the smaller model stands behind it on its own separate quota.
         llm=llm.FallbackAdapter(
             [
-                groq.LLM(model=m, reasoning_effort="low", max_completion_tokens=200, temperature=0.4)
+                groq.LLM(model=m, reasoning_effort="low", max_completion_tokens=200, temperature=0.2)
                 for m in (LLM_MODEL, LLM_FALLBACK_MODEL)
             ],
             max_retry_per_llm=0,
@@ -134,10 +134,7 @@ async def entrypoint(ctx: JobContext) -> None:
     timeout_task = asyncio.create_task(close_on_timeout())
     ctx.add_shutdown_callback(lambda: _cancel(timeout_task))
 
-    await session.say(
-        "Hey, thanks for stopping by. This is Wasif, or rather my AI answering "
-        "in my own words. What would you like to know?"
-    )
+    await session.say("Hey, this is Wasif. What would you like to know?")
 
 
 async def _cancel(task: asyncio.Task) -> None:
