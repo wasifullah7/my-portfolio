@@ -6,6 +6,8 @@ import {
   LiveKitRoom,
   RoomAudioRenderer,
   useDataChannel,
+  useIsSpeaking,
+  useLocalParticipant,
   useTranscriptions,
   useVoiceAssistant,
 } from "@livekit/components-react";
@@ -205,6 +207,8 @@ function LiveTranscript() {
 
 function LiveStage({ onEnd }: { onEnd?: () => void }) {
   const { state, audioTrack } = useVoiceAssistant();
+  const { localParticipant } = useLocalParticipant();
+  const youAreSpeaking = useIsSpeaking(localParticipant);
   const [remaining, setRemaining] = useState(SESSION_SECONDS);
 
   useEffect(() => {
@@ -212,14 +216,18 @@ function LiveStage({ onEnd }: { onEnd?: () => void }) {
     return () => clearInterval(id);
   }, []);
 
+  // Name the speaker, not just the state. "Listening" does not tell you whether
+  // the microphone is actually picking you up.
   const label =
-    state === "listening"
-      ? "Listening"
-      : state === "thinking"
-        ? "Thinking"
-        : state === "speaking"
-          ? "Speaking"
-          : "Connecting";
+    state === "speaking"
+      ? "Agent speaking"
+      : youAreSpeaking
+        ? "You are speaking"
+        : state === "thinking"
+          ? "Thinking"
+          : state === "listening"
+            ? "Listening"
+            : "Connecting";
 
   return (
     <>

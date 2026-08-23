@@ -12,7 +12,7 @@ import sys
 from dotenv import load_dotenv
 from livekit import agents
 from livekit.agents import AgentServer, AgentSession, JobContext, room_io
-from livekit.plugins import groq, silero
+from livekit.plugins import groq, noise_cancellation, silero
 
 from booking import PortfolioAgent
 from knowledge import build_instructions, load_digest_sync
@@ -79,7 +79,13 @@ async def entrypoint(ctx: JobContext) -> None:
     await session.start(
         room=ctx.room,
         agent=agent,
-        room_options=room_io.RoomOptions(),
+        room_options=room_io.RoomOptions(
+            audio_input=room_io.AudioInputOptions(
+                # Included with LiveKit Cloud. BVC also strips other voices in
+                # the room, but voice isolation is billed separately.
+                noise_cancellation=noise_cancellation.NC(),
+            ),
+        ),
     )
 
     async def close_on_timeout() -> None:
