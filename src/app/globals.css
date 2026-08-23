@@ -456,6 +456,26 @@ html.lenis body {
   display: block;
 }
 
+/* --- Voice agent -------------------------------------------------------------- */
+
+/* A slow accent pulse on the idle console, so the eye finds the control. */
+.agent-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: agent-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes agent-pulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-pulse { animation: none; opacity: 0.8; }
+}
+
 /* --- Project architecture diagrams ------------------------------------------ */
 
 /* The diagram SVG is inlined into the page so it can follow the theme toggle.

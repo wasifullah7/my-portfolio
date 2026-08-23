@@ -31,7 +31,7 @@ const STAGES: { key: keyof Latency; label: string }[] = [
 const STACK = [
   ["Transport", "LiveKit, WebRTC"],
   ["Recognition", "Whisper large v3 turbo"],
-  ["Model", "gpt-oss-120b"],
+  ["Model", "gpt-oss, open weights"],
   ["Synthesis", "Piper, on the worker"],
   ["Turn taking", "Silero"],
 ];
@@ -129,27 +129,39 @@ function IdleTranscript({ phase, error }: { phase?: string; error?: string | nul
   );
 }
 
+// The whole panel is the control, not a small button under it. A visitor should
+// not have to find the affordance.
 function IdleStage({ phase, onStart }: { phase?: string; onStart?: () => void }) {
+  const connecting = phase === "connecting";
+  const label = connecting ? "Connecting" : phase === "idle" ? "Start the call" : "Call again";
+
   return (
-    <>
+    <button
+      type="button"
+      onClick={onStart}
+      disabled={connecting}
+      aria-label={`${label}. Talk to the voice agent.`}
+      className="group -m-2 flex w-full flex-col items-center gap-6 p-2 transition-colors duration-300 hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-wait"
+    >
       <div className="w-full">
         <Scope bands={[]} live={false} label="Waiting to start" />
-        <p className="mono mt-2 text-center text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
-          No signal
+        <p className="mono mt-2 flex items-center justify-center gap-2 text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
+          <span className={connecting ? "agent-pulse" : "agent-pulse"} aria-hidden />
+          {connecting ? "Connecting" : "Ready when you are"}
         </p>
       </div>
-      <button
-        type="button"
-        onClick={onStart}
-        disabled={phase === "connecting"}
-        className="group mono inline-flex items-center gap-3 border border-ink px-6 py-3 text-xs uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-ink hover:text-paper disabled:cursor-wait disabled:opacity-50"
-      >
-        {phase === "connecting" ? "Connecting" : phase === "idle" ? "Start the call" : "Call again"}
-        <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">
+
+      <span className="mono inline-flex items-center gap-3 border border-ink bg-ink px-7 py-3.5 text-xs uppercase tracking-[0.16em] text-paper transition-transform duration-300 group-hover:-translate-y-0.5 group-disabled:opacity-50">
+        {label}
+        <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
           &rarr;
         </span>
-      </button>
-    </>
+      </span>
+
+      <span className="text-[0.8125rem] leading-relaxed text-muted">
+        It answers out loud. Your microphone is only on while you are talking.
+      </span>
+    </button>
   );
 }
 
