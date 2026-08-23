@@ -156,10 +156,11 @@ export const hiringForm = {
 } as const;
 
 export const navItems = [
+  // No entry for the agent: it sits in the hero, above everything the nav points at.
   { label: "About", href: "#about", index: "01" },
-  { label: "Agent", href: "#talk", index: "02" },
-  { label: "Stack", href: "#skills", index: "03" },
-  { label: "Experience", href: "#experience", index: "04" },
-  { label: "Work", href: "#work", index: "05" },
-  { label: "Contact", href: "#contact", index: "07" },
+  { label: "Stack", href: "#skills", index: "02" },
+  { label: "Experience", href: "#experience", index: "03" },
+  { label: "Work", href: "#work", index: "04" },
+  { label: "Writing", href: "#writing", index: "05" },
+  { label: "Contact", href: "#contact", index: "06" },
 ] as const;

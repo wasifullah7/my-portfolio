@@ -4,6 +4,7 @@ import { MagneticHeadline } from "@/components/motion/MagneticHeadline";
 import { Reveal } from "@/components/motion/Reveal";
 import { Counter } from "@/components/motion/Counter";
 import { cn } from "@/lib/utils";
+import { AgentConsole } from "@/components/voice/AgentConsole";
 
 export function Hero() {
   return (
@@ -61,7 +62,7 @@ export function Hero() {
                   </span>
                 </a>
                 <a
-                  href="#talk"
+                  href="#agent"
                   className="link-underline mono text-xs uppercase tracking-[0.16em] text-accent"
                 >
                   Talk to my agent
@@ -83,6 +84,20 @@ export function Hero() {
             </Reveal>
           </div>
         </div>
+
+        <Reveal delay={1.0}>
+          <div id="agent" className="mt-16 scroll-mt-24">
+            <div className="rule-t flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 pt-4">
+              <span className="label">Live voice agent</span>
+              <span className="mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
+                Measured, not claimed
+              </span>
+            </div>
+            <div className="mt-6">
+              <AgentConsole />
+            </div>
+          </div>
+        </Reveal>
 
         {/* Measurement band */}
         <Reveal delay={1.05}>

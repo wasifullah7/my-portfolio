@@ -7,7 +7,7 @@ export function Skills() {
     <section id="skills" className="scroll-mt-24 py-28 sm:py-36">
       <div className="mx-auto max-w-[1400px] px-6 sm:px-10">
         <SectionHeading
-          index="03"
+          index="02"
           eyebrow="Stack"
           title="What I build with"
           lead="Grouped by what it solves, not by what language it happens to be written in."

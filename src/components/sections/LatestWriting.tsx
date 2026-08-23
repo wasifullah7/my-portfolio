@@ -13,7 +13,7 @@ export function LatestWriting() {
       className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-28 sm:px-10 sm:py-36"
     >
       <SectionHeading
-        index="06"
+        index="05"
         eyebrow="Writing"
         title="Engineering write-ups"
         lead="Long-form notes on latency, concurrency and retrieval in production AI systems."

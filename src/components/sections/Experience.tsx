@@ -9,7 +9,7 @@ export function Experience() {
       className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-28 sm:px-10 sm:py-36"
     >
       <SectionHeading
-        index="04"
+        index="03"
         eyebrow="Experience"
         title="Where I've shipped"
         lead="Three teams. Each one moved me further from notebooks and closer to things people depend on."

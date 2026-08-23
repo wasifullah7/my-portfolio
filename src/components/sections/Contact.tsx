@@ -10,7 +10,7 @@ export function Contact() {
       className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-28 sm:px-10 sm:py-36"
     >
       <SectionHeading
-        index="07"
+        index="06"
         eyebrow="Contact"
         title="Get in touch"
         lead="If you are hiring, the form on the hire page asks the few things I need to give you a straight answer. Otherwise, email works fine."
