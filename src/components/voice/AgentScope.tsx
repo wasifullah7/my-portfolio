@@ -83,18 +83,44 @@ export function Scope({
       history.current.push(level.current);
       if (history.current.length > HISTORY) history.current.shift();
 
+      // An envelope, the way audio software draws one: a faint fill under a
+      // hairline outline. Solid bars read as a graphic; this reads as a signal.
       const active = liveRef.current;
       const step = w / HISTORY;
-      ctx.strokeStyle = active ? accent : faint;
-      ctx.lineWidth = 2;
+      const points = history.current;
+      const amp = (i: number) => Math.max(points[i] * h * 0.34, active ? 0.6 : 0.3);
+      const colour = active ? accent : faint;
 
-      for (let i = 0; i < history.current.length; i++) {
-        const amp = Math.max(history.current[i] * h * 0.42, active ? 1 : 0.5);
+      ctx.beginPath();
+      for (let i = 0; i < points.length; i++) {
         const x = i * step + step / 2;
-        ctx.globalAlpha = 0.2 + (i / history.current.length) * 0.8;
+        if (i === 0) ctx.moveTo(x, mid - amp(i));
+        else ctx.lineTo(x, mid - amp(i));
+      }
+      for (let i = points.length - 1; i >= 0; i--) {
+        ctx.lineTo(i * step + step / 2, mid + amp(i));
+      }
+      ctx.closePath();
+
+      ctx.globalAlpha = active ? 0.1 : 0.05;
+      ctx.fillStyle = colour;
+      ctx.fill();
+
+      ctx.globalAlpha = active ? 0.55 : 0.3;
+      ctx.strokeStyle = colour;
+      ctx.lineWidth = 1;
+      ctx.lineJoin = "round";
+      ctx.stroke();
+
+      // Only the leading edge is at full strength, so the eye follows the now.
+      if (active && points.length) {
+        const last = points.length - 1;
+        const x = last * step + step / 2;
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = accent;
         ctx.beginPath();
-        ctx.moveTo(x, mid - amp);
-        ctx.lineTo(x, mid + amp);
+        ctx.moveTo(x, mid - amp(last));
+        ctx.lineTo(x, mid + amp(last));
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
