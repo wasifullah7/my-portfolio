@@ -4,16 +4,19 @@ import { site } from "@/content/site";
 import { Reveal } from "@/components/motion/Reveal";
 
 /**
- * The GitHub profile card, inlined.
+ * The profile card: portrait beside a live readout.
  *
- * It is the same artefact that renders on the GitHub profile, regenerated in
- * this site's palette: every colour in it is a CSS custom property, so it
- * follows the light and dark themes here instead of carrying its own.
+ * The readout is the same artefact that renders on the GitHub profile,
+ * regenerated in this site's palette. Every colour in it is a CSS custom
+ * property, so it follows the light and dark themes here rather than carrying
+ * its own, which is also why it is inlined: a file in <img> cannot read the
+ * page's variables.
  *
- * Inlined rather than served as an image for two reasons. A file in <img>
- * cannot read the page's CSS variables, and inlining costs no extra request.
+ * The GitHub version pairs the readout with an ASCII portrait, which is the
+ * convention there. Here it sits next to the actual photograph instead, since
+ * an ASCII likeness at 52 columns cannot survive the comparison.
  *
- * Refresh with `npm run refresh:card` after the numbers move.
+ * Refresh with `npm run refresh:card`.
  */
 export function GitHubCard() {
   let svg = "";
@@ -38,18 +41,35 @@ export function GitHubCard() {
       </Reveal>
 
       <Reveal delay={0.06}>
-        <div className="github-card mt-10 overflow-x-auto">
-          <div
-            className="min-w-[860px]"
-            dangerouslySetInnerHTML={{ __html: svg }}
-          />
+        <div className="mt-12 grid gap-10 lg:grid-cols-[240px_1fr] lg:gap-16">
+          {site.portrait ? (
+            <figure className="max-w-[240px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={site.portrait.src}
+                alt={site.portrait.alt}
+                width={site.portrait.width}
+                height={site.portrait.height}
+                loading="lazy"
+                className="w-full select-none"
+              />
+              <figcaption className="label mt-2">{site.name}</figcaption>
+            </figure>
+          ) : null}
+
+          <div className="github-card overflow-x-auto">
+            <div
+              className="min-w-[560px]"
+              dangerouslySetInnerHTML={{ __html: svg }}
+            />
+          </div>
         </div>
 
         <a
           href={site.links.github}
           target="_blank"
           rel="noreferrer"
-          className="link-underline mono mt-8 inline-block text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
+          className="link-underline mono mt-10 inline-block text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
         >
           Full activity on GitHub
         </a>
