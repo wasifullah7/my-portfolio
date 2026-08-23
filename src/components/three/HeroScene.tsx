@@ -2,7 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { useTheme } from "next-themes";
-import { FlowField } from "./FlowField";
+import { GridField } from "./GridField";
 
 export default function HeroScene() {
   const { resolvedTheme } = useTheme();
@@ -16,10 +16,10 @@ export default function HeroScene() {
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
     >
-      <FlowField
-        ink={dark ? "#8b8b93" : "#12121a"}
+      <GridField
+        rule={dark ? "#3a3a42" : "#c9c9d2"}
         accent={dark ? "#ff3b2f" : "#e5241b"}
-        opacity={dark ? 0.5 : 0.34}
+        opacity={dark ? 0.85 : 0.9}
       />
     </Canvas>
   );
