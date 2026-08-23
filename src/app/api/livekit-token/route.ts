@@ -84,10 +84,25 @@ export async function POST(request: Request) {
     );
   }
 
+  let timeZone = "UTC";
+  try {
+    const body = await request.json();
+    // Only an IANA-looking name, since this is echoed into the agent.
+    if (typeof body?.timeZone === "string" && /^[A-Za-z_+\-]+\/[A-Za-z_+\-/]+$/.test(body.timeZone)) {
+      timeZone = body.timeZone;
+    }
+  } catch {
+    // no body is fine
+  }
+
   const room = `portfolio-${crypto.randomUUID()}`;
   const identity = `visitor-${crypto.randomUUID().slice(0, 8)}`;
 
-  const token = new AccessToken(key, secret, { identity, ttl: TOKEN_TTL });
+  const token = new AccessToken(key, secret, {
+    identity,
+    ttl: TOKEN_TTL,
+    metadata: JSON.stringify({ timeZone }),
+  });
   token.addGrant({
     room,
     roomJoin: true,

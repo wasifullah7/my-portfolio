@@ -74,7 +74,7 @@ async def entrypoint(ctx: JobContext) -> None:
     latency = TurnLatency(ctx.room)
     session.on("metrics_collected", latency.handle)
 
-    agent = PortfolioAgent(build_instructions(ctx.proc.userdata["digest"]))
+    agent = PortfolioAgent(build_instructions(ctx.proc.userdata["digest"]), room=ctx.room)
 
     await session.start(
         room=ctx.room,

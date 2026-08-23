@@ -14,7 +14,12 @@ export function useAgentConnection() {
     setPhase("connecting");
     setError(null);
     try {
-      const response = await fetch("/api/livekit-token", { method: "POST" });
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const response = await fetch("/api/livekit-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ timeZone }),
+      });
       const data = await response.json();
       if (!response.ok) {
         setError(data.error ?? "The voice agent is not available right now.");

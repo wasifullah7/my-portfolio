@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import json
 import logging
 import os
 import re
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 import httpx
 from livekit.agents import Agent, RunContext, function_tool
@@ -26,10 +28,22 @@ MAX_BOOKINGS_PER_SESSION = 1
 
 
 class PortfolioAgent(Agent):
-    def __init__(self, instructions: str) -> None:
+    def __init__(self, instructions: str, room=None) -> None:
         super().__init__(instructions=instructions)
+        self._room = room
         self._offered: list[str] = []
         self._booked = 0
+
+    def _tz(self) -> str:
+        try:
+            for participant in self._room.remote_participants.values():
+                zone = json.loads(participant.metadata or "{}").get("timeZone")
+                if zone:
+                    ZoneInfo(zone)
+                    return zone
+        except Exception:  # noqa: BLE001
+            pass
+        return "UTC"
 
     @function_tool()
     async def check_availability(
@@ -77,8 +91,9 @@ class PortfolioAgent(Agent):
             return "nothing open in that window; suggest looking further ahead"
 
         self._offered = slots[:12]
-        spoken = ", ".join(_spoken(s) for s in self._offered[:3])
-        return f"open slots (UTC): {spoken}. More if they want another day."
+        tz = self._tz()
+        spoken = ", ".join(_spoken(s, tz) for s in self._offered[:3])
+        return f"open slots in the caller local time ({tz}): {spoken}. More if they want another day."
 
     @function_tool()
     async def book_intro_call(
@@ -111,7 +126,7 @@ class PortfolioAgent(Agent):
             "attendee": {
                 "name": name.strip(),
                 "email": email.strip(),
-                "timeZone": "UTC",
+                "timeZone": self._tz(),
                 "language": "en",
             },
             "metadata": {"source": "portfolio voice agent"},
@@ -142,7 +157,7 @@ class PortfolioAgent(Agent):
 
         self._booked += 1
         logger.info("booked %s for %s", slot_iso, email.strip())
-        return f"booked for {_spoken(slot_iso)} UTC. Confirmation is on its way to their inbox."
+        return f"booked for {_spoken(slot_iso, self._tz())}. Confirmation is on its way to their inbox."
 
 
 def _flatten_slots(payload: object) -> list[str]:
@@ -167,9 +182,13 @@ def _flatten_slots(payload: object) -> list[str]:
     return sorted(dict.fromkeys(found))
 
 
-def _spoken(iso: str) -> str:
+def _spoken(iso: str, tz: str = "UTC") -> str:
+    # am/pm is spelled out. Left as "4:00" the model read 04:00 UTC aloud as
+    # "four p.m.", which is a twelve hour error in a meeting invitation.
     try:
-        when = datetime.fromisoformat(iso.replace("Z", "+00:00"))
-    except ValueError:
+        when = datetime.fromisoformat(iso.replace("Z", "+00:00")).astimezone(ZoneInfo(tz))
+    except Exception:  # noqa: BLE001
         return iso
-    return when.strftime("%A the %d at %H:%M").replace(" 0", " ")
+    hour = when.hour % 12 or 12
+    meridiem = "am" if when.hour < 12 else "pm"
+    return f"{when:%A} {when.day} {when:%B} at {hour}:{when:%M} {meridiem}"
