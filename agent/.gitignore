@@ -1,0 +1,7 @@
+# 63MB of ONNX per voice. The Dockerfile downloads these at build time.
+voices/
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.local
