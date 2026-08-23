@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 
@@ -40,7 +41,11 @@ class TurnLatency:
         payload = json.dumps({k: round(v * 1000) for k, v in turn.items()})
         self._turn = {}
 
+        # publish_data is a coroutine and this callback is sync, so it has to be
+        # scheduled; calling it plainly creates a coroutine nobody awaits.
+        coro = self._room.local_participant.publish_data(payload, topic=TOPIC, reliable=True)
         try:
-            self._room.local_participant.publish_data(payload, topic=TOPIC, reliable=True)
-        except Exception as exc:  # noqa: BLE001 - telemetry must not break a call
-            logger.debug("could not publish metrics (%s)", exc)
+            asyncio.get_running_loop().create_task(coro)
+        except RuntimeError:
+            coro.close()
+            logger.debug("no running loop, dropped metrics")
