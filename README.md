@@ -1,6 +1,6 @@
 # Wasif Ullah
 
-**Full-Stack AI Engineer** · Python · FastAPI · React · Next.js · Computer Vision
+**Voice AI & Full-Stack AI Engineer** · Python · FastAPI · LiveKit · React · Next.js · Computer Vision
 
 [wasif.wwez@gmail.com](mailto:wasif.wwez@gmail.com) · +92 318 9340438 · Lahore, Pakistan
 [LinkedIn](https://www.linkedin.com/in/wasifullahdev) · [GitHub](https://github.com/wasifullah7) · [Medium](https://medium.com/@wasifullahdev) · [Portfolio](https://wasif-ullah-portfolio.vercel.app)
@@ -9,38 +9,39 @@
 
 ## Summary
 
-Full-Stack AI Engineer with 2+ years designing and shipping production backend systems, AI-integrated web applications, and computer vision pipelines for clients across the UK, EU, and US. Proficient in Python, FastAPI, React, Next.js, PostgreSQL, Docker, and AWS, delivering end-to-end systems from REST API architecture and database design through to responsive frontend and cloud deployment.
+Voice AI and Full-Stack AI Engineer with 2+ years shipping production systems for clients across the UK, EU and US. Most of my work is real-time voice: agents that answer a live phone call, understand it, retrieve from a knowledge base and hand off to a human when they should. The rest is computer vision and the backend infrastructure that carries both.
 
-Measured results: **0.83 mAP** on a diagram digitisation pipeline, **97%** arrow-association accuracy, and **89%** prediction accuracy on a live RAG recommendation system.
+Measured results: voice latency cut from **1.8 seconds to under 300ms**, hybrid retrieval **under 150ms**, **0.83 mAP** on a diagram digitisation pipeline with **97%** arrow-association accuracy, and **89%** prediction accuracy on a live RAG recommendation system.
 
 ---
 
 ## Experience
 
-### Full-Stack AI Engineer · Strateger AI
+### Voice AI & Full-Stack AI Engineer · RTC League
 `Jul 2025 – Present` · Lahore, Pakistan (onsite)
 
-- Architected and deployed the **AI Board Scanner**, an end-to-end diagram recognition system combining RF-DETR object detection, PaddleOCR text extraction, and SAM2 segmentation, achieving 0.83 mAP and 97% arrow-association accuracy against industry benchmarks.
-- Built dynamic binary mask pipelines and spatial algorithms using KD-trees, BFS skeletonisation, and colour and angle detection logic to extract complex graphs from diagrams with overlapping objects and OCR gaps.
-- Developed and dockerised FastAPI REST services for scalable deployment across AWS EC2 and S3, with structured JSON output consumed by downstream frontend and enterprise integrations.
-- Automated cloud infrastructure with Terraform and Terragrunt, supporting consistent rollout of AI microservices across multiple enterprise regions.
-- Implemented CI/CD pipelines with GitHub Actions and Docker across the AI backend.
+- Built **real-time voice agents** on LiveKit and SIP telephony, streaming audio rather than waiting on complete turns, cutting end-to-end response from 1.8 seconds to under 300 milliseconds.
+- Tuned **vLLM** across a multi-node GPU cluster with continuous batching so throughput holds under concurrent calls, and built hybrid retrieval combining vector and keyword search returning grounded answers in under 150 milliseconds.
+- Designed an **on-premise voice platform** for a healthcare client where patient data could never leave their hardware: telephony, call analytics, a knowledge assistant and live agent assist across four workstreams.
+- Architected and deployed the **AI Board Scanner**, a diagram recognition system combining RF-DETR detection, PaddleOCR text extraction and SAM2 segmentation, reaching 0.83 mAP and 97% arrow-association accuracy.
+- Built binary mask pipelines using KD-trees, BFS skeletonisation and colour and angle heuristics to extract graphs from diagrams with overlapping objects and OCR gaps.
+- Automated cloud infrastructure with Terraform and Terragrunt, and CI/CD with GitHub Actions and Docker.
 
 ### Full-Stack Developer · Gojins
 `Aug 2024 – Jun 2025` · Lahore, Pakistan (onsite)
 
-- Designed and built a comprehensive **HRMS** managing leave tracking, payroll, attendance, performance reviews, and analytics dashboards, backed by secure REST APIs, PostgreSQL, MongoDB, and JWT authentication for a UK enterprise client.
-- Developed a real-time **Portfolio Builder** enabling users to create, update, and publish personal sites with live editing and custom domain support.
-- Engineered production platforms for business management and equipment troubleshooting on dual-database architectures combining PostgreSQL and MongoDB.
-- Integrated ML-driven logic for predictive diagnostics, smart recommendations, and adaptive workflow automation.
-- Maintained reliability through Jest unit and integration testing in a cross-functional Agile team.
+- Designed and built a comprehensive **HRMS** covering leave tracking, payroll, attendance, performance reviews and analytics, backed by secure REST APIs, PostgreSQL, MongoDB and JWT authentication for a UK enterprise client.
+- Built a **CRM** covering the lead pipeline, projects and tasks with role-based access and threaded comments, as lead backend engineer on a team of five.
+- Developed a real-time **Portfolio Builder** with live editing and custom domain support.
+- Shipped a two-service **image moderation API** and cut its median response from 1.67 seconds to 170 milliseconds without touching the model or losing accuracy.
+- Delivered a standards-compliant **LMS integration** for an education client as a pure wrapper, adding only new files and leaving their existing sign-on untouched.
 
 ### Junior Software Developer · UNAZ Legal Services
 `Oct 2023 – May 2024` · Hull, UK (remote)
 
-- Built a **Lawyer Case Management** backend in Node.js handling document workflows, scheduling, case tracking, and client management.
-- Designed a **Zakat Automation System** with real-time analytics, a PostgreSQL data layer, and cross-module state via React Context API.
-- Applied async programming patterns to optimise notification delivery and case-tracking responsiveness across high-volume legal workflows.
+- Built a **Lawyer Case Management** backend in Node.js handling document workflows, scheduling, case tracking and client management.
+- Designed a **Zakat Automation System** with real-time analytics, a PostgreSQL data layer and cross-module state via React Context API.
+- Applied async patterns to optimise notification delivery and case-tracking responsiveness across high-volume workflows.
 
 ---
 
@@ -49,11 +50,13 @@ Measured results: **0.83 mAP** on a diagram digitisation pipeline, **97%** arrow
 | Project | Result | Stack |
 | --- | --- | --- |
 | **AI Board Scanner** | 0.83 mAP, 97% arrow association | RF-DETR, SAM2, PaddleOCR, FastAPI, Docker, AWS |
+| **PPTX Adaptation Agent** | Layout-preserving slide agent with vision self-correction, 1,197 tests | LangChain, LangGraph, python-pptx, Next.js |
+| **On-Premise Voice Platform** | Four workstreams under HIPAA constraints, 500 concurrent calls targeted | Kubernetes, LiveKit, SIP, vLLM, Qdrant, gRPC |
+| **[Document Intelligence Pipeline](https://github.com/wasifullah7/document-intelligence-pipeline)** | Fully offline, 287 MB of models, zero cloud calls | FastAPI, ChromaDB, spaCy, PyMuPDF |
+| **Content Moderation API** | 1.67s to 170ms median, accuracy held at 96% | Node.js, FastAPI, TensorFlow.js, Docker |
 | **[Ele(Q)tric](https://github.com/wasifullah7/Q-volution-Hackathon)** ([live](https://q-volution-hackathon-theta.vercel.app/)) | QAOA on Rigetti's 84-qubit Ankaa-3, ~10x speedup | React, TypeScript, PyQuil, QAOA |
-| **AI Career Coach** | 89% predictive accuracy | FastAPI, LangChain, Pinecone, RAG |
-| **[Document Intelligence Pipeline](https://github.com/wasifullah7/document-intelligence-pipeline)** | Fully offline, 287 MB models, CPU only | FastAPI, ChromaDB, spaCy, PyMuPDF |
-| **HRMS Platform** | End-to-end HR system for a UK client | React, Next.js, Node.js, PostgreSQL, MongoDB |
-| **Pakistani Sign Language Recognition** | 85% accuracy (final year project) | PyTorch, OpenCV, GAN |
+
+Fifteen written case studies, with the problem, the approach and the measured outcome for each: **[wasif-ullah-portfolio.vercel.app/work](https://wasif-ullah-portfolio.vercel.app/work)**
 
 ---
 
@@ -62,11 +65,12 @@ Measured results: **0.83 mAP** on a diagram digitisation pipeline, **97%** arrow
 | | |
 | --- | --- |
 | **Languages** | Python, JavaScript, TypeScript, SQL |
-| **Backend** | FastAPI, Node.js, Express, REST APIs, GraphQL, JWT, OAuth, Pydantic, Async Python, Microservices, WebSockets, LiveKit, WebRTC |
+| **Voice & Real-time** | LiveKit, SIP telephony, WebRTC, vLLM, streaming STT and TTS, WebSockets |
+| **Backend** | FastAPI, Node.js, Express, REST APIs, GraphQL, JWT, OAuth, Pydantic, Async Python, Microservices |
 | **Frontend** | React, Next.js, Redux Toolkit, Tailwind CSS, shadcn/ui, React Query, Zustand, React Hook Form |
-| **Databases** | PostgreSQL, MongoDB, MySQL, Redis, Pinecone, vector databases, schema design, query optimisation |
+| **Databases** | PostgreSQL, MongoDB, MySQL, Redis, Qdrant, Pinecone, pgvector, schema design, query optimisation |
 | **AI & Vision** | PyTorch, RF-DETR, YOLOv8, SAM2, PaddleOCR, OpenCV, object detection, image segmentation, OCR, RAG, LangChain, embeddings, semantic search |
-| **Cloud & DevOps** | AWS (EC2, S3, SageMaker, API Gateway, Lambda), Docker, Terraform, Terragrunt, GitHub Actions, CI/CD |
+| **Cloud & DevOps** | AWS (EC2, S3, SageMaker, API Gateway, Lambda), Kubernetes, Docker, Terraform, Terragrunt, GitHub Actions, CI/CD |
 | **Testing** | Pytest, Jest, unit and integration testing, Postman |
 
 ---
@@ -82,13 +86,4 @@ Measured results: **0.83 mAP** on a diagram digitisation pipeline, **97%** arrow
 
 ---
 
-## Repository
-
-Source for the portfolio site above. Next.js 16, React 19, TypeScript, Tailwind CSS v4, Motion.
-
-```bash
-npm install
-npm run dev
-```
-
-Publishing workflow for articles: [docs/WRITING.md](docs/WRITING.md)
+Open to AI engineering and full-stack roles. **[Get in touch](https://wasif-ullah-portfolio.vercel.app/hire)**
