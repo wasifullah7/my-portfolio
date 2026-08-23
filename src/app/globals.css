@@ -461,7 +461,10 @@ html.lenis body {
 /* The diagram SVG is inlined into the page so it can follow the theme toggle.
    That rules out presentation attributes: var() does not resolve inside fill=""
    or font-family="", so every colour and face is set here instead. */
-.project-diagram svg {
+/* Sizing belongs to the wide figure alone. The compact card shares the paint
+   below but sets its own dimensions, and a min-width here would burst it out of
+   its 4:3 slot. */
+.project-diagram-wide svg {
   width: 100%;
   /* Below this the 15px labels scale into illegibility, so the figure scrolls
      sideways instead of shrinking. Same treatment as the profile card. */
@@ -512,6 +515,20 @@ html.lenis body {
   fill: none;
   stroke: var(--rule);
   stroke-width: 1;
+}
+
+.project-diagram .d-rail {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.project-diagram .d-node {
+  fill: var(--muted);
+}
+
+.project-diagram .d-node-accent {
+  fill: var(--accent);
 }
 
 .project-diagram .d-head {

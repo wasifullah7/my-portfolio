@@ -99,7 +99,7 @@ export function ProjectDiagram({
     // No margin of its own: the caller supplies the spacing, and a margin here
     // collapses against it, which shifts the figure out from under ClipReveal’s
     // clip path and slices the top row off.
-    <figure className="project-diagram not-prose overflow-x-auto">
+    <figure className="project-diagram project-diagram-wide not-prose overflow-x-auto">
       <svg
         viewBox={`0 0 ${WIDTH} ${height}`}
         width={WIDTH}

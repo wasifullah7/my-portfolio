@@ -1,27 +1,42 @@
-"use client";
-
-import { useState } from "react";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type { Project } from "@/content/projects";
+import { diagrams } from "@/content/diagrams";
+import { ProjectDiagramCard } from "./ProjectDiagramCard";
 
 /**
- * Screenshot with a designed fallback. Real files dropped into /public/projects
- * swap in automatically; until then the plate renders, so the layout never
- * shows a broken image.
+ * What sits in a project's media slot, in order of preference:
+ *
+ *   1. a real screenshot, if the file is actually on disk
+ *   2. the project's architecture, drawn compactly
+ *   3. a hatched plate, so the layout never shows a hole
+ *
+ * The screenshot check is existsSync rather than an <img> onError handler. Every
+ * project carries an image path, but most point at files that do not exist yet,
+ * and letting the browser discover that meant serving a broken image and
+ * swapping it out after the 404 came back. Resolving it here means the right
+ * thing is in the HTML from the start. Drop a file into /public/projects and it
+ * takes over on the next build, with nothing else to change.
  */
 export function ProjectMedia({ project }: { project: Project }) {
-  const [failed, setFailed] = useState(false);
+  const hasScreenshot =
+    !!project.image &&
+    existsSync(join(process.cwd(), "public", project.image.replace(/^\//, "")));
 
-  if (project.image && !failed) {
+  if (hasScreenshot) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={project.image}
         alt={`${project.title} interface`}
         loading="lazy"
-        onError={() => setFailed(true)}
         className="aspect-[4/3] w-full object-cover"
       />
     );
+  }
+
+  if (diagrams[project.slug]) {
+    return <ProjectDiagramCard slug={project.slug} stack={project.stack} />;
   }
 
   return (
