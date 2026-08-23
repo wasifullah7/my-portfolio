@@ -21,7 +21,8 @@ from piper_tts import PiperTTS
 load_dotenv(".env.local")
 load_dotenv(".env")
 
-Sif sys.platform == "win32":
+# Piper logs IPA phonemes; a Windows console codepage cannot encode them.
+if sys.platform == "win32":
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", errors="replace")
@@ -43,11 +44,6 @@ LLM_MODEL = os.getenv("GROQ_LLM_MODEL", "openai/gpt-oss-120b")
 
 
 def setup(proc: agents.JobProcess) -> None:
-    """
-    Load everything slow before a caller is waiting on it. This runs once per
-    worker process, before any job is accepted. The Piper session costs about
-    1.5 seconds cold and 143ms warm, and that gap is the whole first impression.
-    """
     proc.userdata["vad"] = silero.VAD.load()
     tts = PiperTTS(model_path=VOICE_DIR / f"{VOICE_NAME}.onnx")
     tts.load_sync()
@@ -66,20 +62,14 @@ async def entrypoint(ctx: JobContext) -> None:
         llm=groq.LLM(
             model=LLM_MODEL,
             reasoning_effort="low",
-            # Spoken answers, not written ones. Two or three sentences is the
-            # brief, and a hard ceiling stops a rambling turn holding the floor.
             max_completion_tokens=200,
             temperature=0.4,
         ),
         tts=ctx.proc.userdata["tts"],
         vad=ctx.proc.userdata["vad"],
-        # People interrupt a voice agent constantly, and one that talks over the
-        # interruption reads as broken rather than busy.
         allow_interruptions=True,
     )
 
-    # The framework measures every turn already. This forwards those numbers to
-    # the page so a visitor can watch the latency rather than take it on trust.
     latency = TurnLatency(ctx.room)
     session.on("metrics_collected", latency.handle)
 

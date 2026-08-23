@@ -1,16 +1,3 @@
-"""
-Piper as a LiveKit TTS plugin.
-
-Speech synthesis is the one part of a free voice stack that cannot come from an
-API. Groq's free tier allows 100 synthesis requests a day, and every reply the
-agent speaks is one request, so a single conversation of fifteen turns eats a
-sixth of the daily budget. Piper removes the meter: MIT licensed, runs on CPU,
-and measured here at 143ms to first audio and 23x realtime once warm.
-
-The generator Piper exposes is blocking, so synthesis runs on a worker thread and
-chunks are handed back to the event loop as they arrive. Buffering the whole
-utterance first would throw away the only latency number that matters.
-"""
 
 from __future__ import annotations
 
@@ -36,9 +23,6 @@ class PiperTTS(tts.TTS):
         if not config.exists():
             raise FileNotFoundError(f"Piper voice config not found at {config}")
 
-        # The sample rate is needed before the voice is loaded, and the config
-        # sidecar carries it. Reading a few KB of JSON beats loading 63MB of
-        # ONNX just to answer one question.
         with config.open(encoding="utf-8") as fh:
             sample_rate = int(json.load(fh)["audio"]["sample_rate"])
 
@@ -54,12 +38,7 @@ class PiperTTS(tts.TTS):
         self._load_lock = asyncio.Lock()
 
     def load_sync(self):
-        """
-        Load the ONNX session. Called from the server's setup hook, which runs
-        once per worker process before any job is accepted, so the 1.5 second
-        cold start is paid before anyone is listening rather than during the
-        first reply.
-        """
+
         if self._voice is None:
             from piper import PiperVoice
 
@@ -69,7 +48,7 @@ class PiperTTS(tts.TTS):
         return self._voice
 
     async def ensure_voice(self):
-        """Lazy fallback, for the case where setup did not run."""
+        """Lazy fallback if setup did not run."""
         if self._voice is not None:
             return self._voice
 
@@ -97,10 +76,6 @@ class ChunkedStream(tts.ChunkedStream):
             sample_rate=self._tts.sample_rate,
             num_channels=NUM_CHANNELS,
             mime_type="audio/pcm",
-            # The emitter cannot release a frame until it holds a whole one, so
-            # the frame size is a floor on time-to-first-audio. 100ms halves that
-            # floor for a few more, cheaper, frames.
-            frame_size_ms=200,
         )
 
         loop = asyncio.get_running_loop()

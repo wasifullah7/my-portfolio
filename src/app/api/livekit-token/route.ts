@@ -3,20 +3,9 @@ import { AccessToken } from "livekit-server-sdk";
 import { RoomAgentDispatch, RoomConfiguration } from "@livekit/protocol";
 
 /**
- * Mints the short-lived token the browser needs to join a room with the voice
- * agent.
- *
- * This route is the front door to metered infrastructure. Anyone who can call it
- * can start a conversation, so it carries the two limits that matter: how often
- * one visitor may start a call, and how many minutes the site will spend in a
- * day. The hard cap on a single conversation is enforced in the agent itself,
- * because a limit the client owns is a limit the client can remove.
- *
- * Both counters live in module memory. That is deliberate rather than lazy: on
- * Vercel each instance keeps its own, so the real ceiling is per instance and
- * the daily budget is a floor on spending, not a guarantee. A shared counter
- * needs Redis, which is worth adding the day this gets real traffic and not
- * before.
+ * Mints the short-lived token the browser needs to join the agent's room.
+ * Counters are per-instance on Vercel, so the daily budget is a floor on
+ * spending rather than a guarantee. Redis when this sees real traffic.
  */
 
 export const runtime = "nodejs";
@@ -88,7 +77,6 @@ export async function POST(request: Request) {
   const secret = process.env.LIVEKIT_API_SECRET;
 
   if (!url || !key || !secret) {
-    // Not the visitor's problem, and not something to leak detail about.
     console.error("livekit-token: LIVEKIT_URL, _API_KEY or _API_SECRET missing");
     return NextResponse.json(
       { error: "The voice agent is not available right now." },
@@ -105,20 +93,13 @@ export async function POST(request: Request) {
     roomJoin: true,
     canPublish: true,
     canSubscribe: true,
-    // Nothing in the UI needs to write data, and a visitor has no reason to be
-    // able to change what the room says about itself.
     canPublishData: false,
     canUpdateOwnMetadata: false,
   });
 
-  // The worker runs under a name, and naming a worker turns automatic dispatch
-  // off: it joins only the rooms it is sent to. Carrying the dispatch on the
-  // token means the agent is summoned as the visitor connects, with no second
-  // round trip from this route and no room sitting empty waiting for one.
+  // Naming the worker disables automatic dispatch, so it has to be summoned.
   token.roomConfig = new RoomConfiguration({
     agents: [new RoomAgentDispatch({ agentName: AGENT_NAME })],
-    // Close the room promptly once the visitor leaves, so an abandoned tab does
-    // not keep billing agent minutes.
     emptyTimeout: 20,
     maxParticipants: 2,
   });

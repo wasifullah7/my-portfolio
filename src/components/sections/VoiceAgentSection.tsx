@@ -3,18 +3,8 @@ import { VoiceAgent } from "@/components/VoiceAgent";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 
-/**
- * The voice agent, on the homepage, directly after the introduction.
- *
- * Deliberately a section and not a floating bubble in the corner. A round bubble
- * bottom-right is the universal signifier for customer support, which is the
- * opposite of what this is for, and corner widgets are the first thing people
- * learn to ignore. Placed in the page, immediately after the claim about
- * real-time voice work, it reads as evidence for the sentence above it.
- *
- * The call runs here. The full instrumentation, including the measured latency
- * for each turn, lives on /talk where there is room for it.
- */
+// A section rather than a corner bubble: a bubble reads as support chat, and
+// corner widgets are the first thing people learn to ignore.
 export function VoiceAgentSection() {
   return (
     <section

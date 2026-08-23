@@ -11,16 +11,6 @@ import {
 } from "@livekit/components-react";
 import { site, hire } from "@/content/site";
 
-/**
- * The voice agent on /talk.
- *
- * Two things are on screen for a reason. The transcript is the accessible form
- * of the whole feature and the only way a visitor can check the agent heard them
- * correctly. The latency panel is the demonstration: anyone can claim a number
- * in an article, and this one is measured in front of the reader, by the
- * framework itself, on the turn they just spoke.
- */
-
 type Connection = { token: string; url: string };
 type Phase = "idle" | "connecting" | "live" | "ended" | "error";
 
@@ -168,13 +158,11 @@ function LiveCall({ onEnd, compact }: { onEnd: () => void; compact: boolean }) {
   const [latency, setLatency] = useState<Latency | null>(null);
   const logRef = useRef<HTMLDivElement>(null);
 
-  // The agent publishes one payload per turn on this topic. useDataChannel is
-  // the framework's own subscriber, so there is no protocol here to maintain.
   useDataChannel(METRICS_TOPIC, (message) => {
     try {
       setLatency(JSON.parse(new TextDecoder().decode(message.payload)));
     } catch {
-      // A malformed packet is not worth breaking a call over.
+      // ignore a malformed packet
     }
   });
 
@@ -300,8 +288,6 @@ function LatencyPanel({ latency }: { latency: Latency | null }) {
         </div>
       </dl>
 
-      {/* Said plainly, because a recruiter who reads the article first will
-          notice the gap, and finding it explained is better than finding it. */}
       <p className="mono mt-5 text-[0.6875rem] leading-relaxed text-faint">
         Measured by the agent on the turn you just spoke, not estimated. Higher than
         the sub-300ms in my writing: that was dedicated infrastructure, this is a
