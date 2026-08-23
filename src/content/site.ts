@@ -74,11 +74,14 @@ export const site = {
  * Review before sharing widely: the FAQ answers are written to be safe and
  * general, not to speak for you on notice period or salary.
  * Set bookingUrl to a Cal.com or Calendly link to turn on the booking button.
+ * bookingShortUrl is optional and adds a shorter slot beside it, for people who
+ * want a quick screen before committing half an hour. Both are hidden when empty.
  */
 export const hire = {
   headline: "Hiring for an AI engineering role?",
   lead: "Most of what a recruiter asks me in the first email is answered below. What is left is the form, which takes about a minute.",
   bookingUrl: "https://cal.com/wasif-ullah-dev/30min",
+  bookingShortUrl: "https://cal.com/wasif-ullah-dev/15min",
   lookingFor: [
     "Full-stack AI engineering, where the model and the product are the same job",
     "Computer vision and retrieval systems that run in production, not in notebooks",

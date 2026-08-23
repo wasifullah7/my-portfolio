@@ -67,6 +67,8 @@ export default function HirePage() {
             Or just email me
           </a>
 
+          {/* The duration is in the label on purpose: a recruiter deciding whether
+              to click wants to know what they are committing to first. */}
           {hire.bookingUrl ? (
             <a
               href={hire.bookingUrl}
@@ -74,7 +76,18 @@ export default function HirePage() {
               rel="noreferrer"
               className="link-underline mono text-xs uppercase tracking-[0.16em] text-accent"
             >
-              Book a call
+              Book a call, 30 min
+            </a>
+          ) : null}
+
+          {hire.bookingShortUrl ? (
+            <a
+              href={hire.bookingShortUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="link-underline mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
+            >
+              Or 15 min
             </a>
           ) : null}
 
