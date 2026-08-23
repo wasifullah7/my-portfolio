@@ -3,35 +3,57 @@ import { join } from "node:path";
 import type { Project } from "@/content/projects";
 import { diagrams } from "@/content/diagrams";
 import { ProjectDiagramCard } from "./ProjectDiagramCard";
+import imageAlt from "@/content/image-alt.json";
+
+/**
+ * Resolves a configured path against what is actually on disk, trying the usual
+ * encodings. Saving a PNG straight out of a browser is the common case, and
+ * having it silently not appear because the path ends in .webp is a trap.
+ *
+ * This is existsSync rather than an <img> onError handler. Every project carries
+ * an image path but most point at files that do not exist yet, and letting the
+ * browser discover that meant serving a broken image and swapping it out once
+ * the 404 came back. Deciding here puts the right thing in the HTML from the
+ * start. Drop a file into /public/projects and it takes over on the next build.
+ */
+export function resolveImage(image: string | undefined): string | undefined {
+  if (!image) return undefined;
+  const rel = image.replace(/^\//, "");
+  const candidates = [
+    rel,
+    ...[".webp", ".png", ".jpg", ".jpeg"].map((ext) => rel.replace(/\.[a-z]+$/i, ext)),
+  ];
+  for (const candidate of candidates) {
+    if (existsSync(join(process.cwd(), "public", candidate))) return "/" + candidate;
+  }
+  return undefined;
+}
 
 /**
  * What sits in a project's media slot, in order of preference:
  *
- *   1. a real screenshot, if the file is actually on disk
+ *   1. a real image of the work, if the file is actually on disk
  *   2. the project's architecture, drawn compactly
  *   3. a hatched plate, so the layout never shows a hole
- *
- * The screenshot check is existsSync rather than an <img> onError handler. Every
- * project carries an image path, but most point at files that do not exist yet,
- * and letting the browser discover that meant serving a broken image and
- * swapping it out after the 404 came back. Resolving it here means the right
- * thing is in the HTML from the start. Drop a file into /public/projects and it
- * takes over on the next build, with nothing else to change.
  */
 export function ProjectMedia({ project }: { project: Project }) {
-  const hasScreenshot =
-    !!project.image &&
-    existsSync(join(process.cwd(), "public", project.image.replace(/^\//, "")));
+  const resolved = resolveImage(project.image);
 
-  if (hasScreenshot) {
+  if (resolved) {
+    // Contained, not cropped. These are diagrams, dashboards and charts rather
+    // than photographs, so object-cover would cut the sides off and take the
+    // labels with them. Letterboxing on the panel ground keeps them readable.
+    const described = (imageAlt as Record<string, string>)[resolved];
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={project.image}
-        alt={`${project.title} interface`}
-        loading="lazy"
-        className="aspect-[4/3] w-full object-cover"
-      />
+      <div className="flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-paper-2 p-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={resolved}
+          alt={described || project.title}
+          loading="lazy"
+          className="max-h-full max-w-full object-contain"
+        />
+      </div>
     );
   }
 

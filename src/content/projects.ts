@@ -67,7 +67,7 @@ export const projects: Project[] = [
       { value: "1,197", label: "test functions" },
       { value: "113k", label: "lines across 422 files" },
     ],
-    image: "/projects/pptx-agent.webp",
+    image: "/blog/ai-powered-powerpoint-generation/01.webp",
     problem:
       "PPTX manipulation has no tolerance for nondeterminism: two runs on the same file must produce the same XML or the agent cannot reason about its own output. But the interesting work is the judgment between steps. Does the generated text actually fit? Is that large upper-left shape a title or a heading? When the render looks wrong but the character counts said it would fit, which do you trust? A fixed pipeline cannot make those calls.",
     approach: [
@@ -97,7 +97,7 @@ export const projects: Project[] = [
       { value: "4", label: "parallel workstreams" },
       { value: "500", label: "concurrent calls targeted" },
     ],
-    image: "/projects/voice-architecture.webp",
+    image: "/blog/how-i-optimized-vllm-for-high-concurrency-in-a-production/01.webp",
     problem:
       "A healthcare communications company needed voice AI that could never send patient data to a third-party API, had to run on their own hardware, and had to survive an audit. That rules out most of the obvious stack, so the constraint had to drive the architecture rather than be bolted on afterwards.",
     approach: [
@@ -126,7 +126,7 @@ export const projects: Project[] = [
       { value: "300ms", label: "end-to-end latency, from 1.8s" },
       { value: "150ms", label: "hybrid RAG retrieval" },
     ],
-    image: "/projects/voice-ai.webp",
+    image: "/blog/how-i-reduced-voice-ai-latency-from-18-seconds-to-under/02.webp",
     problem:
       "A voice agent that takes 1.8 seconds to answer is unusable. Humans read that pause as the line going dead and start talking over it. Every component in the chain, speech recognition, retrieval, inference and speech synthesis, has to be measured and cut, because latency is the product.",
     approach: [
@@ -193,7 +193,7 @@ export const projects: Project[] = [
       { value: "170ms", label: "median, from 1.67s" },
       { value: "96%", label: "accuracy, unchanged" },
     ],
-    image: "/projects/content-moderation.webp",
+    image: "/blog/from-167-seconds-to-170ms/01.webp",
     problem:
       "The numbers looked fine in staging and then real traffic arrived. A single classification call was taking 1.67 seconds on average, the service level objectives were slipping, and users were waiting on an upload to clear. The obvious suspect was the model, and the obvious suspect was wrong.",
     approach: [
@@ -449,7 +449,7 @@ export const projects: Project[] = [
     ],
     stack: ["PyTorch", "OpenCV", "GAN", "Python"],
     metrics: [{ value: "85%", label: "accuracy" }],
-    image: "/projects/psl.webp",
+    image: "/blog/building-a-text-to-sign-language-for-pakistani-urdu/06.webp",
     problem:
       "Pakistani Sign Language has almost no public dataset. That is the real reason deaf users here get so little assistive tooling: you cannot train what you cannot collect, and every off-the-shelf sign model is trained on ASL, which is a different language.",
     approach: [

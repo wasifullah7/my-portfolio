@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { getPost, formatDate } from "@/lib/posts";
-import { ProjectMedia } from "@/components/ProjectMedia";
+import { ProjectMedia, resolveImage } from "@/components/ProjectMedia";
 import { ProjectDiagram } from "@/components/ProjectDiagram";
 import { diagrams } from "@/content/diagrams";
 import { ClipReveal } from "@/components/motion/ClipReveal";
@@ -42,6 +42,8 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
   const { slug } = await props.params;
   const project = caseStudies.find((p) => p.slug === slug);
   if (!project) notFound();
+
+  const hasImage = !!resolveImage(project.image);
 
   const related = (project.relatedPosts ?? [])
     .map((postSlug) => getPost(postSlug))
@@ -118,23 +120,33 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
         ) : null}
       </header>
 
-      {/* The architecture is the honest illustration for this work: most of it
-          is backend, and the client systems could not be screenshotted anyway.
-          A diagram wins here even where project.image is set, because that field
-          is an aspirational path to a screenshot that does not exist yet, and
-          because on a case study the architecture says more than a UI shot.
-          Projects with no diagram fall through to ProjectMedia. */}
+      {/* Where a real image of the work exists it leads, and the architecture
+          follows underneath, because the two say different things and a case
+          study has room for both. Where there is no image, the architecture
+          takes the lead slot instead of leaving a hatched plate there. Most of
+          this work is backend, and the client systems could not have been
+          screenshotted in any case. */}
       <ClipReveal className="mt-12">
-        {diagrams[project.slug] ? (
+        {hasImage || !diagrams[project.slug] ? (
+          <ProjectMedia project={project} />
+        ) : (
           <ProjectDiagram
             slug={project.slug}
             title={project.title}
             year={project.year}
           />
-        ) : (
-          <ProjectMedia project={project} />
         )}
       </ClipReveal>
+
+      {hasImage && diagrams[project.slug] ? (
+        <ClipReveal className="mt-10">
+          <ProjectDiagram
+            slug={project.slug}
+            title={project.title}
+            year={project.year}
+          />
+        </ClipReveal>
+      ) : null}
 
       <div className="mt-16 grid gap-14 lg:grid-cols-[1fr_260px] lg:gap-20">
         <div>
