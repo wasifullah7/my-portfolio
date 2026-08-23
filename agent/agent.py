@@ -74,6 +74,27 @@ async def entrypoint(ctx: JobContext) -> None:
     latency = TurnLatency(ctx.room)
     session.on("metrics_collected", latency.handle)
 
+    # When the model or synthesis fails the session simply stops talking, which
+    # looks broken rather than busy. Saying something is the difference between
+    # a visitor waiting and a visitor leaving. Guarded so a failing recovery
+    # cannot loop on itself.
+    spoke_failure = False
+
+    def on_error(event) -> None:
+        nonlocal spoke_failure
+        logger.error("session error from %s: %s", event.source, event.error)
+        if spoke_failure:
+            return
+        spoke_failure = True
+        asyncio.create_task(
+            session.say(
+                "Sorry, I lost my connection to the model for a moment. "
+                "The hiring form on this page still reaches Wasif directly."
+            )
+        )
+
+    session.on("error", on_error)
+
     agent = PortfolioAgent(build_instructions(ctx.proc.userdata["digest"]), room=ctx.room)
 
     await session.start(
