@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="980" height="499" viewBox="0 0 980 499" role="img" aria-label="Profile card for Wasif Ullah">
   
   
-  <g font-family="var(--font-jetbrains), ui-monospace, monospace" font-size="13.5" xml:space="preserve" style="font-variant-ligatures:none;font-feature-settings:&quot;liga&quot; 0,&quot;calt&quot; 0,&quot;dlig&quot; 0">
+  <g font-family="var(--font-jetbrains), ui-monospace, monospace" font-size="13.5" xml:space="preserve" style="white-space:pre;font-variant-ligatures:none;font-feature-settings:&quot;liga&quot; 0,&quot;calt&quot; 0,&quot;dlig&quot; 0">
     <text x="26" y="45" fill="var(--faint)">                        .::.</text>
     <text x="26" y="64" fill="var(--faint)">                     :.........</text>
     <text x="26" y="83" fill="var(--faint)">                    :.:-==+*+=.:</text>
@@ -41,7 +41,7 @@
     <text x="408.3" y="387"><tspan fill="var(--accent)">Repositories</tspan><tspan fill="var(--faint)">....</tspan></text><text x="546" y="387" fill="var(--ink)">28</text>
     <text x="408.3" y="406"><tspan fill="var(--accent)">Stars</tspan><tspan fill="var(--faint)">...........</tspan></text><text x="546" y="406" fill="var(--ink)">13</text>
     <text x="408.3" y="425"><tspan fill="var(--accent)">Followers</tspan><tspan fill="var(--faint)">.......</tspan></text><text x="546" y="425" fill="var(--ink)">7</text>
-    <text x="408.3" y="444"><tspan fill="var(--accent)">Contributions</tspan><tspan fill="var(--faint)">...</tspan></text><text x="546" y="444" fill="var(--ink)">237 commits · 1 pull request · 0 issues</text>
+    <text x="408.3" y="444"><tspan fill="var(--accent)">Contributions</tspan><tspan fill="var(--faint)">...</tspan></text><text x="546" y="444" fill="var(--ink)">239 commits · 1 pull request · 0 issues</text>
     <text x="408.3" y="463"><tspan fill="var(--accent)">Code written</tspan><tspan fill="var(--faint)">....</tspan></text><text x="546" y="463" fill="var(--ink)">18.2 MB across 28 repositories</text>
   </g>
 </svg>

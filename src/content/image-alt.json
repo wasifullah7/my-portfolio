@@ -1,0 +1,50 @@
+{
+  "_comment": "Alt text for images pulled in from Medium, keyed by local path. scripts/import-medium.mjs reads this when it rewrites <img> tags, so a re-import keeps the descriptions. Run `node scripts/apply-alt.mjs` after editing to push changes into src/content/posts. An empty string is deliberate: those images are decorative stock photography that carries no information, and WCAG wants screen readers to skip them rather than read a description of a desk.",
+
+  "/blog/ai-powered-powerpoint-generation/01.webp": "Pipeline diagram comparing three transformation workflows for generating slides, from source content through to the finished deck.",
+  "/blog/ai-powered-powerpoint-generation/02.webp": "Flowchart of the template path, from content JSON through template scoring and rerank, to a vision model picking the winner and assigning each piece of text to a region before the XML is written.",
+  "/blog/ai-powered-powerpoint-generation/03.webp": "Flowchart of the image path, branching on whether the reference is a hand-drawn sketch or a finished slide, then building a prompt for gpt-image-2 and wrapping the result in a .pptx.",
+
+  "/blog/architecting-sub-150ms-hybrid-rag-for-voice-agents/01.webp": "",
+  "/blog/architecting-sub-150ms-hybrid-rag-for-voice-agents/02.webp": "",
+  "/blog/architecting-sub-150ms-hybrid-rag-for-voice-agents/03.webp": "",
+
+  "/blog/beyond-the-sandbox/01.webp": "Title card: architecting sub-100ms production voice agents with Twilio WebSockets and a custom voice activity detector.",
+  "/blog/beyond-the-sandbox/02.webp": "",
+  "/blog/beyond-the-sandbox/03.webp": "",
+
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/01.webp": "Title card: building a text to sign AI for Pakistani Urdu, showing an Urdu letter mapped to a hand sign.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/02.webp": "A hand forming one of the Urdu sign letters against a plain wall, the kind of frame the dataset was built from.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/03.webp": "Grid of captured hand signs on a dark background, one frame per Urdu letter.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/04.webp": "Labelled grid of the training dataset, each Urdu letter paired with its hand sign.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/05.webp": "Contact sheet of dataset frames after segmentation, with the hands isolated against black.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/06.webp": "The Urdu Character Image Generator running in a browser, showing generated hand signs for the letters entered.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/07.webp": "Bar chart comparing cDCGAN against Stable Diffusion on FID score and training epochs.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/08.webp": "Keras summary of the conditional GAN generator: a 100-dimension noise vector concatenated with a 37-class label, then upsampled through four transpose convolutions to a 128 by 128 image.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/09.webp": "Closer view of the same generator summary, showing the transpose convolution stack and the parameter count at each layer.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/10.webp": "PyTorch code computing the FID score between the directory of real images and the directory of generated ones.",
+  "/blog/building-a-text-to-sign-language-for-pakistani-urdu/11.webp": "Bar chart of FID score at 300, 800 and 1000 training epochs, ending at 93.53.",
+
+  "/blog/from-167-seconds-to-170ms/01.webp": "Before and after panel: median response falling from 1670ms to 170ms, 85% faster without touching the model.",
+  "/blog/from-167-seconds-to-170ms/02.webp": "Diagram of the three changes behind the speedup: Promise.all for concurrency, sharp for image preprocessing, and a WASM backend for the classifier.",
+  "/blog/from-167-seconds-to-170ms/03.webp": "Before and after dashboard showing latency dropping from 1670ms to a 170 to 250ms band, CPU only, with no change to the model.",
+
+  "/blog/from-call-flows-to-autonomous-agents/01.webp": "",
+  "/blog/from-call-flows-to-autonomous-agents/02.webp": "Architecture diagram: Twilio telephony and LiveKit carrying real-time audio into an agent that chains speech-to-text, a language model and text-to-speech, with tool integrations alongside.",
+  "/blog/from-call-flows-to-autonomous-agents/03.webp": "Diagram of the agent loop cycling through perceive, reason, plan, act and observe, with branches out to CRM, scheduling, SMS and outbound calling.",
+  "/blog/from-call-flows-to-autonomous-agents/04.webp": "Turn pipeline running from user speech through recognition, reasoning and synthesis to playback, with the barge-in path that cancels a response mid-sentence.",
+  "/blog/from-call-flows-to-autonomous-agents/05.webp": "Horizontal bar chart breaking one voice turn into audio capture, speech recognition, model reasoning, speech synthesis and playback.",
+  "/blog/from-call-flows-to-autonomous-agents/06.webp": "Diagram of voice calls over Twilio and LiveKit and SMS over Twilio feeding a single agent that also places outbound calls.",
+
+  "/blog/how-i-optimized-vllm-for-high-concurrency-in-a-production/01.webp": "Grafana dashboard for the vLLM deployment: request and token throughput, average latency, KV cache usage, running requests, preemptions, and GPU and memory utilisation.",
+
+  "/blog/how-i-reduced-voice-ai-latency-from-18-seconds-to-under/01.webp": "Title card: reducing voice AI latency from 1.8 seconds to under 300ms.",
+  "/blog/how-i-reduced-voice-ai-latency-from-18-seconds-to-under/02.webp": "Low-latency voice architecture diagram beside a before and after comparison of the latency budget at each stage.",
+
+  "/blog/smart-privacy-shield/01.webp": "The Privacy Studio screen with footage loaded and the detection panel beside it.",
+  "/blog/smart-privacy-shield/02.webp": "Smart Privacy Shield landing page, headed Privacy in Motion.",
+  "/blog/smart-privacy-shield/03.webp": "Testimonial section of the Smart Privacy Shield landing page.",
+  "/blog/smart-privacy-shield/04.webp": "Step one of the enterprise workflow, uploading footage.",
+  "/blog/smart-privacy-shield/05.webp": "Step two of the workflow, intelligent selection of the regions to protect.",
+  "/blog/smart-privacy-shield/06.webp": "Step three of the workflow, automated redaction."
+}

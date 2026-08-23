@@ -16,6 +16,16 @@ const FEED = "https://medium.com/feed/@wasifullahdev";
 const OUT_DIR = join(process.cwd(), "src", "content", "posts");
 const IMG_DIR = join(process.cwd(), "public", "blog");
 
+/**
+ * Descriptions live in src/content/image-alt.json rather than here, so that
+ * re-importing a post keeps its alt text instead of resetting every image to
+ * empty. Anything without an entry falls back to empty, which is the correct
+ * value for decorative stock photography anyway.
+ */
+const ALT = JSON.parse(
+  readFileSync(join(process.cwd(), "src", "content", "image-alt.json"), "utf8"),
+);
+
 const pick = (block, re) => (block.match(re) ?? [])[1] ?? "";
 
 function slugify(text) {
@@ -124,9 +134,10 @@ async function localiseImages(html, slug) {
       count++;
 
       // Explicit dimensions so the article reserves space and never shifts.
+      const alt = (ALT[`/blog/${slug}/${name}`] ?? "").replace(/"/g, "&quot;");
       const tag =
         `<img src="/blog/${slug}/${name}" width="${finalMeta.width}" ` +
-        `height="${finalMeta.height}" loading="lazy" decoding="async" alt="" />`;
+        `height="${finalMeta.height}" loading="lazy" decoding="async" alt="${alt}" />`;
 
       out = out.replace(
         new RegExp(`<img[^>]*src="${url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*>`, "gi"),
