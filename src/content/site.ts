@@ -78,7 +78,7 @@ export const site = {
 export const hire = {
   headline: "Hiring for an AI engineering role?",
   lead: "Most of what a recruiter asks me in the first email is answered below. What is left is the form, which takes about a minute.",
-  bookingUrl: "",
+  bookingUrl: "https://cal.com/wasif-ullah-dev/30min",
   lookingFor: [
     "Full-stack AI engineering, where the model and the product are the same job",
     "Computer vision and retrieval systems that run in production, not in notebooks",
