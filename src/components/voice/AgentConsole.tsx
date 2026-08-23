@@ -146,7 +146,7 @@ function IdleStage({ phase, onStart }: { phase?: string; onStart?: () => void })
       <div className="w-full">
         <Scope bands={[]} live={false} label="Waiting to start" />
         <p className="mono mt-2 flex items-center justify-center gap-2 text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
-          <span className={connecting ? "agent-pulse" : "agent-pulse"} aria-hidden />
+          <span className="agent-pulse" aria-hidden />
           {connecting ? "Connecting" : "Ready when you are"}
         </p>
       </div>
