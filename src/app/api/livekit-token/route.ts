@@ -13,7 +13,7 @@ export const runtime = "nodejs";
 /** Must match agent_name in agent/agent.py, or nothing is ever dispatched. */
 const AGENT_NAME = "portfolio-agent";
 
-const PER_IP_LIMIT = 3;
+const PER_IP_LIMIT = 6;
 const PER_IP_WINDOW_MS = 60 * 60 * 1000;
 
 /** Roughly how long a capped session runs, used to spend down the daily budget. */

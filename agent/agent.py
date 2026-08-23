@@ -41,7 +41,7 @@ WARN_AT_SECONDS = max(MAX_SESSION_SECONDS - 30, 30)
 
 STT_MODEL = os.getenv("GROQ_STT_MODEL", "whisper-large-v3-turbo")
 
-LLM_MODEL = os.getenv("GROQ_LLM_MODEL", "openai/gpt-oss-120b")
+LLM_MODEL = os.getenv("GROQ_LLM_MODEL", "openai/gpt-oss-20b")
 
 
 def setup(proc: agents.JobProcess) -> None:

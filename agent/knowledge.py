@@ -9,8 +9,8 @@ import httpx
 logger = logging.getLogger("knowledge")
 
 DROP_SECTIONS = {"Writing"}
-MAX_BULLETS = {"Selected work": 8, "Key results": 6}
-MAX_BULLET_CHARS = 420
+MAX_BULLETS = {"Selected work": 6, "Key results": 5}
+MAX_BULLET_CHARS = 300
 
 FALLBACK = """Wasif Ullah is a Voice AI and Full-Stack AI Engineer in Lahore.
 He builds real-time voice agents, computer vision pipelines and the production
