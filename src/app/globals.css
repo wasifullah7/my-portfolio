@@ -436,6 +436,10 @@ html.lenis body {
 
 .github-card svg,
 .github-card svg text {
+  /* var() does not resolve inside SVG presentation attributes, only in real
+     CSS, so the font has to be set here or the card falls back to a generic
+     monospace with different metrics. */
+  font-family: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
   /* JetBrains Mono ligates ==, != and ++ into single wide glyphs, which breaks
      the monospace grid the ASCII portrait depends on. */
   font-variant-ligatures: none;
