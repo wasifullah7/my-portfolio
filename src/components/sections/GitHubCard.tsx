@@ -41,7 +41,9 @@ export function GitHubCard() {
       </Reveal>
 
       <Reveal delay={0.06}>
-        <div className="mt-12 grid gap-10 lg:grid-cols-[240px_1fr] lg:gap-16">
+        {/* A panel rather than bare page, so the readout reads as one object.
+            Both surfaces are theme tokens: near-white in light, near-black in dark. */}
+        <div className="profile-panel mt-12 grid gap-10 rounded-xl border border-rule bg-paper-2 p-8 sm:p-10 lg:grid-cols-[240px_1fr] lg:gap-14">
           {site.portrait ? (
             <figure className="max-w-[240px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
