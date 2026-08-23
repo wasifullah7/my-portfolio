@@ -11,8 +11,8 @@ import sys
 
 from dotenv import load_dotenv
 from livekit import agents
-from livekit.agents import AgentServer, AgentSession, JobContext, room_io
-from livekit.plugins import groq, noise_cancellation, silero
+from livekit.agents import AgentServer, AgentSession, JobContext, llm, room_io
+from livekit.plugins import groq, silero
 
 from booking import PortfolioAgent
 from knowledge import build_instructions, load_digest_sync
@@ -41,7 +41,8 @@ WARN_AT_SECONDS = max(MAX_SESSION_SECONDS - 30, 30)
 
 STT_MODEL = os.getenv("GROQ_STT_MODEL", "whisper-large-v3-turbo")
 
-LLM_MODEL = os.getenv("GROQ_LLM_MODEL", "openai/gpt-oss-20b")
+LLM_MODEL = os.getenv("GROQ_LLM_MODEL", "openai/gpt-oss-120b")
+LLM_FALLBACK_MODEL = os.getenv("GROQ_LLM_FALLBACK", "openai/gpt-oss-20b")
 
 
 def setup(proc: agents.JobProcess) -> None:
@@ -60,11 +61,15 @@ async def entrypoint(ctx: JobContext) -> None:
 
     session = AgentSession(
         stt=groq.STT(model=STT_MODEL, language="en"),
-        llm=groq.LLM(
-            model=LLM_MODEL,
-            reasoning_effort="low",
-            max_completion_tokens=200,
-            temperature=0.4,
+        # The bigger model follows the persona more closely, but Groq caps tokens
+        # per day per model. When that runs out it 429s and the agent goes quiet,
+        # so the smaller model stands behind it on its own separate quota.
+        llm=llm.FallbackAdapter(
+            [
+                groq.LLM(model=m, reasoning_effort="low", max_completion_tokens=200, temperature=0.4)
+                for m in (LLM_MODEL, LLM_FALLBACK_MODEL)
+            ],
+            max_retry_per_llm=0,
         ),
         tts=ctx.proc.userdata["tts"],
         vad=ctx.proc.userdata["vad"],
@@ -100,13 +105,13 @@ async def entrypoint(ctx: JobContext) -> None:
     await session.start(
         room=ctx.room,
         agent=agent,
-        room_options=room_io.RoomOptions(
-            audio_input=room_io.AudioInputOptions(
-                # Included with LiveKit Cloud. BVC also strips other voices in
-                # the room, but voice isolation is billed separately.
-                noise_cancellation=noise_cancellation.NC(),
-            ),
-        ),
+        # Noise cancellation is off. livekit-plugins-noise-cancellation 0.3.0
+        # threw from its native destructor on every session teardown and aborted
+        # the worker with SIGABRT, so the agent never spoke at all:
+        #   Nc::~Nc: Exception caught while destroying the session
+        #   terminate called after throwing an instance of std::runtime_error
+        # Worth retrying on a later plugin release.
+        room_options=room_io.RoomOptions(),
     )
 
     async def close_on_timeout() -> None:
@@ -130,8 +135,8 @@ async def entrypoint(ctx: JobContext) -> None:
     ctx.add_shutdown_callback(lambda: _cancel(timeout_task))
 
     await session.say(
-        "Hi, I am an AI assistant speaking for Wasif. "
-        "What would you like to know about his work?"
+        "Hey, thanks for stopping by. This is Wasif, or rather my AI answering "
+        "in my own words. What would you like to know?"
     )
 
 
