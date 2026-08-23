@@ -8,6 +8,27 @@ export type SkillGroup = {
 /** Mirrors the technical skills section of the CV. */
 export const skillGroups: SkillGroup[] = [
   {
+    code: "RTC",
+    title: "Voice & Real-time",
+    caption: "Live calls, where latency is the product rather than a metric.",
+    items: [
+      "LiveKit",
+      "WebRTC",
+      "SIP telephony",
+      "Twilio",
+      "WebSockets",
+      "Streaming STT",
+      "Streaming TTS",
+      "Voice activity detection",
+      "Speaker diarization",
+      "Barge-in handling",
+      "Warm transfer",
+      "vLLM",
+      "Continuous batching",
+      "Turn-taking latency budgets",
+    ],
+  },
+  {
     code: "CV",
     title: "Vision & ML",
     caption: "Detection, segmentation, OCR, and the spatial logic around them.",
@@ -111,6 +132,11 @@ export const skillGroups: SkillGroup[] = [
 
 /** Flat list used by the marquee band. */
 export const marqueeSkills = [
+  "LiveKit",
+  "WebRTC",
+  "SIP",
+  "vLLM",
+  "Streaming STT",
   "RF-DETR",
   "SAM2",
   "PaddleOCR",

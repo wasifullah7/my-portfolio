@@ -434,6 +434,14 @@ html.lenis body {
   }
 }
 
+.github-card svg,
+.github-card svg text {
+  /* JetBrains Mono ligates ==, != and ++ into single wide glyphs, which breaks
+     the monospace grid the ASCII portrait depends on. */
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0, "dlig" 0;
+}
+
 .github-card svg {
   width: 100%;
   height: auto;
