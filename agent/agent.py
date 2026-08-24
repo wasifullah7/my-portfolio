@@ -11,7 +11,7 @@ import sys
 
 from dotenv import load_dotenv
 from livekit import agents
-from livekit.agents import AgentServer, AgentSession, JobContext, llm, room_io
+from livekit.agents import AgentServer, AgentSession, JobContext, inference, llm, room_io
 from livekit.plugins import groq, silero
 
 from booking import PortfolioAgent
@@ -41,6 +41,15 @@ WARN_AT_SECONDS = max(MAX_SESSION_SECONDS - 30, 30)
 
 STT_MODEL = os.getenv("GROQ_STT_MODEL", "whisper-large-v3-turbo")
 
+# Whisper conditions on this, so the names it would otherwise guess at come back
+# spelled the way the site spells them.
+STT_VOCABULARY = (
+    "Wasif Ullah, RF-DETR, PaddleOCR, SAM2, OpenCV, PyTorch, LiveKit, Twilio, "
+    "pgvector, BM25, vLLM, FastAPI, PostgreSQL, MongoDB, Redis, LangChain, "
+    "Pinecone, ChromaDB, DeBERTa, PyMuPDF, spaCy, Kubernetes, Terraform, QAOA, "
+    "Rigetti, HRMS, LTI, Whisper, Piper, Groq, Next.js, TypeScript."
+)
+
 LLM_MODEL = os.getenv("GROQ_LLM_MODEL", "openai/gpt-oss-120b")
 LLM_FALLBACK_MODEL = os.getenv("GROQ_LLM_FALLBACK", "openai/gpt-oss-20b")
 
@@ -59,8 +68,10 @@ server = AgentServer(setup_fnc=setup)
 @server.rtc_session(agent_name="portfolio-agent")
 async def entrypoint(ctx: JobContext) -> None:
 
+    turn_detector = inference.TurnDetector()
+
     session = AgentSession(
-        stt=groq.STT(model=STT_MODEL, language="en"),
+        stt=groq.STT(model=STT_MODEL, language="en", prompt=STT_VOCABULARY),
         # The bigger model follows the persona more closely, but Groq caps tokens
         # per day per model. When that runs out it 429s and the agent goes quiet,
         # so the smaller model stands behind it on its own separate quota.
@@ -73,8 +84,17 @@ async def entrypoint(ctx: JobContext) -> None:
         ),
         tts=ctx.proc.userdata["tts"],
         vad=ctx.proc.userdata["vad"],
-        allow_interruptions=True,
+        turn_handling={
+            # Semantic end of turn, so a pause mid-thought is not treated as the
+            # end of the sentence. Cloud v1 while hosted, local v1-mini otherwise.
+            "turn_detection": turn_detector,
+            # Piper runs inside this process, so a preemptive synthesis that gets
+            # thrown away costs CPU and nothing else. This is off by default
+            # because it usually means paying a TTS vendor for discarded audio.
+            "preemptive_generation": {"preemptive_tts": True},
+        },
     )
+    logger.info("turn detector: %s %s", turn_detector.provider, turn_detector.model)
 
     latency = TurnLatency(ctx.room)
     session.on("metrics_collected", latency.handle)
