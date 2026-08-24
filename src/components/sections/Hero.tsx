@@ -1,6 +1,6 @@
 import { site } from "@/content/site";
-import { HeroSpotlight } from "@/components/HeroSpotlight";
-import { MagneticHeadline } from "@/components/motion/MagneticHeadline";
+import { HeroGrid } from "@/components/HeroGrid";
+import { HeadlineReveal } from "@/components/motion/HeadlineReveal";
 import { Reveal } from "@/components/motion/Reveal";
 import { Counter } from "@/components/motion/Counter";
 import { cn } from "@/lib/utils";
@@ -9,7 +9,7 @@ import { AgentConsole } from "@/components/voice/AgentConsole";
 export function Hero() {
   return (
     <section id="home" className="relative min-h-[100svh] overflow-hidden pt-24">
-      <HeroSpotlight />
+      <HeroGrid />
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 sm:px-10">
         <div className="grid gap-10 lg:grid-cols-[minmax(180px,220px)_1fr] lg:gap-16">
@@ -31,7 +31,7 @@ export function Hero() {
 
           <div className="order-1 lg:order-2">
             <h1 className="display text-[clamp(2.9rem,10.5vw,9.5rem)]">
-              <MagneticHeadline lines={site.roleLines} delay={0.15} />
+              <HeadlineReveal lines={site.roleLines} delay={0.15} />
             </h1>
 
             <Reveal delay={0.75}>

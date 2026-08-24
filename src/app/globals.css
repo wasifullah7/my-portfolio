@@ -383,57 +383,6 @@ html.lenis body {
    the reveal moves, the grid never does.
    --------------------------------------------------------------------------- */
 
-.hero-spotlight {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.45s ease;
-
-  background-image:
-    linear-gradient(to right, var(--rule) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
-  background-size: 68px 68px;
-
-  --mx: 50%;
-  --my: 40%;
-
-  -webkit-mask-image: radial-gradient(
-    260px circle at var(--mx) var(--my),
-    #000 0%,
-    rgba(0, 0, 0, 0.55) 45%,
-    transparent 72%
-  );
-  mask-image: radial-gradient(
-    260px circle at var(--mx) var(--my),
-    #000 0%,
-    rgba(0, 0, 0, 0.55) 45%,
-    transparent 72%
-  );
-}
-
-.hero-spotlight[data-lit="true"] {
-  opacity: 1;
-}
-
-/* A small warm core, so the accent still marks where the reader is. */
-.hero-spotlight::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    150px circle at var(--mx) var(--my),
-    var(--accent-wash, rgba(229, 36, 27, 0.09)) 0%,
-    transparent 70%
-  );
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-spotlight {
-    display: none;
-  }
-}
-
 .github-card svg,
 .github-card svg text {
   /* var() does not resolve inside SVG presentation attributes, only in real
