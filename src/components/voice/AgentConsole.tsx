@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   LiveKitRoom,
@@ -24,6 +24,11 @@ type Latency = {
 const METRICS_TOPIC = "agent-metrics";
 const SESSION_SECONDS = 180;
 
+const WAKE_CEILING_MS = 40_000;
+
+const WAKE_FAILED =
+  "The agent did not wake up in time. It sleeps when the site is quiet, and that usually takes a few seconds, not this long. Try once more.";
+
 const STAGES: { key: keyof Latency; label: string }[] = [
   { key: "endOfTurn", label: "End of turn" },
   { key: "model", label: "Model" },
@@ -40,6 +45,7 @@ const STACK = [
 
 export function AgentConsole() {
   const { phase, connection, error, start, end, fail } = useAgentConnection();
+  const onTimeout = useCallback(() => fail(WAKE_FAILED), [fail]);
 
   if (phase === "live" && connection) {
     return (
@@ -53,7 +59,7 @@ export function AgentConsole() {
         onError={() => fail("The call dropped. You can start another one.")}
       >
         <RoomAudioRenderer />
-        <Console live onEnd={end} />
+        <Console live onEnd={end} onTimeout={onTimeout} />
       </LiveKitRoom>
     );
   }
@@ -67,12 +73,14 @@ function Console({
   error,
   onStart,
   onEnd,
+  onTimeout,
 }: {
   live: boolean;
   phase?: string;
   error?: string | null;
   onStart?: () => void;
   onEnd?: () => void;
+  onTimeout?: () => void;
 }) {
   return (
     <div className="grid gap-px border border-rule bg-rule lg:grid-cols-[1fr_minmax(320px,420px)_1fr]">
@@ -81,7 +89,11 @@ function Console({
       </Panel>
 
       <Panel title="Session" center>
-        {live ? <LiveStage onEnd={onEnd} /> : <IdleStage phase={phase} onStart={onStart} />}
+        {live ? (
+          <LiveStage onEnd={onEnd} onTimeout={onTimeout} />
+        ) : (
+          <IdleStage phase={phase} onStart={onStart} />
+        )}
       </Panel>
 
       <Panel title="Latency, last turn">
@@ -171,6 +183,7 @@ function IdleStage({ phase, onStart }: { phase?: string; onStart?: () => void })
 
 function LiveTranscript() {
   const transcriptions = useTranscriptions();
+  const { agent } = useVoiceAssistant();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -186,7 +199,9 @@ function LiveTranscript() {
       className="flex max-h-[240px] flex-col gap-4 overflow-y-auto"
     >
       {transcriptions.length === 0 ? (
-        <p className="text-[0.9375rem] leading-relaxed text-faint">Listening.</p>
+        <p className="text-[0.9375rem] leading-relaxed text-faint">
+          {agent ? "Listening." : "Waiting for the agent to come up."}
+        </p>
       ) : (
         transcriptions.map((entry) => {
           const visitor = entry.participantInfo.identity.startsWith("visitor-");
@@ -205,21 +220,33 @@ function LiveTranscript() {
   );
 }
 
-function LiveStage({ onEnd }: { onEnd?: () => void }) {
-  const { state, audioTrack } = useVoiceAssistant();
+function LiveStage({ onEnd, onTimeout }: { onEnd?: () => void; onTimeout?: () => void }) {
+  const { agent, state, audioTrack } = useVoiceAssistant();
   const { localParticipant } = useLocalParticipant();
   const youAreSpeaking = useIsSpeaking(localParticipant);
   const [remaining, setRemaining] = useState(SESSION_SECONDS);
 
+  // The token arrives instantly; the agent does not. Everything below waits on
+  // the agent actually joining, so a cold start does not eat the session.
+  const waking = !agent;
+
   useEffect(() => {
+    if (waking) return;
     const id = setInterval(() => setRemaining((r) => Math.max(0, r - 1)), 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [waking]);
+
+  useEffect(() => {
+    if (!waking) return;
+    const id = setTimeout(() => onTimeout?.(), WAKE_CEILING_MS);
+    return () => clearTimeout(id);
+  }, [waking, onTimeout]);
 
   // Name the speaker, not just the state. "Listening" does not tell you whether
   // the microphone is actually picking you up.
-  const label =
-    state === "speaking"
+  const label = waking
+    ? "Waking the agent"
+    : state === "speaking"
       ? "Agent speaking"
       : youAreSpeaking
         ? "You are speaking"
@@ -238,9 +265,13 @@ function LiveStage({ onEnd }: { onEnd?: () => void }) {
       <div className="flex flex-col items-center gap-3">
         <span className="label text-accent">{label}</span>
         <div className="flex items-center gap-6">
-          <span className="tabular text-xs text-faint">
-            {Math.floor(remaining / 60)}:{String(remaining % 60).padStart(2, "0")} left
-          </span>
+          {waking ? (
+            <span className="text-xs text-faint">It sleeps between calls</span>
+          ) : (
+            <span className="tabular text-xs text-faint">
+              {Math.floor(remaining / 60)}:{String(remaining % 60).padStart(2, "0")} left
+            </span>
+          )}
           <button
             type="button"
             onClick={onEnd}

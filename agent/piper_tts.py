@@ -8,6 +8,8 @@ from pathlib import Path
 
 from livekit.agents import DEFAULT_API_CONNECT_OPTIONS, APIConnectionError, tts, utils
 
+from pronounce import for_speech
+
 logger = logging.getLogger("piper-tts")
 
 NUM_CHANNELS = 1
@@ -84,7 +86,7 @@ class ChunkedStream(tts.ChunkedStream):
 
         def synthesize_blocking() -> None:
             try:
-                for chunk in voice.synthesize(self._input_text):
+                for chunk in voice.synthesize(for_speech(self._input_text)):
                     loop.call_soon_threadsafe(queue.put_nowait, chunk.audio_int16_bytes)
             except BaseException as exc:  # noqa: BLE001 - re-raised on the loop below
                 failure.append(exc)
